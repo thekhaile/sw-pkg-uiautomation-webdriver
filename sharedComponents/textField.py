@@ -10,12 +10,12 @@ class TextField(object):
         """
         self.testCase = testCase
 
-    def enterKeyword(self):
-        el = self.testCase.app.find_element(self.testCase.app.getStrategy().ID, 'lst-ib')
+    def enterKeyword(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().ID, 'lst-ib')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.app.is_mobile():
+        if self.testCase.app.isMobile():
             el.tap_hybrid()
         else:
             el.tap()
-        el.enter_text('hello world')
+        el.enterText(text)
         sleep(5)
