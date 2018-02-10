@@ -1,7 +1,5 @@
 from time import sleep
-
 from projectBase import ProjectBase
-
 
 class TextField(object):
 
