@@ -1,6 +1,6 @@
 from time import sleep
 
-from mobile.projectBase import ProjectBase
+from projectBase import ProjectBase
 
 
 class TextField(object):
