@@ -13,8 +13,8 @@ class TextField(object):
     def enterKeyword(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().ID, 'lst-ib')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.app.isMobile():
-            el.tap_hybrid()
+        if self.testCase.isMobile():
+            el.tapHybrid()
         else:
             el.tap()
         el.enterText(text)
