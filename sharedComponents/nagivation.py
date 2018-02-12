@@ -2,7 +2,7 @@ from time import sleep
 from projectBase import ProjectBase
 
 class Navigation(object):
-    LOGIN_PAGE = 'https://google.com'
+    LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -12,6 +12,4 @@ class Navigation(object):
         self.testCase = testCase
 
     def navigateToLoginPage(self):
-
         self.testCase.driver.get(Navigation.LOGIN_PAGE)
-        sleep(5)
