@@ -17,6 +17,7 @@ class Authentication(object):
             el.tapHybrid()
         else:
             el.tap()
+        el.clearText()
         el.enterText(text)
 
     def enterPassword(self, text):
@@ -36,3 +37,4 @@ class Authentication(object):
             el.tapHybrid()
         else:
             el.tap()
+        sleep(2)
