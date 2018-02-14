@@ -11,9 +11,11 @@ class Authentication(object):
         self.testCase = testCase
 
     def enterEmail(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[@id="root"]/div/main/div/div/form/label[1]/input')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="text"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isMobile:
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
             el.tapHybrid()
         else:
             el.tap()
@@ -21,19 +23,24 @@ class Authentication(object):
         el.enterText(text)
 
     def enterPassword(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[@id="root"]/div/main/div/div/form/label[2]/input')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="password"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isMobile:
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
             el.tapHybrid()
         else:
             el.tap()
+        el.clearText()
         el.enterText(text)
 
 
     def tapSubmit(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[@id="root"]/div/main/div/div/form/button[1]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button" and @class="login"]')
         el = self.testCase.UIType.Button(el)
-        if self.testCase.isMobile:
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
             el.tapHybrid()
         else:
             el.tap()

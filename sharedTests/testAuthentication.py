@@ -14,6 +14,7 @@ class TestAuthentication(ProjectBase):
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
 
+    @pytest.mark.sandbox
     @pytest.mark.ac
     def testSuccessfulLoginWithValidCredentials(self):
         email = 'khai.le@mutualmobile.com'
