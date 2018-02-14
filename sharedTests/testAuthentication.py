@@ -105,7 +105,7 @@ class TestAuthentication(ProjectBase):
     @pytest.mark.functionality
     def testSubmitButtonDisabledWhenEmailAndPasswordAreEmpty(self):
         self.navigation.navigateToLoginPage()
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//*[@id="root"]/div/main/div/div/form/button[1]')
+        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
         el = self.UIType.Button(el)
         self.assertion.assertFalse(el.isEnabled())
 
@@ -114,7 +114,7 @@ class TestAuthentication(ProjectBase):
         password = 'password'
         self.navigation.navigateToLoginPage()
         self.authentication.enterPassword(password)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//*[@id="root"]/div/main/div/div/form/button[1]')
+        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
         el = self.UIType.Button(el)
         self.assertion.assertFalse(el.isEnabled())
 
@@ -123,7 +123,7 @@ class TestAuthentication(ProjectBase):
         email = 'noexist@mutualmobile.com'
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//*[@id="root"]/div/main/div/div/form/button[1]')
+        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
         el = self.UIType.Button(el)
         self.assertion.assertFalse(el.isEnabled())
 
@@ -135,6 +135,6 @@ class TestAuthentication(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//*[@id="root"]/div/main/div/div/form/button[1]')
+        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
         el = self.UIType.Button(el)
         self.assertion.assertTrue(el.isEnabled())
