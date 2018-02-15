@@ -3,8 +3,8 @@ sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from time import sleep
 from projectBase import ProjectBase
 import pytest
-from sharedComponents.nagivation import Navigation
-from sharedComponents.authentication import Authentication
+from components.nagivation import Navigation
+from components.authentication import Authentication
 
 class TestAuthentication(ProjectBase):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'

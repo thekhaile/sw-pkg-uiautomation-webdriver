@@ -1,2 +1,2 @@
-from sharedComponents import *
-from sharedTests import *
+from components import *
+from tests import *
