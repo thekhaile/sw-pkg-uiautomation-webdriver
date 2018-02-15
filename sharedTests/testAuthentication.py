@@ -14,7 +14,6 @@ class TestAuthentication(ProjectBase):
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
 
-    @pytest.mark.sandbox
     @pytest.mark.ac
     def testSuccessfulLoginWithValidCredentials(self):
         email = 'khai.le@mutualmobile.com'
@@ -36,7 +35,9 @@ class TestAuthentication(ProjectBase):
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
         self.authentication.tapSubmit()
+        sleep(2)
         self.driver.back()
+        sleep(5)
         self.assertion.assertNotEqual(TestAuthentication.LOGIN_PAGE, self.driver.current_url)
 
     @pytest.mark.ac
@@ -48,7 +49,9 @@ class TestAuthentication(ProjectBase):
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
         self.authentication.tapSubmit()
+        sleep(2)
         self.driver.refresh()
+        sleep(5)
         self.assertion.assertNotEqual(TestAuthentication.LOGIN_PAGE, self.driver.current_url)
 
     @pytest.mark.ac
@@ -105,8 +108,7 @@ class TestAuthentication(ProjectBase):
     @pytest.mark.functionality
     def testSubmitButtonDisabledWhenEmailAndPasswordAreEmpty(self):
         self.navigation.navigateToLoginPage()
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
-        el = self.UIType.Button(el)
+        el = self.authentication.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.functionality
@@ -114,8 +116,7 @@ class TestAuthentication(ProjectBase):
         password = 'password'
         self.navigation.navigateToLoginPage()
         self.authentication.enterPassword(password)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
-        el = self.UIType.Button(el)
+        el = self.authentication.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.functionality
@@ -123,8 +124,7 @@ class TestAuthentication(ProjectBase):
         email = 'noexist@mutualmobile.com'
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
-        el = self.UIType.Button(el)
+        el = self.authentication.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.functionality
@@ -135,6 +135,6 @@ class TestAuthentication(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
-        el = self.app.findElement(self.app.getStrategy().XPATH,'//button[@type="button" and @class="login"]')
-        el = self.UIType.Button(el)
+
+        el = self.authentication.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())

@@ -34,10 +34,13 @@ class Authentication(object):
         el.clearText()
         el.enterText(text)
 
-
-    def tapSubmit(self):
+    def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button" and @class="login"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapSubmit(self):
+        el = self.getSubmitButton()
         if self.testCase.isChromium:
             el.tap()
         elif self.testCase.isMobile:
