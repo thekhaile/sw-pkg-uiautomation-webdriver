@@ -3,7 +3,7 @@ sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from time import sleep
 from projectBase import ProjectBase
 import pytest
-from components.nagivation import Navigation
+from components.navigation import Navigation
 from components.authentication import Authentication
 
 class TestAuthentication(ProjectBase):
@@ -23,7 +23,7 @@ class TestAuthentication(ProjectBase):
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
         self.authentication.tapSubmit()
-        sleep(5)
+        sleep(2)
         self.assertion.assertNotEqual(TestAuthentication.LOGIN_PAGE, self.driver.current_url)
 
     @pytest.mark.ac

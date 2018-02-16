@@ -1,2 +1,2 @@
-from nagivation import *
+from navigation import *
 from authentication import *

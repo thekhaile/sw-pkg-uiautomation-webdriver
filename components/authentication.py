@@ -47,4 +47,3 @@ class Authentication(object):
             el.tapHybrid()
         else:
             el.tap()
-        sleep(2)
