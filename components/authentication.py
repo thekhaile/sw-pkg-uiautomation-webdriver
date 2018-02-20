@@ -35,7 +35,7 @@ class Authentication(object):
         el.enterText(text)
 
     def getSubmitButton(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button" and @class="login"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit" and @class="login"]')
         el = self.testCase.UIType.Button(el)
         return el
 
@@ -47,3 +47,4 @@ class Authentication(object):
             el.tapHybrid()
         else:
             el.tap()
+        sleep(3)
