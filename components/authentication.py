@@ -48,3 +48,8 @@ class Authentication(object):
         else:
             el.tap()
         sleep(3)
+
+    def login(self, email, password):
+        self.enterEmail(email)
+        self.enterPassword(password)
+        self.tapSubmit()

@@ -3,6 +3,7 @@ from projectBase import ProjectBase
 
 class Navigation(object):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
+    PROJECTS_PAGE= 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -13,3 +14,6 @@ class Navigation(object):
 
     def navigateToLoginPage(self):
         self.testCase.driver.get(Navigation.LOGIN_PAGE)
+
+    def navigateToProjectsPage(self):
+        self.testCase.driver.get(Navigation.PROJECTS_PAGE)
