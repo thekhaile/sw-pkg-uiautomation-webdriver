@@ -1,5 +1,7 @@
 from time import sleep
 from projectBase import ProjectBase
+import string
+import random
 
 
 class Jobs(object):
@@ -117,3 +119,65 @@ class Jobs(object):
         else:
             el.tap()
         sleep(3)
+
+
+    '''
+    Ningxin's code starts here
+    '''
+
+    def tapCancel(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
+        el = self.testCase.UIType.Button(el)
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+        sleep(3)
+
+    def tapOverflow(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = self.testCase.UIType.Button(el)
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+
+    def tapEditSettings(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = self.testCase.UIType.Button(el)
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+
+    def getErrorMsg(self):
+        # get container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project.job')
+        # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
+        allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
+        #get the last P in the list
+        p = allPs[-1]
+        #assign P to an element type
+        p = self.testCase.UIType.Element(p)
+        #return the error message
+        return p.getLabel()
+
+    def getRandomName(self):
+        randomName = ''.join([random.choice(string.letters + string.digits + " " + " " + " ") for i in range(30)])
+        return randomName
+
+    def enterRandomJobName(self):
+        name = self.getRandomName()
+        self.enterJobName(name)
+
+
+
+
+

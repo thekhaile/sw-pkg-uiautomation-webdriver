@@ -42,5 +42,140 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(currentUrl, newUrl)
 
+    @pytest.mark.nxTest
+    def testCreateJobWithUniqueNmaeAndToggleOn(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        sleep(1)
+        # currentUrl = self.driver.current_url
+        self.jobs.enterJobName('Ningxin 3rd Automation Job')
+        sleep(1)
+        self.jobs.enterWeight('88')
+        sleep(2)
+        self.jobs.enterHeight('999')
+        sleep(2)
+        self.jobs.enterWidth('66')
+        sleep(2)
+        self.jobs.toggleSIMpullReel()
+        sleep(2)
+        self.jobs.tapSubmit()
+        sleep(2)
+        # newUrl = self.driver.current_url
+
+        #self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.nxTest
+    def testCreateJobWithUniqueNmaeAndToggleOff(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        sleep(1)
+        # currentUrl = self.driver.current_url
+        self.jobs.enterJobName('Ningxin 1st Automation Job')
+        sleep(1)
+        self.jobs.enterWeight('99')
+        sleep(2)
+        self.jobs.enterHeight('88')
+        sleep(2)
+        self.jobs.enterWidth('66')
+        sleep(2)
+        # self.jobs.toggleSIMpullReel()
+        # sleep(2)
+        self.jobs.tapSubmit()
+        sleep(2)
+        # newUrl = self.driver.current_url
+
+        # self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.nxTest
+    def testCreateJobWithoutUniqueNmae(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.jobs.enterJobName('Ningxin 2nd Automation Job')
+        sleep(1)
+        self.jobs.enterWeight('88')
+        sleep(2)
+        self.jobs.enterHeight('999')
+        sleep(2)
+        self.jobs.enterWidth('66')
+        sleep(2)
+        self.jobs.toggleSIMpullReel()
+        sleep(2)
+        self.jobs.tapSubmit()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.nxTest2
+    def testCreateJobWithOver30CharLimit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.jobs.enterJobName('abc def ghi jkl mno pqrs tuv w1')
+        sleep(1)
+        self.jobs.enterWeight('88')
+        sleep(2)
+        self.jobs.enterHeight('999')
+        sleep(2)
+        # self.jobs.enterWidth('66')
+        # sleep(2)
+        # self.jobs.toggleSIMpullReel()
+        # sleep(2)
+        # self.jobs.tapSubmit()
+        # sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+
+    @pytest.mark.nxTest
+    def testExitCreateJobProcess(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.jobs.enterJobName('Ningxin 2nd Automation Job')
+        sleep(1)
+        self.jobs.enterWeight('88')
+        sleep(2)
+        # self.jobs.enterHeight('999')
+        # sleep(2)
+        # self.jobs.enterWidth('66')
+        # sleep(2)
+        # self.jobs.toggleSIMpullReel()
+        # sleep(2)
+        self.jobs.tapCancel()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        # self.assertion.assertEqual(currentUrl, newUrl)
 
 

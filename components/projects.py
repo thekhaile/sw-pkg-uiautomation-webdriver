@@ -30,3 +30,47 @@ class Projects(object):
             el.tap()
 
         sleep(3)
+
+    '''
+    Nngxin's starts from here
+    '''
+    def tapCreateProject(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
+        el = self.testCase.UIType.Button(el)
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+
+    def enterProjectName(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
+        el = self.testCase.UIType.TextField(el)
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    def getSubmitButton(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapSubmit(self):
+        el = self.getSubmitButton()
+        if self.testCase.isChromium:
+            el.tap()
+        elif self.testCase.isMobile:
+            el.tapHybrid()
+        else:
+            el.tap()
+        sleep(3)
+
+    '''
+    Nngxin's ends here
+    '''
