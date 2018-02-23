@@ -42,7 +42,7 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    @pytest.mark.nxTest
+    @pytest.mark.nx
     def testCreateJobWithUniqueNmaeAndToggleOn(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
