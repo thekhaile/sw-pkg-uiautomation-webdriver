@@ -205,15 +205,12 @@ class TestJobs(ProjectBase):
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName('Ningxin 1st Job')
+        self.jobs.enterRandomJobName()
         sleep(1)
         self.jobs.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Job name already exists'
-        actualErrorMsg = self.jobs.getErrorMsg()
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
     # Verify when a SIMpull Reel selection is changed for the job, that the new setting is updated in the database
