@@ -43,9 +43,10 @@ class TestJobs(ProjectBase):
         self.assertion.assertEqual(currentUrl, newUrl)
 
     # Test SCR-104 Create New Job
-    # Verify that a new job with unique name can be created on Create New Job page and Toggle On
+
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOn(self):
+        # Verify that a new job with unique name can be created on Create New Job page and Toggle On
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -71,9 +72,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Verify that a new job with unique name can be created on Create New Job page and Toggle Off
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOff(self):
+        # Verify that a new job with unique name can be created on Create New Job page and Toggle Off
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -93,9 +94,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Verify when entering a same name for a new job, that an alert is displayed on the Create New Job page
     @pytest.mark.ac
     def testCreateJobWithoutUniqueName(self):
+        # Verify when entering a same name for a new job, that an alert is displayed on the Create New Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -120,9 +121,9 @@ class TestJobs(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    # Verify that when entering more than 30 char for job name, that an alert is displayed on the Create New Job page
     @pytest.mark.ac
     def testCreateJobWithOver30CharLimit(self):
+        # Verify that when entering more than 30 char for job name, that an alert is displayed on the Create New Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -138,6 +139,8 @@ class TestJobs(ProjectBase):
         sleep(1)
         self.jobs.enterHeight('999')
         sleep(1)
+        self.jobs.tapSubmit()
+        sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Project Name cannot exceed 30 characters.'
         actualErrorMsg = self.jobs.getErrorMsg()
@@ -145,10 +148,12 @@ class TestJobs(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
+        el = self.jobs.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
-    # Verify that by clicking/tapping Cancel button exit the Create New Job page at any time
     @pytest.mark.ac
     def testExitCreateJobProcess(self):
+        # Verify that by clicking/tapping Cancel button exit the Create New Job page at any time
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -169,9 +174,10 @@ class TestJobs(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     # Test SCR-105 Edit Job Settings
-    # Verify that the modified job with unique name can be saved on Create New Job page
+
     @pytest.mark.ac
     def testEditJobNameWithNewName(self):
+        # Verify that the modified job with unique name can be saved on Create New Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -191,9 +197,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Verify when entering a same name for a modified job, that an alert is displayed on the Edit Job page
     @pytest.mark.ac
-    def testEditJobNameWithNewName(self):
+    def testEditJobNameWithSameName(self):
+        # Verify when entering a same name for a modified job, that an alert is displayed on the Edit Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -205,7 +211,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
+        self.jobs.enterJobName('Ningxin 1st Job')
         sleep(1)
         self.jobs.tapSubmit()
         sleep(2)
@@ -213,9 +219,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    # Verify when a SIMpull Reel selection is changed for the job, that the new setting is updated in the database
     @pytest.mark.ac
-    def testEditWeightHeightAndWidth(self):
+    def testEditSIMPullReel(self):
+        # Verify when a SIMpull Reel selection is changed for the job, that the new setting is updated in the database
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -235,10 +241,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Verify that by clicking/tapping Cancel button exit the Edit Job Settings page at any timeVerify that by clicking
-    # Cancel button exit the Edit Job Settings page at any time
     @pytest.mark.ac
-    def testEditWeightHeightAndWidth(self):
+    def testExitEditSettings(self):
+        # Verify that by clicking/tapping Cancel button exit the Edit Job Settings page at any time
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -260,9 +265,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Verify that the modified width, height and weight restriction field can be saved on Create New Job page
     @pytest.mark.ac
     def testEditWeightHeightAndWidth(self):
+        # Verify that the modified width, height and weight restriction field can be saved on Create New Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
