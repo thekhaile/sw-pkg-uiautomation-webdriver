@@ -1,3 +1,4 @@
+__author__ = 'ningxinliao'
 from time import sleep
 from projectBase import ProjectBase
 import string
@@ -30,6 +31,9 @@ class Registration(object):
     #     return el
 
     def selectContactRole(self, role = 'Southwire Employee'):
+        print role
+
+    def getContactRole(self, role):
         print role
 
     def enterCompanyName(self, text):
@@ -68,6 +72,9 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
+    def selectCountry(self, country = 'US'):
+        print (country)
+
     def selectStateOrProvince(self, state = 'some state/province'):
         print state
 
@@ -99,17 +106,18 @@ class Registration(object):
         el.enterText(text)
 
     #   Not Required fields
-    def enterTitle(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
-        el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        el.clearText()
-        el.enterText(text)
+
+    # def enterTitle(self, text):
+    #     el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
+    #     el = self.testCase.UIType.TextField(el)
+    #     if self.testCase.isChromium:
+    #         el.tap()
+    #     elif self.testCase.isMobile:
+    #         el.tapHybrid()
+    #     else:
+    #         el.tap()
+    #     el.clearText()
+    #     el.enterText(text)
 
     def enterAddress(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
@@ -159,8 +167,6 @@ class Registration(object):
             el.tap()
         sleep(3)
 
-
-
     def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
         el = self.testCase.UIType.Button(el)
@@ -188,3 +194,4 @@ class Registration(object):
         p = self.testCase.UIType.Element(p)
         #return the error message
         return p.getLabel()
+
