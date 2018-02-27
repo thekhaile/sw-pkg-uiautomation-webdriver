@@ -42,6 +42,18 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(currentUrl, newUrl)
 
+    @pytest.mark.getInfo
+    def testGetProjectInfo(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+
+        print self.projects.getProjectName()
+        print self.projects.getProjectDate()
+        print self.projects.getProjectJobCount()
+
+
     # Test SCR-104 Create New Job
 
     @pytest.mark.ac
