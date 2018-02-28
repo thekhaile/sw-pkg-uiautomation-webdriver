@@ -4,7 +4,7 @@ from projectBase import ProjectBase
 class Navigation(object):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
     PROJECTS_PAGE= 'https://southwire-configurator-test.firebaseapp.com/projects'
-    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/XXXXX'
+    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/register'
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None

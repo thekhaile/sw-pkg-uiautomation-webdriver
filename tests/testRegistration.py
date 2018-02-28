@@ -9,7 +9,7 @@ from southwire_pkg_uiautomation_webdriver.components.authentication import Authe
 
 
 class TestRegistration(ProjectBase):
-    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/XXXXX'
+    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/register'
 
     def __init__(self, *args, **kwargs):
         super(TestRegistration, self).__init__(*args, **kwargs)
@@ -17,51 +17,96 @@ class TestRegistration(ProjectBase):
         self.navigation = Navigation(self)
         self.registration = Registration(self)
 
-    @pytest.mark.ac
+    @pytest.mark.ac1
+    # Verify
     def testCreateAccountWithValidInfoForUS(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+10@mutualmobile.com')
+        self.registration.enterRandomEmail()
         sleep(1)
-        self.registration.enterPassword()
+        self.registration.enterPassword('password')
         sleep(1)
-        self.registration.enterConfirmPassword()
+        self.registration.enterConfirmPassword('password')
         sleep(1)
-        self.registration.enterContactName()
+        self.registration.enterContactName('Ningxin Liao')
         sleep(1)
-        self.registration.enterCompanyName()
+        self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
+        self.registration.selectContactRole(role='Contractor')
         sleep(1)
-        self.registration.enterAddress()
+        self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.enterCity()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
-        self.registration.selectStateOrProvince()
+        self.registration.enterZipCode('78701')
         sleep(1)
-        self.registration.enterZipCode()
-        sleep(1)
-        self.registration.enterPhoneNumber()
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.enterPhoneNumber('512-999-9999')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac
-    def testExitRegistrationProcess(self):
+    @pytest.mark.ac2
+    # Verify
+    def testCreateAccountWithValidInfoForCanada(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail()
+        self.registration.enterRandomEmail()
         sleep(1)
-        self.registration.tapCancel()
+        self.registration.enterPassword('password')
+        sleep(1)
+        self.registration.enterConfirmPassword('password')
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(1)
+        self.registration.enterCompanyName('MM')
+        sleep(1)
+        self.registration.selectContactRole(role='Contractor')
+        sleep(1)
+        self.registration.enterCity('Austin')
+        sleep(1)
+        self.registration.selectStateOrProvince(state='Quebec')
+        sleep(1)
+        self.registration.enterZipCode('A1A1A1')
+        sleep(1)
+        self.registration.enterPhoneNumber('418-999-9999')
+        sleep(1)
+        self.registration.selectUnitOfMeasure(UOM='Standard')
+        sleep(1)
+        self.registration.tapSubmit()
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac3
+    def testExitRegistrationProcess(self):
+        self.navigation.navigateToRegistrationPage()
+        sleep(5)
+        currentUrl = self.driver.current_url
+        self.registration.enterRandomEmail()
+        sleep(3)
+        self.registration.tapCancel()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    # @pytest.mark.ac4
+    # def testExitRegistrationProcess(self):
+    #     self.navigation.navigateToLoginPage()
+    #     sleep(2)
+    #     self.authentication.
+    #     currentUrl = self.driver.current_url
+    #     self.registration.enterRandomEmail()
+    #     sleep(3)
+    #     self.registration.tapCancel()
+    #     sleep(2)
+    #     newUrl = self.driver.current_url
+    #
+    #     self.assertion.assertNotEqual(currentUrl, newUrl)
 
     def testCreateAccountWithSameEmail(self):
         self.navigation.navigateToRegistrationPage()

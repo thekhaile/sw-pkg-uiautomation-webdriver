@@ -13,101 +13,90 @@ class Registration(object):
         self.testCase = testCase
 
     # Required fields
-    def enterContactName(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[')
-        el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        el.clearText()
-        el.enterText(text)
+    def getRandomEmail(self):
+        randomName = ''.join([random.choice(string.letters+string.digits) for i in range(8)])
+        randomEmail = randomName + '@ningxintest.com'
+        return randomEmail
 
-    # def getContactRole(self):
-    #     el = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, ' ')
-    #     el = self.testCase.UIType.Picker(el)
-    #     return el
-
-    def selectContactRole(self, role = 'Southwire Employee'):
-        print role
-
-    def getContactRole(self, role):
-        print role
-
-    def enterCompanyName(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, ' ')
-        el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        el.clearText()
-        el.enterText(text)
+    def enterRandomEmail(self):
+        email = self.getRandomEmail()
+        self.enterEmail(email)
 
     def enterEmail(self,text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '  ')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Email"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
-
-    def enterCity(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
-        el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        el.clearText()
-        el.enterText(text)
-
-    def selectCountry(self, country = 'US'):
-        print (country)
-
-    def selectStateOrProvince(self, state = 'some state/province'):
-        print state
-
-    def selectUnitOfMeasure(self, UOM = 'Standard'):
-        print UOM
 
     def enterPassword(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Password"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
 
     def enterConfirmPassword(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Confirm Password"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
 
+    def enterContactName(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Name"]')
+        el = self.testCase.UIType.TextField(el)
+        el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    def enterCompanyName(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Company Name"]')
+        el = self.testCase.UIType.TextField(el)
+        el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    def getContactRole(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
+        el = self.testCase.UIType.Picker(el)
+        return el
+
+    def selectContactRole(self, role):
+        el = self.getContactRole()
+        el.scrollToValue(role)
+
+    def enterCity(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="City"]')
+        el = self.testCase.UIType.TextField(el)
+        el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    # def selectCountry(self, country = 'US'):
+    #     print (country)
+
+    def getStateOrProvince(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="State/Province"]')
+        el = self.testCase.UIType.Picker(el)
+        return el
+
+    def selectStateOrProvince(self, state):
+        el = self.getStateOrProvince()
+        el.scrollToValue(state)
+
+    def getUnitOfMeasure(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Unit of Measure"]')
+        el = self.testCase.UIType.Picker(el)
+        return el
+
+    def selectUnitOfMeasure(self, UOM):
+        el = self.getUnitOfMeasure()
+        el.scrollToValue(UOM)
+
     #   Not Required fields
 
-    # def enterTitle(self, text):
+    # def enterAddress(self, text):
     #     el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
     #     el = self.testCase.UIType.TextField(el)
     #     if self.testCase.isChromium:
@@ -119,39 +108,17 @@ class Registration(object):
     #     el.clearText()
     #     el.enterText(text)
 
-    def enterAddress(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
-        el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        el.clearText()
-        el.enterText(text)
-
     def enterZipCode(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Zip"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
 
     def enterPhoneNumber(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Phone Number"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
 
@@ -184,14 +151,7 @@ class Registration(object):
 
     # Error msg
     def getErrorMsg(self):
-        # get container
-        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project.job')
-        # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
-        allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
-        #get the last P in the list
-        p = allPs[-1]
-        #assign P to an element type
-        p = self.testCase.UIType.Element(p)
-        #return the error message
-        return p.getLabel()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
 
