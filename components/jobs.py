@@ -21,6 +21,25 @@ class Jobs(object):
         selectedRow = rows[rowOrder]
         return selectedRow
 
+    def getJobName(self, rowOrder=0):
+        row = self.getAJob(rowOrder)
+        jobName= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'th')
+        jobName = self.testCase.UIType.Element(jobName)
+        return jobName.getLabel()
+
+    def getJobCreatedDate(self, rowOrder=0):
+        row = self.getAJob(rowOrder)
+        jobCreatedDate= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        jobCreatedDate = self.testCase.UIType.Element(jobCreatedDate)
+        return jobCreatedDate.getLabel()
+
+    def getJobModifiedDate(self, rowOrder=0):
+        row = self.getAJob(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        jobModifiedDate = allTds[1]
+        jobModifiedDate = self.testCase.UIType.Element(jobModifiedDate)
+        return jobModifiedDate.getLabel()
+
     def selectAJob(self, rowOrder=0):
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)

@@ -17,43 +17,6 @@ class TestJobs(ProjectBase):
         self.projects = Projects(self)
         self.jobs = Jobs(self)
 
-    @pytest.mark.sandbox
-    def testCreateAJob(self):
-        email = 'khai.le@mutualmobile.com'
-        password = 'password'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        sleep(2)
-        currentUrl = self.driver.current_url
-        self.jobs.enterJobName('Test Job Name 123')
-        sleep(2)
-        self.jobs.enterWeight('5000')
-        sleep(2)
-        self.jobs.enterWidth('50')
-        sleep(2)
-        self.jobs.toggleSIMpullReel()
-        sleep(2)
-        self.jobs.tapSubmit()
-        sleep(2)
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-    @pytest.mark.getInfo
-    def testGetProjectInfo(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-
-        print self.projects.getProjectName()
-        print self.projects.getProjectDate()
-        print self.projects.getProjectJobCount()
-
-
     # Test SCR-104 Create New Job
 
     @pytest.mark.ac
@@ -68,7 +31,8 @@ class TestJobs(ProjectBase):
         self.jobs.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
+        jobName = self.jobs.getRandomName()
+        self.jobs.enterJobName(jobName)
         sleep(1)
         self.jobs.enterWeight('88')
         sleep(1)
@@ -80,9 +44,11 @@ class TestJobs(ProjectBase):
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
+        viewJobName = self.jobs.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
 
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOff(self):
@@ -96,15 +62,17 @@ class TestJobs(ProjectBase):
         self.jobs.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
-        sleep(1)
+        jobName = self.jobs.getRandomName()
+        self.jobs.enterJobName(jobName)
         self.jobs.enterWeight('99')
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
+        viewJobName = self.jobs.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
 
     @pytest.mark.ac
     def testCreateJobWithoutUniqueName(self):
@@ -202,13 +170,15 @@ class TestJobs(ProjectBase):
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
-        sleep(1)
+        jobName = self.jobs.getRandomName()
+        self.jobs.enterJobName(jobName)
         self.jobs.tapSubmit()
         sleep(2)
+        viewJobName = self.jobs.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
 
     @pytest.mark.ac
     def testEditJobNameWithSameName(self):
@@ -219,43 +189,29 @@ class TestJobs(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        self.jobs.enterRandomJobName()
+        self.jobs.tapSubmit()
+        # Get the job name of the second row
+        name = self.jobs.getJobName(rowOrder=1)
         self.jobs.tapOverflow()
         sleep(2)
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName('Ningxin 1st Job')
+        self.jobs.enterJobName(name)
         sleep(1)
         self.jobs.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
+        expectedErrorMsg = 'Job name already exists'
+        actualErrorMsg = self.jobs.getErrorMsg()
 
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        # name = self.jobs.getRandomName()
-        # self.jobs.enterJobName(name)
-        # sleep(1)
-        # self.jobs.tapSubmit()
-        # sleep(1)
-        # self.jobs.tapOverflow()
-        # sleep(2)
-        # self.jobs.tapEditSettings()
-        # sleep(2)
-        # self.jobs.enterJobName(name)
-        # currentUrl = self.driver.current_url
-        # self.jobs.tapSubmit()
-        # sleep(1)
-        # newUrl = self.driver.current_url
-        # expectedErrorMsg = 'Job name already exists'
-        # actualErrorMsg = self.jobs.getErrorMsg()
-        #
-        # self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        # self.assertion.assertEqual(currentUrl, newUrl)
-        #
-        # el = self.jobs.getSubmitButton()
-        # self.assertion.assertFalse(el.isEnabled())
-
-
+        el = self.jobs.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
     def testEditSIMPullReel(self):
