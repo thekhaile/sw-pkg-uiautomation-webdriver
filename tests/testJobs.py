@@ -117,13 +117,15 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.tapCreateJob()
         sleep(1)
+        name = self.jobs.getRandomName()
+        self.jobs.enterJobName(name)
+        sleep(1)
+        self.jobs.tapSubmit()
+        sleep(1)
+        self.jobs.tapCreateJob()
+        sleep(1)
+        self.jobs.enterJobName(name)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName('Ningxin 1st Job')
-        sleep(1)
-        self.jobs.enterWeight('88')
-        sleep(1)
-        self.jobs.toggleSIMpullReel()
-        sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
@@ -132,6 +134,9 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.jobs.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
     def testCreateJobWithOver30CharLimit(self):
@@ -146,10 +151,6 @@ class TestJobs(ProjectBase):
         sleep(1)
         currentUrl = self.driver.current_url
         self.jobs.enterJobName('abc def ghi jkl mno pqrs tuv w1')
-        sleep(1)
-        self.jobs.enterWeight('88')
-        sleep(1)
-        self.jobs.enterHeight('999')
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
@@ -230,6 +231,31 @@ class TestJobs(ProjectBase):
         newUrl = self.driver.current_url
 
         self.assertion.assertEqual(currentUrl, newUrl)
+
+        # name = self.jobs.getRandomName()
+        # self.jobs.enterJobName(name)
+        # sleep(1)
+        # self.jobs.tapSubmit()
+        # sleep(1)
+        # self.jobs.tapOverflow()
+        # sleep(2)
+        # self.jobs.tapEditSettings()
+        # sleep(2)
+        # self.jobs.enterJobName(name)
+        # currentUrl = self.driver.current_url
+        # self.jobs.tapSubmit()
+        # sleep(1)
+        # newUrl = self.driver.current_url
+        # expectedErrorMsg = 'Job name already exists'
+        # actualErrorMsg = self.jobs.getErrorMsg()
+        #
+        # self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        # self.assertion.assertEqual(currentUrl, newUrl)
+        #
+        # el = self.jobs.getSubmitButton()
+        # self.assertion.assertFalse(el.isEnabled())
+
+
 
     @pytest.mark.ac
     def testEditSIMPullReel(self):
