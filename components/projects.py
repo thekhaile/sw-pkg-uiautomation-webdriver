@@ -19,14 +19,58 @@ class Projects(object):
         selectedRow = rows[rowOrder]
         return selectedRow
 
+    def getProjectName(self, rowOrder=0):
+        row = self.getAProject(rowOrder)
+        projectName= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'th')
+        projectName = self.testCase.UIType.Element(projectName)
+        return projectName.getLabel()
+
+    def getProjectDate(self, rowOrder=0):
+        row = self.getAProject(rowOrder)
+        projectDate= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        projectDate = self.testCase.UIType.Element(projectDate)
+        return projectDate.getLabel()
+
+    def getProjectJobCount(self, rowOrder=0):
+        row = self.getAProject(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        projectjobCount = allTds[1]
+        projectjobCount = self.testCase.UIType.Element(projectjobCount)
+        return projectjobCount.getLabel()
+
     def selectAProject(self, rowOrder=0):
-        el = self.getAProject(rowOrder)
+        # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
+        if self.testCase.app.isMicrosoftEdge():
+            sleep(50)
+        row = self.getAProject(rowOrder)
+        # Had to go to 'th' level to proceed, instead of 'tr' b/c of Firefox issue
+        el = row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'th')
         el = self.testCase.UIType.Element(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
 
         sleep(3)
+
+    '''Nngxin's starts from here'''
+    def tapCreateProject(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def enterProjectName(self, text):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
+        el = self.testCase.UIType.TextField(el)
+        el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    def getSubmitButton(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapSubmit(self):
+        el = self.getSubmitButton()
+        el.tap()
+        sleep(3)
+
+    '''Nngxin's ends here'''
