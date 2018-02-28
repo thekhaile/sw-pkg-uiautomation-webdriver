@@ -14,7 +14,7 @@ class Registration(object):
 
     # Required fields
     def enterContactName(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, '')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[')
         el = self.testCase.UIType.TextField(el)
         if self.testCase.isChromium:
             el.tap()
