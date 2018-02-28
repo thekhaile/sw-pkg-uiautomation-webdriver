@@ -46,37 +46,20 @@ class Projects(object):
         # Had to go to 'th' level to proceed, instead of 'tr' b/c of Firefox issue
         el = row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'th')
         el = self.testCase.UIType.Element(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
 
         sleep(3)
 
-    '''
-    Nngxin's starts from here
-    '''
+    '''Nngxin's starts from here'''
     def tapCreateProject(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
         el = self.testCase.UIType.Button(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
 
     def enterProjectName(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         el.clearText()
         el.enterText(text)
 
@@ -87,14 +70,7 @@ class Projects(object):
 
     def tapSubmit(self):
         el = self.getSubmitButton()
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         sleep(3)
 
-    '''
-    Nngxin's ends here
-    '''
+    '''Nngxin's ends here'''
