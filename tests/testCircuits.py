@@ -23,6 +23,7 @@ class TestJobs(ProjectBase):
 
     # TEST SCR-28 Add Circuit to Feeder Schedule
 
+    @pytest.mark.ac
     def testCreateCircuitWithOnlyRequiredFieldsForUS(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -63,7 +64,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -93,7 +94,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -125,7 +126,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -146,7 +147,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -183,7 +184,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -221,7 +222,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterTo()
         sleep(1)
@@ -252,7 +253,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -283,7 +284,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -314,7 +315,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -345,7 +346,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -407,7 +408,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
