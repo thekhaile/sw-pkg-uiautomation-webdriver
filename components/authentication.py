@@ -13,24 +13,16 @@ class Authentication(object):
     def enterEmail(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="text"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
+
         el.clearText()
         el.enterText(text)
 
     def enterPassword(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="password"]')
         el = self.testCase.UIType.TextField(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
+
         el.clearText()
         el.enterText(text)
 
@@ -41,15 +33,15 @@ class Authentication(object):
 
     def tapSubmit(self):
         el = self.getSubmitButton()
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         sleep(3)
 
     def login(self, email, password):
         self.enterEmail(email)
         self.enterPassword(password)
         self.tapSubmit()
+
+    def tapCreateAccount(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.secondary')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
