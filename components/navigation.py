@@ -18,9 +18,6 @@ class Navigation(object):
 
     def navigateToProjectsPage(self):
         self.testCase.driver.get(Navigation.PROJECTS_PAGE)
-<<<<<<< HEAD
 
     def navigateToRegistrationPage(self):
         self.testCase.driver.get(Navigation.REGISTRATION_PAGE)
-=======
->>>>>>> 251906a186655140e85c2e6c749d19440b060f45

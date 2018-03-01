@@ -6,6 +6,7 @@ import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.registration import Registration
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
+import unidecode
 
 
 class TestRegistration(ProjectBase):
@@ -81,33 +82,92 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac3
-    def testExitRegistrationProcess(self):
+    @pytest.mark.ac8
+    def testCreateAccountWithAllFields(self):
         self.navigation.navigateToRegistrationPage()
-        sleep(5)
+        sleep(1)
         currentUrl = self.driver.current_url
         self.registration.enterRandomEmail()
-        sleep(3)
-        self.registration.tapCancel()
-        sleep(2)
+        sleep(1)
+        self.registration.enterPassword('password')
+        sleep(1)
+        self.registration.enterConfirmPassword('password')
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(1)
+        self.registration.enterCompanyName('MM')
+        sleep(1)
+        self.registration.selectContactRole(role='Contractor')
+        sleep(1)
+        self.registration.enterCity('Austin')
+        sleep(1)
+        self.registration.selectStateOrProvince(state='California')
+        sleep(1)
+        self.registration.enterZipCode('78701')
+        sleep(1)
+        self.registration.enterPhoneNumber('512-999-9999')
+        sleep(1)
+        self.registration.tapSubmit()
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # @pytest.mark.ac4
-    # def testExitRegistrationProcess(self):
-    #     self.navigation.navigateToLoginPage()
-    #     sleep(2)
-    #     self.authentication.
-    #     currentUrl = self.driver.current_url
-    #     self.registration.enterRandomEmail()
-    #     sleep(3)
-    #     self.registration.tapCancel()
-    #     sleep(2)
-    #     newUrl = self.driver.current_url
-    #
-    #     self.assertion.assertNotEqual(currentUrl, newUrl)
+    @pytest.mark.ac3
+    def testExitRegistrationProcess(self):
+        self.navigation.navigateToRegistrationPage()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.registration.enterRandomEmail()
+        sleep(3)
+        self.registration.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
 
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac4
+    def testNavigateBackToLoginScreenAfterTapCancel(self):
+        self.navigation.navigateToLoginPage()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.authentication.tapCreateAccount()
+        self.registration.enterRandomEmail()
+        sleep(2)
+        self.registration.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac5
+    def testCreateAccountWithOnlyRequiredFields(self):
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.registration.enterRandomEmail()
+        sleep(1)
+        self.registration.enterPassword('password')
+        sleep(1)
+        self.registration.enterConfirmPassword('password')
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(1)
+        self.registration.enterCompanyName('MM')
+        sleep(1)
+        self.registration.selectContactRole(role='Contractor')
+        sleep(1)
+        self.registration.enterCity('Austin')
+        sleep(1)
+        self.registration.selectStateOrProvince(state='Quebec')
+        sleep(1)
+        self.registration.selectUnitOfMeasure(UOM='Standard')
+        sleep(1)
+        self.registration.tapSubmit()
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac6
     def testCreateAccountWithSameEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -118,73 +178,60 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterConfirmPassword('password')
         sleep(1)
-        self.registration.enterContactName()
+        self.registration.enterContactName('Ningxin Liao')
         sleep(1)
-        self.registration.enterCompanyName()
+        self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
+        self.registration.selectContactRole(role='Contractor')
         sleep(1)
-        self.registration.enterAddress()
+        self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.enterCity()
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode()
-        sleep(1)
-        self.registration.enterPhoneNumber()
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
+        expectedErrorMsg = 'This email address is already in use.'
         actualErrorMsg = self.registration.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac7
     def testCreateAccountWithUnmatchPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+11@mutualmobile.com')
+        self.registration.enterRandomEmail()
         sleep(1)
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('wrongpassword')
         sleep(1)
-        self.registration.enterContactName()
+        self.registration.enterContactName('Ningxin Liao')
         sleep(1)
-        self.registration.enterCompanyName()
+        self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
+        self.registration.selectContactRole(role='Contractor')
         sleep(1)
-        self.registration.enterAddress()
+        self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.enterCity()
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode()
-        sleep(1)
-        self.registration.enterPhoneNumber()
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
+        expectedErrorMsg = "Your passwords don't match."
         actualErrorMsg = self.registration.getErrorMsg()
+        actualErrorMsg = unidecode._unidecode(actualErrorMsg)
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac9
     def testCreateAcctWithLessThan6CharPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
+        self.registration.enterRandomEmail()
         sleep(1)
         self.registration.enterPassword('pass')
         sleep(1)
@@ -194,27 +241,19 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Contractor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
+        expectedErrorMsg = 'Password must be 6 or more characters.'
         actualErrorMsg = self.registration.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(currentUrl, newUrl)
 
 
     def testAssignSouthwireEmployeeRoleAutomatically(self):
