@@ -71,7 +71,7 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.selectStateOrProvince(state='Quebec')
         sleep(1)
-        self.registration.enterZipCode('A1A1A1')
+        self.registration.enterZipCode('H1A0A1')
         sleep(1)
         self.registration.enterPhoneNumber('418-999-9999')
         sleep(1)

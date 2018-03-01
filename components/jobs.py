@@ -143,6 +143,10 @@ class Jobs(object):
         name = self.getRandomName()
         self.enterJobName(name)
 
+    def tapConfigureJob(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'')
+        el = self.testCase.UIType.Button(el)
+        return el
 
 
 
