@@ -92,13 +92,7 @@ class AddCircuits(object):
 
     def tapSubmit(self):
         el = self.getSubmitButton()
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
-        sleep(3)
+        el.tap()
 
     # Error msg
     def getErrorMsg(self):

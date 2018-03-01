@@ -1,0 +1,24 @@
+__author__ = 'ningxinliao'
+from time import sleep
+from projectBase import ProjectBase
+import string
+import random
+
+class FeederSchedule(object):
+
+    def __init__(self, testCase):
+        # type: (ProjectBase) -> None
+        """
+        :param testCase: will be the ProjectBase object when a test is run.
+        """
+        self.testCase = testCase
+
+    def getAddCircuit(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'')
+        el = self.testCase.UIType.Button()
+        return el
+
+    def tapAddCircuit(self):
+        el = self.getAddCircuit()
+        el.tap()
+        sleep(2)

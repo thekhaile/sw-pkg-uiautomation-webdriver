@@ -7,6 +7,7 @@ from southwire_pkg_uiautomation_webdriver.components.authentication import Authe
 from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
 from southwire_pkg_uiautomation_webdriver.components.circuits import AddCircuits
+from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 
 class TestJobs(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
@@ -18,6 +19,7 @@ class TestJobs(ProjectBase):
         self.projects = Projects(self)
         self.jobs = Jobs(self)
         self.addCircuits = AddCircuits(self)
+        self.feederSchedule = FeederSchedule(self)
 
     # TEST SCR-28 Add Circuit to Feeder Schedule
 
@@ -30,7 +32,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)
@@ -374,7 +376,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        self.jobs.tapAddCircuit()
+        self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
         self.addCircuits.enterFrom()
         sleep(1)

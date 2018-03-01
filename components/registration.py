@@ -131,12 +131,7 @@ class Registration(object):
     def tapCancel(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
         el = self.testCase.UIType.Button(el)
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         sleep(3)
 
     def getSubmitButton(self):
@@ -146,12 +141,7 @@ class Registration(object):
 
     def tapSubmit(self):
         el = self.getSubmitButton()
-        if self.testCase.isChromium:
-            el.tap()
-        elif self.testCase.isMobile:
-            el.tapHybrid()
-        else:
-            el.tap()
+        el.tap()
         sleep(3)
 
     # Error msg
