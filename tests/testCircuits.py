@@ -6,7 +6,7 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
-from southwire_pkg_uiautomation_webdriver.components.addCircuits import AddCircuits
+from southwire_pkg_uiautomation_webdriver.components.circuits import AddCircuits
 
 class TestJobs(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
