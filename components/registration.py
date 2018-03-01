@@ -57,14 +57,19 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def getContactRole(self):
+    def getRolePicker(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
         el = self.testCase.UIType.Picker(el)
         return el
 
     def selectContactRole(self, role):
-        el = self.getContactRole()
+        el = self.getRolePicker()
         el.scrollToValue(role)
+
+    def getCurrentRole(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
+        el = self.testCase.UIType.Picker(el)
+        return el.getLabel()
 
     def enterCity(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="City"]')

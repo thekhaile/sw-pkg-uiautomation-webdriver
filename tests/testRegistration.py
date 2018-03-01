@@ -67,7 +67,7 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.selectContactRole(role='Contractor')
         sleep(1)
-        self.registration.enterCity('Austin')
+        self.registration.enterCity('Montreal')
         sleep(1)
         self.registration.selectStateOrProvince(state='Quebec')
         sleep(1)
@@ -106,6 +106,8 @@ class TestRegistration(ProjectBase):
         self.registration.enterZipCode('78701')
         sleep(1)
         self.registration.enterPhoneNumber('512-999-9999')
+        sleep(1)
+        self.registration.selectUnitOfMeasure(UOM='Metric')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
@@ -255,134 +257,32 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
+    # @pytest.mark.ac10
+    # def testAssignSouthwireEmployeeRoleAutomatically(self):
+    #     self.navigation.navigateToRegistrationPage()
+    #     sleep(1)
+    #     currentUrl = self.driver.current_url
+    #     self.registration.enterEmail('russ.king@southwire.com')
+    #     sleep(1)
+    #     # self.registration.enterContactName('Russ King')
+    #     # sleep(1)
+    #     newUrl = self.driver.current_url
+    #     expectedRole = 'Southwire Employee'
+    #     actualRole = self.registration.getCurrentRole()
+    #
+    #     self.assertion.assertEqual(expectedRole, actualRole)
+    #     self.assertion.assertEqual(currentUrl, newUrl)
+    #
+    #     el = self.registration.getRolePicker()
+    #     # Get the Picker to work using Selenium's own library
+    #     self.assertion.assertFalse(el.ui_object.is_enabled())
 
-    def testAssignSouthwireEmployeeRoleAutomatically(self):
-        self.navigation.navigateToRegistrationPage()
-        sleep(1)
-        currentUrl = self.driver.current_url
-        self.registration.enterEmail('russ.king@southwire.com')
-        sleep(1)
-        self.registration.enterPassword('password')
-        sleep(1)
-        self.registration.enterConfirmPassword('password')
-        sleep(1)
-        self.registration.enterContactName()
-        sleep(1)
-        self.registration.enterCompanyName()
-        sleep(1)
-        # self.registration.selectContactRole()
-        # sleep(1)
-        self.registration.enterAddress()
-        sleep(1)
-        self.registration.enterCity()
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode()
-        sleep(1)
-        self.registration.enterPhoneNumber()
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
-        sleep(1)
-        self.registration.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedRole = 'Southwire Employee'
-        actualRole = self.registration.getContactRole()
-
-        self.assertion.assertEqual(expectedRole, actualRole)
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-    def testModifyRoleForSouthwireEmployeeEmail(self):
-        self.navigation.navigateToRegistrationPage()
-        sleep(1)
-        currentUrl = self.driver.current_url
-        self.registration.enterEmail('russ.king@southwire.com')
-        sleep(1)
-        self.registration.enterPassword('password')
-        sleep(1)
-        self.registration.enterConfirmPassword('password')
-        sleep(1)
-        self.registration.enterContactName()
-        sleep(1)
-        self.registration.enterCompanyName()
-        sleep(1)
-        self.registration.selectContactRole('Other')
-        sleep(1)
-        self.registration.enterAddress()
-        sleep(1)
-        self.registration.enterCity()
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode()
-        sleep(1)
-        self.registration.enterPhoneNumber()
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
-        sleep(1)
-        self.registration.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-    def testZipCodeOver6AlpaCharMax(self):
-        self.navigation.navigateToRegistrationPage()
-        sleep(1)
-        currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
-        self.registration.enterPassword('password')
-        sleep(1)
-        self.registration.enterConfirmPassword('password')
-        sleep(1)
-        self.registration.enterContactName('Ningxin Liao')
-        sleep(1)
-        self.registration.enterCompanyName('MM')
-        sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
-        sleep(1)
-        self.registration.enterCity('Austin')
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('7870107')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
-        sleep(1)
-        self.registration.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-    def testLogInWithoutVerifyNewAcct(self):
-        email = 'unverified@mutualmobile.com'
-        password = 'password'
-
-        self.navigation.navigateToLoginPage()
-        currentUrl = self.driver.current_url
-        self.authentication.login(email, password)
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
+    @pytest.mark.ac11
     def testRegisterWithInvalidFormatEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile')
+        self.registration.enterEmail('InvalidFormat@mm')
         sleep(1)
         self.registration.enterPassword('password')
         sleep(1)
@@ -392,35 +292,26 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Distributor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
+        expectedErrorMsg = 'This email format is incorrect.'
         actualErrorMsg = self.registration.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(currentUrl, newUrl)
 
     # Error handling for required fields
+    @pytest.mark.ac12
     def testCreateAcctWithoutEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        # self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        # sleep(1)
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -429,142 +320,104 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Distributor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac13
     def testCreateAcctWithoutPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
-        # self.registration.enterPassword('password')
-        # sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterConfirmPassword('password')
         sleep(1)
         self.registration.enterContactName('Ningxin Liao')
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Distributor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac14
     def testCreateAcctWithoutConfirmPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterPassword('password')
         sleep(1)
-        # self.registration.enterConfirmPassword('password')
-        # sleep(1)
         self.registration.enterContactName('Ningxin Liao')
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Distributor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac15
     def testCreateAcctWithoutName(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('password')
         sleep(1)
-        # self.registration.enterContactName('Ningxin Liao')
-        # sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
+        self.registration.selectContactRole(role='Distributor')
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac16
     def testCreateAcctWithoutRole(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -573,34 +426,24 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        # self.registration.selectContactRole()
-        # sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
-        sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac17
     def testCreateAcctWithoutCity(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -609,34 +452,24 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
+        self.registration.selectContactRole(role='Other')
         sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
-        sleep(1)
-        # self.registration.enterCity('Austin')
-        # sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac18
     def testCreateAcctWithoutState(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
+        self.registration.enterRandomEmail()
         self.registration.enterPassword('password')
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -645,63 +478,18 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole()
+        self.registration.selectContactRole(role='Other')
         sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
-        sleep(1)
-        self.registration.enterCity('Austin')
-        sleep(1)
-        # self.registration.selectStateOrProvince()
-        # sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        self.registration.selectUnitOfMeasure()
+        self.registration.enterCity('Hot Springs')
         sleep(1)
         self.registration.tapSubmit()
+
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
+        self.assertion.assertEqual(currentUrl, newUrl)
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
-    def testCreateAcctWithoutUOM(self):
-        self.navigation.navigateToRegistrationPage()
-        sleep(1)
-        currentUrl = self.driver.current_url
-        self.registration.enterEmail('ningxin.liao+12@mutualmobile.com')
-        sleep(1)
-        self.registration.enterPassword('password')
-        sleep(1)
-        self.registration.enterConfirmPassword('password')
-        sleep(1)
-        self.registration.enterContactName('Ningxin Liao')
-        sleep(1)
-        self.registration.enterCompanyName('MM')
-        sleep(1)
-        self.registration.selectContactRole()
-        sleep(1)
-        self.registration.enterAddress('301 Congress Ave')
-        sleep(1)
-        self.registration.enterCity('Austin')
-        sleep(1)
-        self.registration.selectStateOrProvince()
-        sleep(1)
-        self.registration.enterZipCode('78701')
-        sleep(1)
-        self.registration.enterPhoneNumber('')
-        sleep(1)
-        # self.registration.selectUnitOfMeasure()
-        # sleep(1)
-        self.registration.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.registration.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertNotEqual(currentUrl, newUrl)
     # End of required fields
 
 
