@@ -43,7 +43,10 @@ class Jobs(object):
     def selectAJob(self, rowOrder=0):
         # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
         if self.testCase.app.isMicrosoftEdge():
-            sleep(45)
+            count = 0
+            while not self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,'tbody') or count <= 100:
+                count += 1
+                continue
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         el.tap()
