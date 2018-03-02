@@ -41,7 +41,7 @@ class Projects(object):
     def selectAProject(self, rowOrder=0):
         # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
         if self.testCase.app.isMicrosoftEdge():
-            sleep(50)
+            sleep(45)
         row = self.getAProject(rowOrder)
         # Had to go to 'th' level to proceed, instead of 'tr' b/c of Firefox issue
         el = row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'th')
