@@ -143,7 +143,8 @@ class Jobs(object):
 
     def getRandomName(self):
         randomName = ''.join([random.choice(string.letters + string.digits + " " + " " + " ") for i in range(30)])
-        return randomName
+        stripName = randomName.strip()
+        return stripName
 
     def enterRandomJobName(self):
         name = self.getRandomName()
