@@ -18,7 +18,7 @@ class TestRegistration(ProjectBase):
         self.navigation = Navigation(self)
         self.registration = Registration(self)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     # Verify
     def testCreateAccountWithValidInfoForUS(self):
         self.navigation.navigateToRegistrationPage()
@@ -49,7 +49,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac2
+    @pytest.mark.ac
     # Verify
     def testCreateAccountWithValidInfoForCanada(self):
         self.navigation.navigateToRegistrationPage()
@@ -82,7 +82,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac8
+    @pytest.mark.ac
     def testCreateAccountWithAllFields(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -114,7 +114,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac3
+    @pytest.mark.ac
     def testExitRegistrationProcess(self):
         self.navigation.navigateToRegistrationPage()
         sleep(3)
@@ -127,7 +127,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac4
+    @pytest.mark.ac
     def testNavigateBackToLoginScreenAfterTapCancel(self):
         self.navigation.navigateToLoginPage()
         sleep(2)
@@ -141,7 +141,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac5
+    @pytest.mark.ac
     def testCreateAccountWithOnlyRequiredFields(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -169,7 +169,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac6
+    @pytest.mark.ac
     def testCreateAccountWithSameEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -198,7 +198,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac7
+    @pytest.mark.ac
     def testCreateAccountWithUnmatchPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -228,7 +228,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac9
+    @pytest.mark.ac
     def testCreateAcctWithLessThan6CharPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -277,7 +277,7 @@ class TestRegistration(ProjectBase):
     #     # Get the Picker to work using Selenium's own library
     #     self.assertion.assertFalse(el.ui_object.is_enabled())
 
-    @pytest.mark.ac11
+    @pytest.mark.ac
     def testRegisterWithInvalidFormatEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -307,7 +307,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(currentUrl, newUrl)
 
     # Error handling for required fields
-    @pytest.mark.ac12
+    @pytest.mark.ac
     def testCreateAcctWithoutEmail(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -334,7 +334,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac13
+    @pytest.mark.ac
     def testCreateAcctWithoutPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -360,7 +360,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac14
+    @pytest.mark.ac
     def testCreateAcctWithoutConfirmPassword(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -386,7 +386,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac15
+    @pytest.mark.ac
     def testCreateAcctWithoutName(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -412,7 +412,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac16
+    @pytest.mark.ac
     def testCreateAcctWithoutRole(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -438,7 +438,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac17
+    @pytest.mark.ac
     def testCreateAcctWithoutCity(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
@@ -464,7 +464,7 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac18
+    @pytest.mark.ac
     def testCreateAcctWithoutState(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)

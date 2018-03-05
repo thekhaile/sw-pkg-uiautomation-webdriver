@@ -15,21 +15,21 @@ class AddCircuits(object):
 
     # Required Fields
     def enterFrom(self,text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="From"]')
         el = self.testCase.UIType.TextField(el)
         el.tap()
         el.clearText()
         el.enterText(text)
 
     def enterTo(self,text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="To"]')
         el = self.testCase.UIType.TextField(el)
         el.tap()
         el.clearText()
         el.enterText(text)
 
     def getConductorTypePicker(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Metal / Insulation"]')
         el = self.testCase.UIType.Picker(el)
         return el
 
@@ -38,7 +38,7 @@ class AddCircuits(object):
         el.scrollToValue(type)
 
     def getConductorSizePicker(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'//select[@label="Size"]')
         el = self.testCase.UIType.Picker(el)
         return el
 
@@ -47,18 +47,23 @@ class AddCircuits(object):
         el.scrollToValue(size)
 
     def enterCircuitLength(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'')
-        el = self.testCase.UIType.TextField()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'//input[@label="Length"]')
+        el = self.testCase.UIType.TextField(el)
         return el
 
     def getNumOfConductorPicker(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
         el = self.testCase.UIType.Picker(el)
         return el
 
     def selectNumOfConductor(self, NOC):
         el = self.getNumOfConductorPicker()
         el.scrollToValue(NOC)
+
+    def getCommonPresets(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@id="Black-Red-Blue"]')
+        el = self.testCase.UIType.Button(el)
+        return el
 
     def selectConductorColor(self, color):
         print(color)
@@ -96,7 +101,7 @@ class AddCircuits(object):
 
     # Error msg
     def getErrorMsg(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
