@@ -88,13 +88,10 @@ class TestJobs(ProjectBase):
         sleep(1)
         name = self.jobs.getRandomName()
         self.jobs.enterJobName(name)
-<<<<<<< HEAD
-=======
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
         self.jobs.tapCreateJob()
->>>>>>> ac1461778a191f22b013c02706f219a72daec765
         sleep(1)
         self.jobs.enterJobName(name)
         currentUrl = self.driver.current_url
