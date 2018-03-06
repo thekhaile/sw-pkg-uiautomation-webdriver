@@ -115,17 +115,19 @@ class TestJobs(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        # Preconditions: Set up an existing job
         self.jobs.tapCreateJob()
         sleep(1)
-        currentUrl = self.driver.current_url
-        self.jobs.enterJobName('Ningxin 1st Job')
-        sleep(1)
-        self.jobs.enterWeight('88')
-        sleep(1)
-        self.jobs.toggleSIMpullReel()
+        name = self.jobs.getRandomName()
+        self.jobs.enterJobName(name)
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
+        # End of preconditions
+        self.jobs.tapCreateJob()
+        currentUrl = self.driver.current_url
+        self.jobs.enterJobName(name)
+        self.jobs.tapSubmit()
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Job name already exists'
         actualErrorMsg = self.jobs.getErrorMsg()
