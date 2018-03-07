@@ -9,7 +9,7 @@ from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
 from southwire_pkg_uiautomation_webdriver.components.circuits import AddCircuits
 from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 
-class TestJobs(ProjectBase):
+class TestCircuits(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
@@ -35,19 +35,19 @@ class TestJobs(ProjectBase):
         self.jobs.tapConfigureJob()
         self.feederSchedule.tapAddCircuit()
         currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
+        self.addCircuits.enterFrom('ABC123')
         sleep(1)
-        self.addCircuits.enterTo()
+        self.addCircuits.enterTo('QWE098')
         sleep(1)
-        self.addCircuits.selectConductorType()
+        self.addCircuits.selectConductorType(type='CU|THHN')
         sleep(1)
-        self.addCircuits.selectConductorSize()
+        self.addCircuits.selectConductorSize(size='300')
         sleep(1)
-        self.addCircuits.enterCircuitLength()
+        self.addCircuits.enterCircuitLength("123")
         sleep(1)
-        self.addCircuits.selectNumOfConductor()
+        self.addCircuits.selectNumOfConductor(NOC='4')
         sleep(1)
-        self.addCircuits.selectConductorColor()
+        self.addCircuits.selectConductorColor(color='')
         sleep(1)
         self.addCircuits.tapSubmit()
         newUrl = self.driver.current_url
@@ -85,7 +85,7 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    def testCeateCircuitWithAllFields(self):
+    def testCreateCircuitWithAllFields(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 

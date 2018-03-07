@@ -38,7 +38,7 @@ class AddCircuits(object):
         el.scrollToValue(type)
 
     def getConductorSizePicker(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'//select[@label="Size"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Size"]')
         el = self.testCase.UIType.Picker(el)
         return el
 
@@ -47,7 +47,7 @@ class AddCircuits(object):
         el.scrollToValue(size)
 
     def enterCircuitLength(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'//input[@label="Length"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Length"]')
         el = self.testCase.UIType.TextField(el)
         return el
 
@@ -60,13 +60,20 @@ class AddCircuits(object):
         el = self.getNumOfConductorPicker()
         el.scrollToValue(NOC)
 
-    def getCommonPresets(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@id="Black-Red-Blue"]')
-        el = self.testCase.UIType.Button(el)
-        return el
+    # def getCommonPresets(self):
+    #     el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@id="Black-Red-Blue"]')
+    #     el = self.testCase.UIType.Button(el)
+    #     return el
+
+    def getConductorColor(self):
+        allColors = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.pickable-color')
+        pickOneColor = allColors.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'label')
+        pickOneColor = self.testCase.UIType.Element(pickOneColor)
+        return pickOneColor.getLabel
 
     def selectConductorColor(self, color):
-        print(color)
+        color = self.getConductorColor()
+        color.tap
 
     # Not Required field
     def getSIMpullHeadToggle(self):
