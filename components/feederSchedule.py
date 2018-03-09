@@ -14,8 +14,8 @@ class FeederSchedule(object):
         self.testCase = testCase
 
     def getAddCircuit(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,'')
-        el = self.testCase.UIType.Button()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
+        el = self.testCase.UIType.Button(el)
         return el
 
     def tapAddCircuit(self):

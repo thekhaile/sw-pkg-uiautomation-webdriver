@@ -6,20 +6,47 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
-from southwire_pkg_uiautomation_webdriver.components.circuits import AddCircuits
+from southwire_pkg_uiautomation_webdriver.components.circuits import Circuits
 from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 
 class TestCircuits(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
-        super(TestJobs, self).__init__(*args, **kwargs)
+        super(TestCircuits, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.projects = Projects(self)
         self.jobs = Jobs(self)
-        self.addCircuits = AddCircuits(self)
+        self.circuits = Circuits(self)
         self.feederSchedule = FeederSchedule(self)
+
+    @pytest.mark.nx
+    def testSwapColor(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSelectedColorCircle(circleOrder=0)
+        sleep(1)
+        self.circuits.selectColorOption(color='Black')
+        sleep(3)
 
     # TEST SCR-28 Add Circuit to Feeder Schedule
 

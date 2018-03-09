@@ -4,7 +4,7 @@ from projectBase import ProjectBase
 import string
 import random
 
-class AddCircuits(object):
+class Circuits(object):
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -60,20 +60,35 @@ class AddCircuits(object):
         el = self.getNumOfConductorPicker()
         el.scrollToValue(NOC)
 
-    # def getCommonPresets(self):
-    #     el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@id="Black-Red-Blue"]')
-    #     el = self.testCase.UIType.Button(el)
-    #     return el
+    def getCommonPreset(self, preset):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@id="%s"]' % preset)
+        el = self.testCase.UIType.Button(el)
+        return el
 
-    def getConductorColor(self):
-        allColors = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.pickable-color')
-        pickOneColor = allColors.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'label')
-        pickOneColor = self.testCase.UIType.Element(pickOneColor)
-        return pickOneColor.getLabel
+    def selectCommonPreset(self, preset):
+        el = self.getCommonPreset(preset)
+        el.tap()
 
-    def selectConductorColor(self, color):
-        color = self.getConductorColor()
-        color.tap
+    def getSelectedColorCircle(self, circleOrder):
+        selectedColors = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//li[@class="selected-color"]')
+        selectedColor = selectedColors[circleOrder]
+        selectedColor= self.testCase.UIType.Element(selectedColor)
+
+        return selectedColor
+
+    def tapSelectedColorCircle(self, circleOrder):
+        el = self.getSelectedColorCircle(circleOrder)
+        el.tap()
+
+
+    def getColorOption(self, color):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="button" and @id= "%s"]' % color)
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def selectColorOption(self, color):
+        el = self.getColorOption(color)
+        el.tap()
 
     # Not Required field
     def getSIMpullHeadToggle(self):
