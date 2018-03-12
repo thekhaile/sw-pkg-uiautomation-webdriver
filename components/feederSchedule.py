@@ -13,12 +13,12 @@ class FeederSchedule(object):
         """
         self.testCase = testCase
 
-    def getAddCircuit(self):
+    def getCreateCircuit(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
         el = self.testCase.UIType.Button(el)
         return el
 
-    def tapAddCircuit(self):
-        el = self.getAddCircuit()
+    def tapCreateCircuit(self):
+        el = self.getCreateCircuit()
         el.tap()
         sleep(2)

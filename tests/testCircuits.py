@@ -1,3 +1,4 @@
+__author__ = 'ningxinliao'
 import sys, os
 from time import sleep
 from projectBase import ProjectBase
@@ -8,6 +9,7 @@ from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
 from southwire_pkg_uiautomation_webdriver.components.circuits import Circuits
 from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
+import unidecode
 
 class TestCircuits(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
@@ -21,7 +23,477 @@ class TestCircuits(ProjectBase):
         self.circuits = Circuits(self)
         self.feederSchedule = FeederSchedule(self)
 
-    @pytest.mark.nx
+    # TEST SCR-28 Add Circuit to Feeder Schedule
+
+    @pytest.mark.ac
+    def testCreateCircuitWithOnlyRequiredFieldsForUS(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateCircuitWithOnlyRequiredFieldsForCanada(self):
+        email = 'jess.moss@mutualmobile.com'
+        password = 'password'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|RW90')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Black-Black-Black-Black')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateCircuitWithAllFields(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.toggleSIMpullHead()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testExitAddCircuitProcess(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.tapCancel()
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    # Error Msg
+    # @pytest.mark.ac5
+    # def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
+    #     email = 'ningxin.liao@mutualmobile.com'
+    #     password = 'newpassword'
+    #
+    #     self.navigation.navigateToLoginPage()
+    #     self.authentication.login(email, password)
+    #     self.projects.selectAProject()
+    #     self.jobs.selectAJob()
+    #     sleep(3)
+    #     self.jobs.tapConfigureJob()
+    #     sleep(3)
+    #     self.feederSchedule.tapCreateCircuit()
+    #     currentUrl = self.driver.current_url
+    #     self.circuits.enterFrom('ABC123')
+    #     sleep(1)
+    #     self.circuits.enterTo('QWE098')
+    #     sleep(1)
+    #     self.circuits.selectConductorType(type='CU|THHN')
+    #     sleep(1)
+    #     self.circuits.selectConductorSize(size='6')
+    #     sleep(1)
+    #     self.circuits.enterCircuitLength('123')
+    #     sleep(1)
+    #     self.circuits.toggleSIMpullHead()
+    #     sleep(1)
+    #     self.circuits.selectNumOfConductor(NOC='4')
+    #     sleep(1)
+    #     self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+    #     sleep(1)
+    #     self.circuits.tapSubmit()
+    #     sleep(3)
+    #     newUrl = self.driver.current_url
+    #     expectedErrorMsg = " ERROR MSG "
+    #     actualErrorMsg = self.jobs.getErrorMsg()
+    #
+    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+    #
+    #     self.assertion.assertNotEqual(currentUrl, newUrl)
+    #
+    #     el = self.circuits.getSIMpullHeadToggle()
+    #     self.assertion.assertFalse(el.isEnabled())
+    #
+    # @pytest.mark.ac6
+    # def testSIMpullHeadIsNotAvailableForSizes8Conductors(self):
+    #     email = 'ningxin.liao@mutualmobile.com'
+    #     password = 'newpassword'
+    #
+    #     self.navigation.navigateToLoginPage()
+    #     self.authentication.login(email, password)
+    #     self.projects.selectAProject()
+    #     self.jobs.selectAJob()
+    #     sleep(3)
+    #     self.jobs.tapConfigureJob()
+    #     sleep(3)
+    #     self.feederSchedule.tapCreateCircuit()
+    #     currentUrl = self.driver.current_url
+    #     self.circuits.enterFrom('ABC123')
+    #     sleep(1)
+    #     self.circuits.enterTo('QWE098')
+    #     sleep(1)
+    #     self.circuits.selectConductorType(type='CU|THHN')
+    #     sleep(1)
+    #     self.circuits.selectConductorSize(size='8')
+    #     sleep(1)
+    #     self.circuits.enterCircuitLength('123')
+    #     sleep(1)
+    #     self.circuits.toggleSIMpullHead()
+    #     sleep(1)
+    #     self.circuits.selectNumOfConductor(NOC='4')
+    #     sleep(1)
+    #     self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+    #     sleep(1)
+    #     self.circuits.tapSubmit()
+    #     sleep(3)
+    #     newUrl = self.driver.current_url
+    #     expectedErrorMsg = " ERROR MSG "
+    #     actualErrorMsg = self.jobs.getErrorMsg()
+    #
+    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+    #
+    #     self.assertion.assertNotEqual(currentUrl, newUrl)
+    #
+    #     el = self.circuits.getSIMpullHeadToggle()
+    #     self.assertion.assertFalse(el.isEnabled())
+
+    # Missing Required Fields
+    @pytest.mark.ac
+    def testCreateCircuitWithoutFrom(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testCreateCircuitWithoutTo(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac9
+    def testCreateCircuitWithoutType(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+
+        el = self.circuits.getConductorSizePicker()
+
+
+
+
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac10
+    def testCreateCircuitWithoutSize(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.toggleSIMpullHead()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testCreateCircuitWithoutLength(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac12
+    def testCreateCircuitWithoutNOC(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testCreateCircuitWithoutColor(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU|THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.circuits.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    #test functionality eg. change color
+    @pytest.mark.func
     def testSwapColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -33,7 +505,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        self.feederSchedule.tapAddCircuit()
+        self.feederSchedule.tapCreateCircuit()
         sleep(3)
         self.circuits.selectConductorType(type='CU|THHN')
         sleep(1)
@@ -48,411 +520,3 @@ class TestCircuits(ProjectBase):
         self.circuits.selectColorOption(color='Black')
         sleep(3)
 
-    # TEST SCR-28 Add Circuit to Feeder Schedule
-
-    @pytest.mark.ac
-    def testCreateCircuitWithOnlyRequiredFieldsForUS(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom('ABC123')
-        sleep(1)
-        self.addCircuits.enterTo('QWE098')
-        sleep(1)
-        self.addCircuits.selectConductorType(type='CU|THHN')
-        sleep(1)
-        self.addCircuits.selectConductorSize(size='300')
-        sleep(1)
-        self.addCircuits.enterCircuitLength("123")
-        sleep(1)
-        self.addCircuits.selectNumOfConductor(NOC='4')
-        sleep(1)
-        self.addCircuits.selectConductorColor(color='')
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-
-    def testCreateCircuitWithOnlyRequiredFieldsForCanada(self):
-        email = 'jess.moss@mutualmobile.com'
-        password = 'password'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-    def testCreateCircuitWithAllFields(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.toggleSIMpullHead()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-    def testExitAddCircuitProcess(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.tapCancel()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-    # Error Msg
-    def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize(size='6')
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.jobs.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSIMpullHeadToggle()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testSIMpullHeadIsNotAvailableForSizes8Conductors(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize(size='6')
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-        expectedErrorMsg = 'Some Error'
-        actualErrorMsg = self.jobs.getErrorMsg()
-
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSIMpullHeadToggle()
-        self.assertion.assertFalse(el.isEnabled())
-
-    # Missing Required Fields
-    def testCreateCircuitWithoutFrom(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutTo(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutType(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutSize(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutLength(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutNOC(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectConductorColor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
-    def testCreateCircuitWithoutColor(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapAddCircuit()
-        currentUrl = self.driver.current_url
-        self.addCircuits.enterFrom()
-        sleep(1)
-        self.addCircuits.enterTo()
-        sleep(1)
-        self.addCircuits.selectConductorType()
-        sleep(1)
-        self.addCircuits.selectConductorSize()
-        sleep(1)
-        self.addCircuits.enterCircuitLength()
-        sleep(1)
-        self.addCircuits.selectNumOfConductor()
-        sleep(1)
-        self.addCircuits.tapSubmit()
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.addCircuits.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())

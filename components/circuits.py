@@ -46,10 +46,12 @@ class Circuits(object):
         el = self.getConductorSizePicker()
         el.scrollToValue(size)
 
-    def enterCircuitLength(self):
+    def enterCircuitLength(self,text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Length"]')
         el = self.testCase.UIType.TextField(el)
-        return el
+        el.tap()
+        el.clearText()
+        el.enterText(text)
 
     def getNumOfConductorPicker(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
