@@ -14,16 +14,24 @@ class Circuits(object):
         self.testCase = testCase
 
     # Required Fields
-    def enterFrom(self,text):
+    def getFrom(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="From"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterFrom(self, text):
+        el = self.getFrom()
         el.tap()
         el.clearText()
         el.enterText(text)
 
-    def enterTo(self,text):
+    def getTo(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="To"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterTo(self, text):
+        el = self.getTo()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -46,9 +54,13 @@ class Circuits(object):
         el = self.getConductorSizePicker()
         el.scrollToValue(size)
 
-    def enterCircuitLength(self,text):
+    def getCircuitLength(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Length"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterCircuitLength(self, text):
+        el = self.getCircuitLength()
         el.tap()
         el.clearText()
         el.enterText(text)

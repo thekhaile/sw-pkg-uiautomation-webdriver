@@ -77,9 +77,9 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU / THHN')
+        self.circuits.selectConductorType(type='CU / RWU')
         sleep(1)
-        self.circuits.selectConductorSize(size='300')
+        self.circuits.selectConductorSize(size='350')
         sleep(1)
         self.circuits.enterCircuitLength('123')
         sleep(1)
@@ -130,7 +130,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testExitAddCircuitProcess(self):
+    def testExitCreateCircuitProcess(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -152,7 +152,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     # Error Msg
-    @pytest.mark.ac5
+    @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -181,7 +181,7 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSIMpullHeadToggle()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac6
+    @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes8Conductors(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -281,7 +281,7 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac9
+    @pytest.mark.ac
     def testCreateCircuitWithoutTypeAndSizeAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -312,7 +312,7 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac10
+    @pytest.mark.ac
     def testCreateCircuitWithoutSizeAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -330,7 +330,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.enterCircuitLength('123')
         sleep(1)
@@ -363,7 +363,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -380,7 +380,7 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac12
+    @pytest.mark.ac
     def testCreateCircuitWithoutNOCAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -398,7 +398,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -431,7 +431,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -448,10 +448,9 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    '''Edit circuit'''
-
-    @pytest.mark.ac14
-    def testEditFrom(self):
+    # create circuit with long text
+    @pytest.mark.ac
+    def testMaxCharacterLimitInTheFromFieldOfCreateCircuit(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -461,6 +460,94 @@ class TestCircuits(ProjectBase):
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterFrom('Far far away, behind')
+        sleep(1)
+        expectedText = 'Far far away, b'
+        actualText = self.circuits.getFrom().getValue()
+
+        self.assertion.assertEqual(expectedText, actualText)
+
+        el = self.circuits.getSubmitButton()
+        self.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testMaxCharacterLimitInTheToFieldOfCreateCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterTo('Far far away, behind')
+        sleep(1)
+        expectedText = 'Far far away, b'
+        actualText = self.circuits.getTo().getValue()
+
+        self.assertion.assertEqual(expectedText, actualText)
+
+        el = self.circuits.getSubmitButton()
+        self.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testMaxCharacterLimitInTheLengthFieldOfCreateCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterCircuitLength('1234567')
+        sleep(1)
+        expectedText = '123456'
+        actualText = self.circuits.getCircuitLength().getValue()
+
+        self.assertion.assertEqual(expectedText, actualText)
+
+        el = self.circuits.getSubmitButton()
+        self.assertFalse(el.isEnabled())
+
+    '''Edit circuit'''
+
+    @pytest.mark.ac
+    def testEditFromField(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
         sleep(3)
         self.circuits.tapOverflow()
         sleep(3)
@@ -475,8 +562,8 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac15
-    def testEditTo(self):
+    @pytest.mark.ac
+    def testEditToField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -487,6 +574,23 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterCircuitLength('123')
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(2)
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
@@ -500,7 +604,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac16
+    @pytest.mark.ac
     def testEditTypeAndPreset(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -517,7 +621,7 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(3)
         currentUrl = self.driver.current_url
-        self.circuits.selectConductorType(type='CU|XHHW')
+        self.circuits.selectConductorType(type='CU / XHHW')
         sleep(1)
         self.circuits.selectCommonPreset(preset='Black-Black-Black-Black')
         sleep(2)
@@ -527,7 +631,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac17
+    @pytest.mark.ac
     def testEditSizeAndPreset(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -554,7 +658,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac18
+    @pytest.mark.ac
     def testEditLength(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -577,7 +681,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac19
+    @pytest.mark.ac
     def testEditSIMpullHead(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -600,7 +704,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac20
+    @pytest.mark.ac
     def testEditNOC(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -625,7 +729,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac21
+    @pytest.mark.ac
     def testEditColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -650,8 +754,8 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac22
-    def testEditColor(self):
+    @pytest.mark.ac
+    def testExitEditCircuit(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -670,6 +774,8 @@ class TestCircuits(ProjectBase):
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+
+
 
 
 
