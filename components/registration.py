@@ -62,6 +62,12 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
+    def getSelectedRole(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
+        selectedRole = el.find_element(self.testCase.app.getStrategy().XPATH, '//option[@value="southwire"]')
+        selectedRole = self.testCase.UIType.Element(selectedRole)
+        return selectedRole
+
     def selectContactRole(self, role):
         el = self.getRolePicker()
         el.scrollToValue(role)

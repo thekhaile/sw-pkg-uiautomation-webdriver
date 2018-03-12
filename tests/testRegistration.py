@@ -257,25 +257,19 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    # @pytest.mark.ac10
-    # def testAssignSouthwireEmployeeRoleAutomatically(self):
-    #     self.navigation.navigateToRegistrationPage()
-    #     sleep(1)
-    #     currentUrl = self.driver.current_url
-    #     self.registration.enterEmail('russ.king@southwire.com')
-    #     sleep(1)
-    #     # self.registration.enterContactName('Russ King')
-    #     # sleep(1)
-    #     newUrl = self.driver.current_url
-    #     expectedRole = 'Southwire Employee'
-    #     actualRole = self.registration.getCurrentRole()
-    #
-    #     self.assertion.assertEqual(expectedRole, actualRole)
-    #     self.assertion.assertEqual(currentUrl, newUrl)
-    #
-    #     el = self.registration.getRolePicker()
-    #     # Get the Picker to work using Selenium's own library
-    #     self.assertion.assertFalse(el.ui_object.is_enabled())
+    @pytest.mark.ac
+    def testAssignSouthwireEmployeeRoleAutomatically(self):
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterEmail('russ.king@southwire.com')
+        sleep(1)
+
+        el = self.registration.getRolePicker()
+        # Get the Picker to work using Selenium's own library
+        self.assertion.assertFalse(el.ui_object.is_enabled())
+
+        el = self.registration.getSelectedRole()
+        self.assertion.assertTrue(el.ui_object.is_selected)
 
     @pytest.mark.ac
     def testRegisterWithInvalidFormatEmail(self):
