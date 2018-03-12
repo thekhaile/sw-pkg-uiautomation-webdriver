@@ -43,7 +43,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -77,7 +77,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|RW90')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -111,7 +111,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -152,91 +152,63 @@ class TestCircuits(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     # Error Msg
-    # @pytest.mark.ac5
-    # def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
-    #     email = 'ningxin.liao@mutualmobile.com'
-    #     password = 'newpassword'
-    #
-    #     self.navigation.navigateToLoginPage()
-    #     self.authentication.login(email, password)
-    #     self.projects.selectAProject()
-    #     self.jobs.selectAJob()
-    #     sleep(3)
-    #     self.jobs.tapConfigureJob()
-    #     sleep(3)
-    #     self.feederSchedule.tapCreateCircuit()
-    #     currentUrl = self.driver.current_url
-    #     self.circuits.enterFrom('ABC123')
-    #     sleep(1)
-    #     self.circuits.enterTo('QWE098')
-    #     sleep(1)
-    #     self.circuits.selectConductorType(type='CU|THHN')
-    #     sleep(1)
-    #     self.circuits.selectConductorSize(size='6')
-    #     sleep(1)
-    #     self.circuits.enterCircuitLength('123')
-    #     sleep(1)
-    #     self.circuits.toggleSIMpullHead()
-    #     sleep(1)
-    #     self.circuits.selectNumOfConductor(NOC='4')
-    #     sleep(1)
-    #     self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
-    #     sleep(1)
-    #     self.circuits.tapSubmit()
-    #     sleep(3)
-    #     newUrl = self.driver.current_url
-    #     expectedErrorMsg = " ERROR MSG "
-    #     actualErrorMsg = self.jobs.getErrorMsg()
-    #
-    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-    #
-    #     self.assertion.assertNotEqual(currentUrl, newUrl)
-    #
-    #     el = self.circuits.getSIMpullHeadToggle()
-    #     self.assertion.assertFalse(el.isEnabled())
-    #
-    # @pytest.mark.ac6
-    # def testSIMpullHeadIsNotAvailableForSizes8Conductors(self):
-    #     email = 'ningxin.liao@mutualmobile.com'
-    #     password = 'newpassword'
-    #
-    #     self.navigation.navigateToLoginPage()
-    #     self.authentication.login(email, password)
-    #     self.projects.selectAProject()
-    #     self.jobs.selectAJob()
-    #     sleep(3)
-    #     self.jobs.tapConfigureJob()
-    #     sleep(3)
-    #     self.feederSchedule.tapCreateCircuit()
-    #     currentUrl = self.driver.current_url
-    #     self.circuits.enterFrom('ABC123')
-    #     sleep(1)
-    #     self.circuits.enterTo('QWE098')
-    #     sleep(1)
-    #     self.circuits.selectConductorType(type='CU|THHN')
-    #     sleep(1)
-    #     self.circuits.selectConductorSize(size='8')
-    #     sleep(1)
-    #     self.circuits.enterCircuitLength('123')
-    #     sleep(1)
-    #     self.circuits.toggleSIMpullHead()
-    #     sleep(1)
-    #     self.circuits.selectNumOfConductor(NOC='4')
-    #     sleep(1)
-    #     self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
-    #     sleep(1)
-    #     self.circuits.tapSubmit()
-    #     sleep(3)
-    #     newUrl = self.driver.current_url
-    #     expectedErrorMsg = " ERROR MSG "
-    #     actualErrorMsg = self.jobs.getErrorMsg()
-    #
-    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-    #
-    #     self.assertion.assertNotEqual(currentUrl, newUrl)
-    #
-    #     el = self.circuits.getSIMpullHeadToggle()
-    #     self.assertion.assertFalse(el.isEnabled())
+    @pytest.mark.ac5
+    def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='6')
+        sleep(1)
+        expectedErrorMsg = 'Heads cannot be applied to size 6 or 8.'
+        actualErrorMsg = self.circuits.getErrorMsg()
+
+        self.assertion.assertTrue(expectedErrorMsg in actualErrorMsg)
+
+        el = self.circuits.getSIMpullHeadToggle()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac6
+    def testSIMpullHeadIsNotAvailableForSizes8Conductors(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterFrom('ABC123')
+        sleep(1)
+        self.circuits.enterTo('QWE098')
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='8')
+        sleep(1)
+        expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
+        actualErrorMsg = unidecode.unidecode(self.circuits.getErrorMsg())
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+
+        el = self.circuits.getSIMpullHeadToggle()
+        self.assertion.assertFalse(el.isEnabled())
 
     # Missing Required Fields
     @pytest.mark.ac
@@ -255,7 +227,7 @@ class TestCircuits(ProjectBase):
         currentUrl = self.driver.current_url
         self.circuits.enterTo('QWE098')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -290,7 +262,7 @@ class TestCircuits(ProjectBase):
         currentUrl = self.driver.current_url
         self.circuits.enterFrom('ABC123')
         sleep(1)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
@@ -310,7 +282,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac9
-    def testCreateCircuitWithoutType(self):
+    def testCreateCircuitWithoutTypeAndSizeAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -327,19 +299,9 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterTo('QWE098')
         sleep(1)
-
-        el = self.circuits.getConductorSizePicker()
-
-
-
-
-        self.circuits.selectConductorSize(size='300')
-        sleep(1)
         self.circuits.enterCircuitLength('123')
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
-        sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -351,7 +313,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac10
-    def testCreateCircuitWithoutSize(self):
+    def testCreateCircuitWithoutSizeAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -372,11 +334,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.enterCircuitLength('123')
         sleep(1)
-        self.circuits.toggleSIMpullHead()
-        sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
-        sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -423,7 +381,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac12
-    def testCreateCircuitWithoutNOC(self):
+    def testCreateCircuitWithoutNOCAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -445,8 +403,6 @@ class TestCircuits(ProjectBase):
         self.circuits.selectConductorSize(size='300')
         sleep(1)
         self.circuits.enterCircuitLength('123')
-        sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -492,9 +448,10 @@ class TestCircuits(ProjectBase):
         el = self.circuits.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    #test functionality eg. change color
-    @pytest.mark.func
-    def testSwapColor(self):
+    '''Edit circuit'''
+
+    @pytest.mark.ac14
+    def testEditFrom(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -505,18 +462,214 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        self.feederSchedule.tapCreateCircuit()
+        self.circuits.tapOverflow()
         sleep(3)
-        self.circuits.selectConductorType(type='CU|THHN')
+        self.circuits.tapEditCircuit()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.circuits.enterFrom('123abc')
         sleep(1)
-        self.circuits.selectConductorSize(size='300')
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac15
+    def testEditTo(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.circuits.tapOverflow()
+        sleep(3)
+        self.circuits.tapEditCircuit()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.circuits.enterTo('123abc')
         sleep(1)
-        self.circuits.selectNumOfConductor(NOC='4')
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac16
+    def testEditTypeAndPreset(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.circuits.tapOverflow()
+        sleep(3)
+        self.circuits.tapEditCircuit()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.circuits.selectConductorType(type='CU|XHHW')
         sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        self.circuits.selectCommonPreset(preset='Black-Black-Black-Black')
+        sleep(2)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac17
+    def testEditSizeAndPreset(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.circuits.tapOverflow()
+        sleep(3)
+        self.circuits.tapEditCircuit()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.circuits.selectConductorSize(size='1/0')
         sleep(1)
-        self.circuits.tapSelectedColorCircle(circleOrder=0)
+        self.circuits.selectCommonPreset(preset='Black-Black-Black-Black')
+        sleep(2)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac18
+    def testEditLength(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.enterCircuitLength('1000')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac19
+    def testEditSIMpullHead(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.toggleSIMpullHead()
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac20
+    def testEditNOC(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.selectNumOfConductor(NOC='3')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Brown-Orange-Yellow')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac21
+    def testEditColor(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.tapSelectedColorCircle(circleOrder=1)
         sleep(1)
         self.circuits.selectColorOption(color='Black')
+        sleep(1)
+        self.circuits.tapSubmit()
         sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac22
+    def testEditColor(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+
 

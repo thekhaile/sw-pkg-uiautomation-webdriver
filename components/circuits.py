@@ -129,3 +129,14 @@ class Circuits(object):
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
+    # Overflow & edit button
+    def tapOverflow(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapEditCircuit(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
