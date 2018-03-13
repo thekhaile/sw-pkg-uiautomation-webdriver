@@ -148,11 +148,24 @@ class Registration(object):
     def tapSubmit(self):
         el = self.getSubmitButton()
         el.tap()
-        sleep(3)
 
     # Error msg
     def getErrorMsg(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
+
+    # Edit Acct Info
+    def getAccountButton(self):
+        containers = self.testCase.app.findElements(self.testCase.app.getStrategy(),CSS_SELECTOR,'div.container')
+        headerContainer = containers[0]
+        allAs = headerContainer.find_elements(By.XPATH,'a')
+        account = allAs[-1]
+        account = self.testCase.UIType.Element(account)
+        return account
+
+    def tapAccount(self):
+        el = self.getAccountButton()
+        el.tap()
+
 
