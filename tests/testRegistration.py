@@ -18,7 +18,7 @@ class TestRegistration(ProjectBase):
         self.navigation = Navigation(self)
         self.registration = Registration(self)
 
-    @pytest.mark.ac
+    @pytest.mark.ac0
     # Verify
     def testCreateAccountWithValidInfoForUS(self):
         self.navigation.navigateToRegistrationPage()
@@ -34,7 +34,7 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterCompanyName('MM')
         sleep(1)
-        self.registration.selectContactRole(role='Contractor')
+        self.registration.selectRandomRole()
         sleep(1)
         self.registration.enterCity('Austin')
         sleep(1)
@@ -45,6 +45,7 @@ class TestRegistration(ProjectBase):
         self.registration.enterPhoneNumber('512-999-9999')
         sleep(1)
         self.registration.tapSubmit()
+        sleep(2)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -78,6 +79,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectUnitOfMeasure(UOM='Standard')
         sleep(1)
         self.registration.tapSubmit()
+        sleep(2)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -110,6 +112,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectUnitOfMeasure(UOM='Metric')
         sleep(1)
         self.registration.tapSubmit()
+        sleep(2)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -165,10 +168,12 @@ class TestRegistration(ProjectBase):
         self.registration.selectUnitOfMeasure(UOM='Standard')
         sleep(1)
         self.registration.tapSubmit()
+        sleep(2)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    #error handling
     @pytest.mark.ac
     def testCreateAccountWithSameEmail(self):
         self.navigation.navigateToRegistrationPage()
@@ -191,6 +196,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectStateOrProvince(state='Texas')
         sleep(1)
         self.registration.tapSubmit()
+        sleep(2)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'This email address is already in use.'
         actualErrorMsg = self.registration.getErrorMsg()
@@ -268,8 +274,9 @@ class TestRegistration(ProjectBase):
         # Get the Picker to work using Selenium's own library
         self.assertion.assertFalse(el.ui_object.is_enabled())
 
-        el = self.registration.getSelectedRole()
-        self.assertion.assertTrue(el.ui_object.is_selected)
+        expectedRole = 'Southwire Employee'
+        actualRole = self.registration.getSelectedRole()
+        self.assertion.assertEqual(expectedRole, actualRole)
 
     @pytest.mark.ac
     def testRegisterWithInvalidFormatEmail(self):
@@ -484,8 +491,8 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    # Edit Account Info
-    
+
+
 
 
 

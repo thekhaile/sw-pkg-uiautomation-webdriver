@@ -43,16 +43,41 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def enterContactName(self, text):
+    def getRandomName(self):
+        randomLastName = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
+        name = 'Ningxin' + ' ' + randomLastName
+        return name
+
+    def enterRandomName(self):
+        name = self.getRandomName()
+        self.enterContactName(name)
+
+    def getContactName(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Name"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterContactName(self, text):
+        el = self.getContactName()
         el.tap()
         el.clearText()
         el.enterText(text)
 
-    def enterCompanyName(self, text):
+    def getRandomCompanyName(self):
+        companyName = ''.join([random.choice(string.ascii_uppercase) for i in range(6)])
+        return companyName
+
+    def enterRandomCompanyName(self):
+        name = self.getRandomCompanyName()
+        self.enterCompanyName(name)
+
+    def getCompanyName(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Company Name"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterCompanyName(self, text):
+        el = self.getCompanyName()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -62,11 +87,22 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
+    def getRandomRole(self):
+        options = ['Southwire Employee', 'Distributor', 'Contractor', 'Sales/Agent', 'Other']
+        return random.choice(options)
+
+    def selectRandomRole(self):
+        el = self.getRandomRole()
+        self.selectContactRole(el)
+
     def getSelectedRole(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
-        selectedRole = el.find_element(self.testCase.app.getStrategy().XPATH, '//option[@value="southwire"]')
-        selectedRole = self.testCase.UIType.Element(selectedRole)
-        return selectedRole
+        select = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
+        options = select.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        for option in options:
+            if option.is_selected() == True:
+                break
+        el = self.testCase.UIType.Element(option)
+        return el.getLabel()
 
     def selectContactRole(self, role):
         el = self.getRolePicker()
@@ -77,15 +113,32 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el.getLabel()
 
-    def enterCity(self, text):
+    def getRandomCity(self):
+        city = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
+        return city
+
+    def enterRandomCity(self):
+        city = self.getRandomCity()
+        self.enterCity(city)
+
+    def getCity(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="City"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterCity(self, text):
+        el = self.getCity()
         el.tap()
         el.clearText()
         el.enterText(text)
 
-    # def selectCountry(self, country = 'US'):
-    #     print (country)
+    def getRandomStateOrProvince(self):
+        options = ['California', 'Florida', 'New York', 'Texas', 'Ontario', 'Prince Edward Island', 'Saskatchewan']
+        return random.choice(options)
+
+    def selectRandomStateOrProvince(self):
+        el = self.getRandomStateOrProvince()
+        self.selectStateOrProvince(el)
 
     def getStateOrProvince(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="State/Province"]')
@@ -96,6 +149,14 @@ class Registration(object):
         el = self.getStateOrProvince()
         el.scrollToValue(state)
 
+    def getRandomUOM(self):
+        options = ['Standard', 'Metric']
+        return random.choice(options)
+
+    def selectRandomUOM(self):
+        el = self.getRandomUOM()
+        self.selectUnitOfMeasure(el)
+
     def getUnitOfMeasure(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Unit of Measure"]')
         el = self.testCase.UIType.Picker(el)
@@ -105,30 +166,42 @@ class Registration(object):
         el = self.getUnitOfMeasure()
         el.scrollToValue(UOM)
 
-    #   Not Required fields
+    #Not required fields
 
-    # def enterAddress(self, text):
-    #     el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, ' ')
-    #     el = self.testCase.UIType.TextField(el)
-    #     if self.testCase.isChromium:
-    #         el.tap()
-    #     elif self.testCase.isMobile:
-    #         el.tapHybrid()
-    #     else:
-    #         el.tap()
-    #     el.clearText()
-    #     el.enterText(text)
+    def getRandomZip(self):
+        zip = ''.join([random.choice(string.digits + string.ascii_uppercase) for i in range(6)])
+        return zip
 
-    def enterZipCode(self, text):
+    def enterRandomZip(self):
+        zip = self.getRandomZip()
+        self.enterZipCode(zip)
+
+    def getZip(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Zip"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterZipCode(self, text):
+        el = self.getZip()
         el.tap()
         el.clearText()
         el.enterText(text)
 
-    def enterPhoneNumber(self, text):
+    def getRandomPhone(self):
+        phone = ''.join([random.choice(string.digits) for i in range(10)])
+        return phone
+
+    def enterRandomPhone(self):
+        phone = self.getRandomPhone()
+        self.enterPhoneNumber(phone)
+
+    def getPhone(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Phone Number"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterPhoneNumber(self, text):
+        el = self.getPhone()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -157,9 +230,9 @@ class Registration(object):
 
     # Edit Acct Info
     def getAccountButton(self):
-        containers = self.testCase.app.findElements(self.testCase.app.getStrategy(),CSS_SELECTOR,'div.container')
+        containers = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.container')
         headerContainer = containers[0]
-        allAs = headerContainer.find_elements(By.XPATH,'a')
+        allAs = headerContainer.find_elements(self.testCase.app.getStrategy().XPATH, 'a')
         account = allAs[-1]
         account = self.testCase.UIType.Element(account)
         return account
@@ -167,5 +240,11 @@ class Registration(object):
     def tapAccount(self):
         el = self.getAccountButton()
         el.tap()
+
+    def getAccountName(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.title')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
 
 
