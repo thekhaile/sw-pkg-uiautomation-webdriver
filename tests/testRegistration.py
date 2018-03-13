@@ -484,7 +484,8 @@ class TestRegistration(ProjectBase):
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    # End of required fields
+    # Edit Account Info
+    
 
 
 
