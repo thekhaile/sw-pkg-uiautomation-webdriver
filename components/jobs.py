@@ -43,7 +43,10 @@ class Jobs(object):
     def selectAJob(self, rowOrder=0):
         # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
         if self.testCase.app.isMicrosoftEdge():
-            sleep(45)
+            count = 0
+            while not self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,'tbody') or count <= 100:
+                count += 1
+                continue
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         el.tap()
@@ -143,8 +146,10 @@ class Jobs(object):
         return p.getLabel()
 
     def getRandomName(self):
-        randomName = ''.join([random.choice(string.letters + string.digits + " " + " " + " ") for i in range(30)])
-        return randomName
+        randomName = ''.join([random.choice(string.letters + string.digits + " " + " ") for i in range(30)])
+        stripName = randomName.strip()
+        replaceName = stripName.replace('  ',' ')
+        return replaceName
 
     def enterRandomJobName(self):
         name = self.getRandomName()
