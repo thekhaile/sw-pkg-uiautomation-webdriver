@@ -94,7 +94,7 @@ class Jobs(object):
 
     def toggleSIMpullReel(self):
         el = self.getSIMpullReelToggle()
-        if self.testCase.isSafari():
+        if self.testCase.isSafari:
             el.tapByLocation()
         else:
             el.tap()
