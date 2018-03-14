@@ -92,12 +92,6 @@ class TestJobs(ProjectBase):
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
-        self.jobs.tapCreateJob()
-        sleep(1)
-        self.jobs.enterJobName(name)
-        currentUrl = self.driver.current_url
-        self.jobs.tapSubmit()
-        sleep(1)
         # End of preconditions
         self.jobs.tapCreateJob()
         currentUrl = self.driver.current_url
