@@ -134,3 +134,18 @@ class TestAuthentication(ProjectBase):
 
         el = self.authentication.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
+
+    #
+    # def testLogInWithoutVerifyNewAcct(self):
+    #     email = 'unverified@mutualmobile.com'
+    #     password = 'password'
+    #
+    #     self.navigation.navigateToLoginPage()
+    #     currentUrl = self.driver.current_url
+    #     self.authentication.login(email, password)
+    #     newUrl = self.driver.current_url
+    #     expectedErrorMsg = 'Some Error'
+    #     actualErrorMsg = self.authentication.getErrorMsg()
+    #
+    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+    #     self.assertion.assertNotEqual(currentUrl, newUrl)
