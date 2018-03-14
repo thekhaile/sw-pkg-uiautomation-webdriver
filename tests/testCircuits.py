@@ -25,7 +25,7 @@ class TestCircuits(ProjectBase):
 
     # TEST SCR-28 Add Circuit to Feeder Schedule
 
-    @pytest.mark.ac
+    @pytest.mark.ac1
     def testCreateCircuitWithOnlyRequiredFieldsForUS(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
