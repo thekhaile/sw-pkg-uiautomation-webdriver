@@ -32,27 +32,8 @@ class TestRegistration(ProjectBase):
         realName = self.registration.getContactName().getValue()
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         expectedName = self.registration.getAccountName()
-
-        self.assertion.assertEqual(expectedName, realName)
-
-    @pytest.mark.ac
-    def testEditCompanyNameField(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.registration.tapAccount()
-        sleep(2)
-        self.registration.enterRandomCompanyName()
-        sleep(2)
-        realName = self.registration.getCompanyName().getValue()
-        sleep(2)
-        self.registration.tapSubmit()
-        sleep(2)
-        expectedName = self.registration.getCompanyName().getValue()
 
         self.assertion.assertEqual(expectedName, realName)
 
@@ -112,7 +93,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedResult, realResult)
 
     @pytest.mark.ac
-    def testEditRoleField(self):
+    def testEditStateField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -165,7 +146,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertEqual(expectedResult, realResult)
 
-    @pytest.mark.nx
+    @pytest.mark.ac
     def testEditUOMField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
