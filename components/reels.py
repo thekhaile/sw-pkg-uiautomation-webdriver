@@ -15,7 +15,7 @@ class Reels(object):
 
     # Required Fields
     def getRandomName(self):
-        randomName = ''.join([random.choice(string.letters + string.digits + " " + " " + " ") for i in range(30)])
+        randomName = ''.join([random.choice(string.letters + string.digits + " ") for i in range(30)])
         return randomName
 
     def enterRandomReelName(self):
@@ -65,7 +65,7 @@ class Reels(object):
 
     def enterRandomWeight(self):
         weight = self.getRandomWeight()
-        self.enterWidth(weight)
+        self.enterWeight(weight)
 
     def enterWeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Weight"]')
