@@ -83,6 +83,11 @@ class Reels(object):
         el = self.getSIMpullReelToggle()
         el.tap()
 
+    def getErrorMsg(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
     def tapCancel(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
         el = self.testCase.UIType.Button(el)
