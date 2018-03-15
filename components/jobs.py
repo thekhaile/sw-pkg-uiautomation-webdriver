@@ -41,6 +41,12 @@ class Jobs(object):
         return jobModifiedDate.getLabel()
 
     def selectAJob(self, rowOrder=0):
+        # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
+        if self.testCase.app.isMicrosoftEdge():
+            count = 0
+            while not self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,'tbody') or count <= 100:
+                count += 1
+                continue
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         el.tap()
@@ -91,7 +97,11 @@ class Jobs(object):
 
     def toggleSIMpullReel(self):
         el = self.getSIMpullReelToggle()
-        el.tap()
+        if self.testCase.isSafari:
+            el.tapByLocation()
+        else:
+            el.tap()
+
 
     def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
@@ -136,8 +146,10 @@ class Jobs(object):
         return p.getLabel()
 
     def getRandomName(self):
-        randomName = ''.join([random.choice(string.letters + string.digits + " " + " " + " ") for i in range(30)])
-        return randomName
+        randomName = ''.join([random.choice(string.letters + string.digits + " " + " ") for i in range(30)])
+        stripName = randomName.strip()
+        replaceName = stripName.replace('  ',' ')
+        return replaceName
 
     def enterRandomJobName(self):
         name = self.getRandomName()
