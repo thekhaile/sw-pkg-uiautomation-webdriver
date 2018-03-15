@@ -159,6 +159,32 @@ class TestReels(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
+    def testExitCreateReelProcess(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterRandomWidth()
+        sleep(1)
+        self.reels.tapCancel()
+        sleep(5)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    # Error handling
+    @pytest.mark.ac
     def testCreateReelWithSameName(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -195,7 +221,7 @@ class TestReels(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
-    def testExitCreateReelProcess(self):
+    def testCreateReelWithErrorHeight(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -207,17 +233,100 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        sleep(1)
         currentUrl = self.driver.current_url
         self.reels.enterRandomReelName()
         sleep(1)
+        self.reels.enterHeight('6')
+        sleep(1)
         self.reels.enterRandomWidth()
         sleep(1)
-        self.reels.tapCancel()
-        sleep(5)
+        self.reels.enterRandomWeight()
+        sleep(1)
+        el = self.reels.getSIMpullReelToggle()
+        self.assertion.assertFalse(el.isOn())
+        self.reels.tapSubmit()
+        sleep(3)
         newUrl = self.driver.current_url
+        expectedErrorMsg = 'No reel available'
+        actualErrorMsg = self.reels.getHeightErrorMsg()
 
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.reels.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testCreateReelWithErrorWidth(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterRandomHeight()
+        sleep(1)
+        self.reels.enterWidth('6')
+        sleep(1)
+        self.reels.enterRandomWeight()
+        sleep(1)
+        el = self.reels.getSIMpullReelToggle()
+        self.assertion.assertFalse(el.isOn())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+        expectedErrorMsg = 'No reel available'
+        actualErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.reels.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testCreateReelWithErrorWeight(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterRandomHeight()
+        sleep(1)
+        self.reels.enterRandomWidth()
+        sleep(1)
+        self.reels.enterWeight('6')
+        sleep(1)
+        el = self.reels.getSIMpullReelToggle()
+        self.assertion.assertFalse(el.isOn())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+        expectedErrorMsg = 'No reel available'
+        actualErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.reels.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
 
 
 
