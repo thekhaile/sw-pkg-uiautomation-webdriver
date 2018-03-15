@@ -83,8 +83,26 @@ class Reels(object):
         el = self.getSIMpullReelToggle()
         el.tap()
 
-    def getErrorMsg(self):
+    def getReelNameErrorMsg(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getHeightErrorMsg(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.form-field.height')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted.delay-alert')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWidthErrorMsg(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.form-field.width')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted.delay-alert')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWeightErrorMsg(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.form-field.weight')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted.delay-alert')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 

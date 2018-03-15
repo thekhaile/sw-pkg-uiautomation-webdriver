@@ -184,7 +184,7 @@ class TestReels(ProjectBase):
         sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Reel name already exists'
-        actualErrorMsg = self.reels.getErrorMsg()
+        actualErrorMsg = self.reels.getReelNameErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
