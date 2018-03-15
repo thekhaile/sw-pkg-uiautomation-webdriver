@@ -174,8 +174,10 @@ class TestReels(ProjectBase):
         name = self.reels.getRandomName()
         self.reels.enterReelName(name)
         sleep(1)
-        self.reels.tapSubmit()
+        self.reels.enterRandomWidth()
         sleep(1)
+        self.reels.tapSubmit()
+        sleep(3)
         self.feederSchedule.tapCreateReel()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -209,8 +211,10 @@ class TestReels(ProjectBase):
         currentUrl = self.driver.current_url
         self.reels.enterRandomReelName()
         sleep(1)
-        self.reels.tapCancel()
+        self.reels.enterRandomWidth()
         sleep(1)
+        self.reels.tapCancel()
+        sleep(5)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
