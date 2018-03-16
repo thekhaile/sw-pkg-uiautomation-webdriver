@@ -61,7 +61,7 @@ class TestCircuits(ProjectBase):
 
     @pytest.mark.ac
     def testCreateCircuitWithOnlyRequiredFieldsForCanada(self):
-        email = 'jess.moss@mutualmobile.com'
+        email = 'khai.le+SWCA1@mutualmobile.com'
         password = 'password'
 
         self.navigation.navigateToLoginPage()

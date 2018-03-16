@@ -83,14 +83,15 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomCity()
+        oldValue = self.registration.getCity().getValue()
+        randomCity = self.registration.generateRandomCity()
+        self.registration.enterCity(randomCity)
         sleep(2)
-        realResult = self.registration.getCity().getValue()
         self.registration.tapSubmit()
         sleep(2)
-        expectedResult = self.registration.getCity().getValue()
-
-        self.assertion.assertEqual(expectedResult, realResult)
+        newValue = self.registration.getCity().getValue()
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, randomCity)
 
     @pytest.mark.ac
     def testEditStateField(self):
@@ -155,7 +156,7 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.selectRandomUOM()
+        self.registration.selectRandomUnitOfMeasure()
         sleep(2)
         realResult = self.registration.getUnitOfMeasure().getLabel()
         self.registration.tapSubmit()

@@ -18,8 +18,7 @@ class TestRegistration(ProjectBase):
         self.navigation = Navigation(self)
         self.registration = Registration(self)
 
-    @pytest.mark.ac0
-    # Verify
+    @pytest.mark.ac
     def testCreateAccountWithValidInfoForUS(self):
         self.navigation.navigateToRegistrationPage()
         sleep(1)
