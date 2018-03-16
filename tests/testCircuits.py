@@ -30,6 +30,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311233
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -64,6 +65,7 @@ class TestCircuits(ProjectBase):
         email = 'khai.le+SWCA1@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1311234
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -134,6 +136,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311337
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -186,6 +189,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311246
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -216,6 +220,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311341
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -251,6 +256,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378867
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -286,6 +292,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378868
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -317,6 +324,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378869
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -350,6 +358,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378870
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -385,6 +394,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378871
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -418,6 +428,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378872
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -454,6 +465,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311275
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -477,6 +489,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311288
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -500,6 +513,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311297
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
