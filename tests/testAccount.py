@@ -45,16 +45,16 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        oldValue = 
-        self.registration.enterRandomCompanyName()
-        sleep(2)
-        realName = self.registration.getCompanyName().getValue()
+        oldValue = self.registration.getCompanyName().getValue()
+        randomCompanyName = self.registration.generateRandomCompanyName()
+        self.registration.enterCompanyName(randomCompanyName)
         sleep(2)
         self.registration.tapSubmit()
         sleep(2)
-        expectedName = self.registration.getCompanyName().getValue()
+        newValue = self.registration.getCompanyName().getValue()
 
-        self.assertion.assertEqual(expectedName, realName)
+        self.assertion.assertEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue,randomCompanyName)
 
     @pytest.mark.ac
     def testEditRoleField(self):
@@ -65,6 +65,8 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
+        oldValue = self.registration.getSelectedRole()
+        role = self.registration.
         self.registration.selectRandomRole()
         sleep(2)
         actualRole = self.registration.getSelectedRole()
