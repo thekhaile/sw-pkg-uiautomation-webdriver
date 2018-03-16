@@ -31,7 +31,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.getRandomName()
+        jobName = self.jobs.generateRandomName()
         self.jobs.enterJobName(jobName)
         sleep(1)
         self.jobs.enterWeight('88')
@@ -62,7 +62,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.getRandomName()
+        jobName = self.jobs.generateRandomName()
         self.jobs.enterJobName(jobName)
         self.jobs.enterWeight('99')
         sleep(1)
@@ -85,7 +85,7 @@ class TestJobs(ProjectBase):
         self.projects.selectAProject()
         self.jobs.tapCreateJob()
         sleep(1)
-        name = self.jobs.getRandomName()
+        name = self.jobs.generateRandomName()
         self.jobs.enterJobName(name)
         sleep(1)
         self.jobs.tapSubmit()
@@ -170,7 +170,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.getRandomName()
+        jobName = self.jobs.generateRandomName()
         self.jobs.enterJobName(jobName)
         self.jobs.tapSubmit()
         sleep(2)

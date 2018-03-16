@@ -145,14 +145,14 @@ class Jobs(object):
         #return the error message
         return p.getLabel()
 
-    def getRandomName(self):
+    def generateRandomName(self):
         randomName = ''.join([random.choice(string.letters + string.digits + " " + " ") for i in range(30)])
         stripName = randomName.strip()
         replaceName = stripName.replace('  ',' ')
         return replaceName
 
     def enterRandomJobName(self):
-        name = self.getRandomName()
+        name = self.generateRandomName()
         self.enterJobName(name)
 
     def tapConfigureJob(self):
