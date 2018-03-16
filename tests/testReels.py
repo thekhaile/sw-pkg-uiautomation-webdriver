@@ -30,6 +30,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378402
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -61,6 +62,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378397
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -91,6 +93,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378404
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -115,6 +118,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378408
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -139,6 +143,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378411
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -163,6 +168,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378861
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -189,6 +195,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378398
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -225,6 +232,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378421
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -261,6 +269,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378423
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -297,6 +306,7 @@ class TestReels(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1378425
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
