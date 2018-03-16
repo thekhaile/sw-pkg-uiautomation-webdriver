@@ -13,13 +13,13 @@ class Registration(object):
         self.testCase = testCase
 
     # Required fields
-    def getRandomEmail(self):
+    def generateRandomEmail(self):
         randomName = ''.join([random.choice(string.letters+string.digits) for i in range(8)])
         randomEmail = randomName + '@ningxintest.com'
         return randomEmail
 
     def enterRandomEmail(self):
-        email = self.getRandomEmail()
+        email = self.generateRandomEmail()
         self.enterEmail(email)
 
     def enterEmail(self,text):
@@ -43,13 +43,13 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def getRandomName(self):
+    def generateRandomName(self):
         randomLastName = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
         name = 'Ningxin' + ' ' + randomLastName
         return name
 
     def enterRandomName(self):
-        name = self.getRandomName()
+        name = self.generateRandomName()
         self.enterContactName(name)
 
     def getContactName(self):
@@ -63,12 +63,12 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def getRandomCompanyName(self):
+    def generateRandomCompanyName(self):
         companyName = ''.join([random.choice(string.ascii_uppercase) for i in range(6)])
         return companyName
 
     def enterRandomCompanyName(self):
-        name = self.getRandomCompanyName()
+        name = self.generateRandomCompanyName()
         self.enterCompanyName(name)
 
     def getCompanyName(self):
@@ -87,12 +87,12 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
-    def getRandomRole(self):
+    def generateRandomRole(self):
         options = ['Southwire Employee', 'Distributor', 'Contractor', 'Sales/Agent', 'Other']
         return random.choice(options)
 
     def selectRandomRole(self):
-        el = self.getRandomRole()
+        el = self.generateRandomRole()
         self.selectContactRole(el)
 
     def getSelectedRole(self):
@@ -113,12 +113,12 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el.getLabel()
 
-    def getRandomCity(self):
+    def generateRandomCity(self):
         city = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
         return city
 
     def enterRandomCity(self):
-        city = self.getRandomCity()
+        city = self.generateRandomCity()
         self.enterCity(city)
 
     def getCity(self):
@@ -132,12 +132,12 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def getRandomStateOrProvince(self):
+    def generateRandomStateOrProvince(self):
         options = ['California', 'Florida', 'New York', 'Texas', 'Ontario', 'Prince Edward Island', 'Saskatchewan']
         return random.choice(options)
 
     def selectRandomStateOrProvince(self):
-        el = self.getRandomStateOrProvince()
+        el = self.generateRandomStateOrProvince()
         self.selectStateOrProvince(el)
 
     def getStateOrProvince(self):
@@ -149,12 +149,12 @@ class Registration(object):
         el = self.getStateOrProvince()
         el.scrollToValue(state)
 
-    def getRandomUOM(self):
+    def generateRandomUnitOfMeasure(self):
         options = ['Standard', 'Metric']
         return random.choice(options)
 
-    def selectRandomUOM(self):
-        el = self.getRandomUOM()
+    def selectRandomUnitOfMeasure(self):
+        el = self.generateRandomUnitOfMeasure()
         self.selectUnitOfMeasure(el)
 
     def getUnitOfMeasure(self):
@@ -168,12 +168,12 @@ class Registration(object):
 
     #Not required fields
 
-    def getRandomZip(self):
+    def generateRandomZip(self):
         zip = ''.join([random.choice(string.digits + string.ascii_uppercase) for i in range(6)])
         return zip
 
     def enterRandomZip(self):
-        zip = self.getRandomZip()
+        zip = self.generateRandomZip()
         self.enterZipCode(zip)
 
     def getZip(self):
@@ -187,12 +187,12 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def getRandomPhone(self):
+    def generateRandomPhone(self):
         phone = ''.join([random.choice(string.digits) for i in range(10)])
         return phone
 
     def enterRandomPhone(self):
-        phone = self.getRandomPhone()
+        phone = self.generateRandomPhone()
         self.enterPhoneNumber(phone)
 
     def getPhone(self):
