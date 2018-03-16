@@ -42,6 +42,7 @@ class TestJobs(ProjectBase):
         sleep(1)
         self.jobs.toggleSIMpullReel()
         sleep(1)
+        self.assertion.assertTrue(self.jobs.getSIMpullReelToggle().isOn(), 'Toggle has the off state after being tapped')
         self.jobs.tapSubmit()
         sleep(1)
         viewJobName = self.jobs.getJobName(rowOrder=0)
