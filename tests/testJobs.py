@@ -84,6 +84,7 @@ class TestJobs(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        # Preconditions: Set up an existing job
         self.jobs.tapCreateJob()
         sleep(1)
         name = self.jobs.generateRandomName()
@@ -91,10 +92,11 @@ class TestJobs(ProjectBase):
         sleep(1)
         self.jobs.tapSubmit()
         sleep(1)
+        # End of preconditions
         self.jobs.tapCreateJob()
         sleep(1)
-        self.jobs.enterJobName(name)
         currentUrl = self.driver.current_url
+        self.jobs.enterJobName(name)
         self.jobs.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
