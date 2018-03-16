@@ -27,15 +27,14 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomName()
-        sleep(2)
-        realName = self.registration.getContactName().getValue()
+        randomName = self.registration.generateRandomName()
+        self.registration.enterContactName(randomName)
         sleep(2)
         self.registration.tapSubmit()
         sleep(5)
         expectedName = self.registration.getAccountName()
 
-        self.assertion.assertEqual(expectedName, realName)
+        self.assertion.assertEqual(expectedName, randomName)
 
     @pytest.mark.ac
     def testEditCompanyNameField(self):
@@ -46,6 +45,7 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
+        oldValue = 
         self.registration.enterRandomCompanyName()
         sleep(2)
         realName = self.registration.getCompanyName().getValue()
