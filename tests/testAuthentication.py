@@ -135,7 +135,6 @@ class TestAuthentication(ProjectBase):
         el = self.authentication.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
 
-    #
     # def testLogInWithoutVerifyNewAcct(self):
     #     email = 'unverified@mutualmobile.com'
     #     password = 'password'

@@ -94,9 +94,11 @@ class TestJobs(ProjectBase):
         sleep(1)
         # End of preconditions
         self.jobs.tapCreateJob()
+        sleep(1)
         currentUrl = self.driver.current_url
         self.jobs.enterJobName(name)
         self.jobs.tapSubmit()
+        sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Job name already exists'
         actualErrorMsg = self.jobs.getErrorMsg()

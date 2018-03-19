@@ -189,3 +189,22 @@ class TestRegistration(ProjectBase):
         newValue = self.registration.getSelectedUnitOfMeasure()
 
         self.assertion.assertEqual(newValue, uom)
+
+
+    @pytest.mark.ac
+    def testSouthwireEmployeeCannotEditRole(self):
+        email = 'ningxin.liao+sw@mutualmobile.com'
+        password = 'password'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.registration.tapAccount()
+        sleep(2)
+
+        el = self.registration.getRolePicker()
+        self.assertion.assertFalse(el.ui_object.is_enabled())
+
+        expectedRole = 'Southwire Employee'
+        actualRole = self.registration.getSelectedRole()
+        self.assertion.assertEqual(expectedRole, actualRole)
+
