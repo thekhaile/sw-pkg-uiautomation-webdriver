@@ -5,6 +5,7 @@ class Navigation(object):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
     PROJECTS_PAGE= 'https://southwire-configurator-test.firebaseapp.com/projects'
     REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/register'
+    ACCOUNT_PAGE = 'https://southwire-configurator-test.firebaseapp.com/account'
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -21,3 +22,6 @@ class Navigation(object):
 
     def navigateToRegistrationPage(self):
         self.testCase.driver.get(Navigation.REGISTRATION_PAGE)
+
+    def navigateToAccountPage(self):
+        self.testCase.driver.get(Navigation.ACCOUNT_PAGE)
