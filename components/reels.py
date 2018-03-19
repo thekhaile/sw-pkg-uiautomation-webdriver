@@ -14,12 +14,12 @@ class Reels(object):
         self.testCase = testCase
 
     # Required Fields
-    def getRandomName(self):
+    def generateRandomName(self):
         randomName = ''.join([random.choice(string.letters + string.digits + " ") for i in range(30)])
         return randomName
 
     def enterRandomReelName(self):
-        name = self.getRandomName()
+        name = self.generateRandomName()
         self.enterReelName(name)
 
     def enterReelName(self, text):

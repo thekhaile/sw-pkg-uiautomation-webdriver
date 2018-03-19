@@ -26,7 +26,7 @@ class TestReels(ProjectBase):
         self.feederSchedule = FeederSchedule(self)
 
     @pytest.mark.ac
-    def testCreateReelWithWithUniqueNameAndToggleOn(self):
+    def testCreateReelWithUniqueNameAndToggleOn(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -58,7 +58,7 @@ class TestReels(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testCreateReelWithWithUniqueNameAndToggleOff(self):
+    def testCreateReelWithUniqueNameAndToggleOff(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -204,7 +204,7 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        name = self.reels.getRandomName()
+        name = self.reels.generateRandomName()
         self.reels.enterReelName(name)
         sleep(1)
         self.reels.enterRandomWidth()
@@ -337,10 +337,3 @@ class TestReels(ProjectBase):
 
         el = self.reels.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
-
-
-
-
-
-
-
