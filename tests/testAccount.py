@@ -27,15 +27,14 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomName()
-        sleep(2)
-        realName = self.registration.getContactName().getValue()
+        randomName = self.registration.generateRandomName()
+        self.registration.enterContactName(randomName)
         sleep(2)
         self.registration.tapSubmit()
         sleep(5)
         expectedName = self.registration.getAccountName()
 
-        self.assertion.assertEqual(expectedName, realName)
+        self.assertion.assertEqual(expectedName, randomName)
 
     @pytest.mark.ac
     def testEditCompanyNameField(self):
@@ -46,15 +45,18 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomCompanyName()
-        sleep(2)
-        realName = self.registration.getCompanyName().getValue()
+        randomCompanyName = self.registration.generateRandomCompanyName()
+        self.registration.enterCompanyName(randomCompanyName)
         sleep(2)
         self.registration.tapSubmit()
         sleep(2)
-        expectedName = self.registration.getCompanyName().getValue()
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getCompanyName().getValue()
 
-        self.assertion.assertEqual(expectedName, realName)
+        self.assertion.assertEqual(newValue,randomCompanyName)
 
     @pytest.mark.ac
     def testEditRoleField(self):
@@ -65,14 +67,18 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.selectRandomRole()
-        sleep(2)
-        actualRole = self.registration.getSelectedRole()
+        role = self.registration.generateRandomRole()
+        self.registration.selectContactRole(role)
         sleep(2)
         self.registration.tapSubmit()
         sleep(2)
-        expectedRole = self.registration.getSelectedRole()
-        self.assertion.assertEqual(expectedRole, actualRole)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getSelectedRole()
+
+        self.assertion.assertEqual(newValue,role)
 
     @pytest.mark.ac
     def testEditCityField(self):
@@ -83,18 +89,21 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        oldValue = self.registration.getCity().getValue()
         randomCity = self.registration.generateRandomCity()
         self.registration.enterCity(randomCity)
         sleep(2)
         self.registration.tapSubmit()
         sleep(2)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
         newValue = self.registration.getCity().getValue()
-        self.assertion.assertNotEqual(oldValue, newValue)
+
         self.assertion.assertEqual(newValue, randomCity)
 
     @pytest.mark.ac
-    def testEditStateField(self):
+    def testEditUSStateField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -102,14 +111,40 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.selectRandomStateOrProvince()
-        sleep(2)
-        actualRole = self.registration.getStateOrProvince().getLabel()
+        state = self.registration.generateRandomState()
+        self.registration.selectStateOrProvince(state)
         sleep(2)
         self.registration.tapSubmit()
         sleep(2)
-        expectedRole = self.registration.getStateOrProvince().getLabel()
-        self.assertion.assertEqual(expectedRole, actualRole)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getSelectedStateOrProvince()
+
+        self.assertion.assertEqual(newValue, state)
+
+    @pytest.mark.ac1
+    def testEditCanadaProvinceField(self):
+        email = 'khai.le+SWCA1@mutualmobile.com'
+        password = 'password'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.registration.tapAccount()
+        sleep(2)
+        province = self.registration.generateRandomProvince()
+        self.registration.selectStateOrProvince(province)
+        sleep(2)
+        self.registration.tapSubmit()
+        sleep(2)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getSelectedStateOrProvince()
+
+        self.assertion.assertEqual(newValue, province)
 
     @pytest.mark.ac
     def testEditZipField(self):
@@ -120,14 +155,18 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomZip()
+        zip = self.registration.generateRandomZip()
+        self.registration.enterZipCode(zip)
         sleep(2)
-        realResult = self.registration.getZip().getLabel()
         self.registration.tapSubmit()
         sleep(2)
-        expectedResult = self.registration.getZip().getLabel()
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getZip().getValue()
 
-        self.assertion.assertEqual(expectedResult, realResult)
+        self.assertion.assertEqual(newValue, zip)
 
     @pytest.mark.ac
     def testEditPhoneField(self):
@@ -138,14 +177,18 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.enterRandomPhone()
+        phone = self.registration.generateRandomPhone()
+        self.registration.enterPhoneNumber(phone)
         sleep(2)
-        realResult = self.registration.getPhone().getLabel()
         self.registration.tapSubmit()
         sleep(2)
-        expectedResult = self.registration.getPhone().getLabel()
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getPhone().getValue()
 
-        self.assertion.assertEqual(expectedResult, realResult)
+        self.assertion.assertEqual(newValue, phone)
 
     @pytest.mark.ac
     def testEditUOMField(self):
@@ -156,14 +199,19 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        self.registration.selectRandomUnitOfMeasure()
+        uom = self.registration.generateRandomUnitOfMeasure()
+        self.registration.selectUnitOfMeasure(uom)
         sleep(2)
-        realResult = self.registration.getUnitOfMeasure().getLabel()
         self.registration.tapSubmit()
         sleep(2)
-        expectedResult = self.registration.getUnitOfMeasure().getLabel()
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getSelectedUnitOfMeasure()
 
-        self.assertion.assertEqual(expectedResult, realResult)
+        self.assertion.assertEqual(newValue, uom)
+
 
     @pytest.mark.ac
     def testSouthwireEmployeeCannotEditRole(self):
@@ -181,3 +229,4 @@ class TestRegistration(ProjectBase):
         expectedRole = 'Southwire Employee'
         actualRole = self.registration.getSelectedRole()
         self.assertion.assertEqual(expectedRole, actualRole)
+

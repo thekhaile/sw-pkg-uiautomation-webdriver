@@ -132,15 +132,24 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def generateRandomStateOrProvince(self):
-        options = ['California', 'Florida', 'New York', 'Texas', 'Ontario', 'Prince Edward Island', 'Saskatchewan']
+    def generateRandomState(self):
+        options = ['California', 'Florida', 'New York', 'Texas']
         return random.choice(options)
 
-    def selectRandomStateOrProvince(self):
-        el = self.generateRandomStateOrProvince()
+    def selectRandomState(self):
+        el = self.generateRandomState()
+        self.selectStateOrProvince(el)
+
+    def generateRandomProvince(self):
+        options = ['Quebec', 'Prince Edward Island', 'Saskatchewan', 'Ontario']
+        return random.choice(options)
+
+    def selectRandomProvince(self):
+        el = self.generateRandomProvince()
         self.selectStateOrProvince(el)
 
     def getStateOrProvince(self):
+        # This is to return the state dropdown element to be used in other method
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="State/Province"]')
         el = self.testCase.UIType.Picker(el)
         return el
@@ -148,6 +157,15 @@ class Registration(object):
     def selectStateOrProvince(self, state):
         el = self.getStateOrProvince()
         el.scrollToValue(state)
+
+    def getSelectedStateOrProvince(self):
+        select = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="State/Province"]')
+        options = select.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        for option in options:
+            if option.is_selected() == True:
+                break
+        el = self.testCase.UIType.Element(option)
+        return el.getLabel()
 
     def generateRandomUnitOfMeasure(self):
         options = ['Standard', 'Metric']
@@ -165,6 +183,15 @@ class Registration(object):
     def selectUnitOfMeasure(self, UOM):
         el = self.getUnitOfMeasure()
         el.scrollToValue(UOM)
+
+    def getSelectedUnitOfMeasure(self):
+        select = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Unit of Measure"]')
+        options = select.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        for option in options:
+            if option.is_selected() == True:
+                break
+        el = self.testCase.UIType.Element(option)
+        return el.getLabel()
 
     #Not required fields
 
@@ -229,16 +256,10 @@ class Registration(object):
         return el.getLabel()
 
     # Edit Acct Info
-    def getAccountButton(self):
-        containers = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.container')
-        headerContainer = containers[0]
-        allAs = headerContainer.find_elements(self.testCase.app.getStrategy().XPATH, 'a')
-        account = allAs[-1]
-        account = self.testCase.UIType.Element(account)
-        return account
 
     def tapAccount(self):
-        el = self.getAccountButton()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.account-link')
+        el = self.testCase.UIType.Element(el)
         el.tap()
 
     def getAccountName(self):
