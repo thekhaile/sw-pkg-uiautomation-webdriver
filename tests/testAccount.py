@@ -103,7 +103,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(newValue, randomCity)
 
     @pytest.mark.ac
-    def testEditStateField(self):
+    def testEditUSStateField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -111,7 +111,7 @@ class TestRegistration(ProjectBase):
         self.authentication.login(email, password)
         self.registration.tapAccount()
         sleep(2)
-        state = self.registration.generateRandomStateOrProvince()
+        state = self.registration.generateRandomState()
         self.registration.selectStateOrProvince(state)
         sleep(2)
         self.registration.tapSubmit()
@@ -123,6 +123,28 @@ class TestRegistration(ProjectBase):
         newValue = self.registration.getSelectedStateOrProvince()
 
         self.assertion.assertEqual(newValue, state)
+
+    @pytest.mark.ac1
+    def testEditCanadaProvinceField(self):
+        email = 'khai.le+SWCA1@mutualmobile.com'
+        password = 'password'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.registration.tapAccount()
+        sleep(2)
+        province = self.registration.generateRandomProvince()
+        self.registration.selectStateOrProvince(province)
+        sleep(2)
+        self.registration.tapSubmit()
+        sleep(2)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.navigation.navigateToAccountPage()
+        sleep(2)
+        newValue = self.registration.getSelectedStateOrProvince()
+
+        self.assertion.assertEqual(newValue, province)
 
     @pytest.mark.ac
     def testEditZipField(self):

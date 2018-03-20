@@ -132,12 +132,20 @@ class Registration(object):
         el.clearText()
         el.enterText(text)
 
-    def generateRandomStateOrProvince(self):
-        options = ['California', 'Florida', 'New York', 'Texas', 'Ontario', 'Prince Edward Island', 'Saskatchewan']
+    def generateRandomState(self):
+        options = ['California', 'Florida', 'New York', 'Texas', 'Ontario']
         return random.choice(options)
 
-    def selectRandomStateOrProvince(self):
-        el = self.generateRandomStateOrProvince()
+    def selectRandomState(self):
+        el = self.generateRandomState()
+        self.selectStateOrProvince(el)
+
+    def generateRandomProvince(self):
+        options = ['Quebec', 'Prince Edward Island', 'Saskatchewan']
+        return random.choice(options)
+
+    def selectRandomProvince(self):
+        el = self.generateRandomProvince()
         self.selectStateOrProvince(el)
 
     def getStateOrProvince(self):
