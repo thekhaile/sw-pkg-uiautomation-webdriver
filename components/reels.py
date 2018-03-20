@@ -81,7 +81,10 @@ class Reels(object):
 
     def toggleSIMpullReel(self):
         el = self.getSIMpullReelToggle()
-        el.tap()
+        if self.testCase.isSafari:
+            el.tapByLocation()
+        else:
+            el.tap()
 
     def getReelNameErrorMsg(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
