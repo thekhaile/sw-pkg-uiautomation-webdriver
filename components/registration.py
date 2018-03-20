@@ -28,6 +28,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def enterPassword(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Password"]')
@@ -35,6 +37,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def enterConfirmPassword(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Confirm Password"]')
@@ -42,6 +46,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def generateRandomName(self):
         randomLastName = ''.join([random.choice(string.ascii_uppercase) for i in range(5)])
@@ -62,6 +68,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def generateRandomCompanyName(self):
         companyName = ''.join([random.choice(string.ascii_uppercase) for i in range(6)])
@@ -81,6 +89,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def getRolePicker(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Role"]')
@@ -131,6 +141,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def generateRandomState(self):
         options = ['California', 'Florida', 'New York', 'Texas']
@@ -213,6 +225,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     def generateRandomPhone(self):
         phone = ''.join([random.choice(string.digits) for i in range(10)])
@@ -232,6 +246,8 @@ class Registration(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.isChromium:
+            self.testCase.app.dismissKeyboard()
 
     # Cancel & Submit button
     def tapCancel(self):
