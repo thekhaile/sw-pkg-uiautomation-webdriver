@@ -133,7 +133,7 @@ class Registration(object):
         el.enterText(text)
 
     def generateRandomState(self):
-        options = ['California', 'Florida', 'New York', 'Texas', 'Ontario']
+        options = ['California', 'Florida', 'New York', 'Texas']
         return random.choice(options)
 
     def selectRandomState(self):
@@ -141,7 +141,7 @@ class Registration(object):
         self.selectStateOrProvince(el)
 
     def generateRandomProvince(self):
-        options = ['Quebec', 'Prince Edward Island', 'Saskatchewan']
+        options = ['Quebec', 'Prince Edward Island', 'Saskatchewan', 'Ontario']
         return random.choice(options)
 
     def selectRandomProvince(self):
