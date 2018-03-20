@@ -616,6 +616,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        # precondition
         self.feederSchedule.tapCreateCircuit()
         self.circuits.enterFrom('ABC123')
         sleep(1)
@@ -633,6 +634,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        # end of precondition
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
@@ -660,6 +662,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        # precondition
         self.feederSchedule.tapCreateCircuit()
         self.circuits.enterFrom('ABC123')
         sleep(1)
@@ -677,6 +680,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        # end of precondition
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
