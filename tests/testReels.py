@@ -337,3 +337,42 @@ class TestReels(ProjectBase):
 
         el = self.reels.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
+
+    # error on Height, width, and weight #
+
+    def testCreateReelWithBelowLimitHeightWidthWeightforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 0000000
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('')
+        sleep(1)
+        self.reels.enterWidth('')
+        sleep(1)
+        self.reels.enterWeight('6')
+        sleep(1)
+        el = self.reels.getSIMpullReelToggle()
+        self.assertion.assertFalse(el.isOn())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+        expectedErrorMsg = 'No reel available'
+        actualErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.reels.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
