@@ -112,7 +112,10 @@ class Circuits(object):
 
     def toggleSIMpullHead(self):
         el = self.getSIMpullHeadToggle()
-        el.tap()
+        if self.testCase.isSafari:
+            el.tapByLocation()
+        else:
+            el.tap()
 
     # Cancel & Submit button
     def tapCancel(self):
