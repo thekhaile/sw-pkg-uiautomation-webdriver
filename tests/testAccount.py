@@ -49,7 +49,7 @@ class TestRegistration(ProjectBase):
         self.registration.enterCompanyName(randomCompanyName)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -71,7 +71,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectContactRole(role)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -93,7 +93,7 @@ class TestRegistration(ProjectBase):
         self.registration.enterCity(randomCity)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -115,7 +115,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectStateOrProvince(state)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -124,7 +124,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertEqual(newValue, state)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testEditCanadaProvinceField(self):
         email = 'khai.le+SWCA1@mutualmobile.com'
         password = 'password'
@@ -137,7 +137,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectStateOrProvince(province)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -159,7 +159,7 @@ class TestRegistration(ProjectBase):
         self.registration.enterZipCode(zip)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -181,7 +181,7 @@ class TestRegistration(ProjectBase):
         self.registration.enterPhoneNumber(phone)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
@@ -203,7 +203,7 @@ class TestRegistration(ProjectBase):
         self.registration.selectUnitOfMeasure(uom)
         sleep(2)
         self.registration.tapSubmit()
-        sleep(2)
+        sleep(5)
         self.navigation.navigateToProjectsPage()
         sleep(2)
         self.navigation.navigateToAccountPage()
