@@ -25,6 +25,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1301968
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -57,6 +58,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1301974
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -81,6 +83,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1301969
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -115,6 +118,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1301994
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -141,6 +145,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1301979
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -165,6 +170,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1302074
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -189,6 +195,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1302075
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -222,6 +229,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1302082
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -244,6 +252,7 @@ class TestJobs(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1302086
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -263,11 +272,12 @@ class TestJobs(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testEditWeightHeightAndWidth(self):
+    def testEditHeightAndWidth(self):
         # Verify that the modified width, height and weight restriction field can be saved on Create New Job page
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1302080
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -288,7 +298,57 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.nx
+    @pytest.mark.ac
+    def testEditWeightAndHeight(self):
+        # Verify that the modified width, height and weight restriction field can be saved on Create New Job page
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1302078
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapOverflow()
+        sleep(2)
+        self.jobs.tapEditSettings()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.jobs.enterWeight('888')
+        sleep(1)
+        self.jobs.enterHeight('888')
+        sleep(1)
+        self.jobs.tapSubmit()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testEditWeightAndWidth(self):
+        # Verify that the modified width, height and weight restriction field can be saved on Create New Job page
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1302079
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapOverflow()
+        sleep(2)
+        self.jobs.tapEditSettings()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.jobs.enterWeight('888')
+        sleep(1)
+        self.jobs.enterWidth('888')
+        sleep(1)
+        self.jobs.tapSubmit()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
     def testDeleteInProgressJob(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -308,7 +368,7 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertNotEqual(jobName, newJobName)
 
-    @pytest.mark.nx
+    @pytest.mark.ac
     def testCancelDeleteInProgressJob(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
