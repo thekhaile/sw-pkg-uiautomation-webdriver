@@ -864,7 +864,45 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertEqual(oldFirstFrom, newFirstFrom)
 
+    @pytest.mark.nx
+    def testDuplicateCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 00000
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        # end of precondition
+        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=1)
+        sleep(3)
+
+        self.assertion.assertEqual(oldFirstFrom, newFirstFrom)
 
 
 
