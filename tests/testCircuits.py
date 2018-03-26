@@ -39,15 +39,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -73,15 +73,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / RWU')
         sleep(1)
         self.circuits.selectConductorSize(size='350')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -107,15 +107,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.toggleSIMpullHead()
         sleep(1)
@@ -142,9 +142,9 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.tapCancel()
         newUrl = self.driver.current_url
@@ -381,7 +381,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
-    def testCreateCircuitWithoutNOCAndColor(self):
+    def testCreateCircuitWithoutNumberOfConductorAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -511,7 +511,7 @@ class TestCircuits(ProjectBase):
         self.circuits.enterCircuitLength('1234567')
         sleep(1)
         expectedText = '123456'
-        actualText = self.circuits.getCircuitLength().getValue()
+        actualText = self.circuits.getLength().getValue()
 
         self.assertion.assertEqual(expectedText, actualText)
 
@@ -533,15 +533,15 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -554,7 +554,7 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(3)
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('123abc')
+        self.circuits.enterRandomFrom()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -575,9 +575,9 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
@@ -596,7 +596,7 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(3)
         currentUrl = self.driver.current_url
-        self.circuits.enterTo('123abc')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -618,15 +618,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         # precondition
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -664,15 +664,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         # precondition
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -711,7 +711,7 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.circuits.enterCircuitLength('1000')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
@@ -743,7 +743,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testEditNOC(self):
+    def testEditNumberOfConductor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -782,6 +782,10 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(2)
         currentUrl = self.driver.current_url
+        self.circuits.tapSelectedColorCircle(circleOrder=0)
+        sleep(1)
+        self.circuits.selectColorOption(color='Black')
+        sleep(1)
         self.circuits.tapSelectedColorCircle(circleOrder=1)
         sleep(1)
         self.circuits.selectColorOption(color='Black')
@@ -823,16 +827,39 @@ class TestCircuits(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapDeleteCircuit()
         sleep(2)
-        currentUrl = self.driver.current_url
-        self.circuits.tapCancel()
+        self.circuits.tapConfirmDelete()
+        sleep(2)
+        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
         sleep(3)
-        newUrl = self.driver.current_url
 
-        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertNotEqual(oldFirstFrom, newFirstFrom)
+
+    @pytest.mark.ac
+    def testCancelDeleteCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        self.circuits.tapCancelDelete()
+        sleep(2)
+        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        sleep(3)
+
+        self.assertion.assertEqual(oldFirstFrom, newFirstFrom)
 
 
 
