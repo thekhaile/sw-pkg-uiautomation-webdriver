@@ -133,6 +133,30 @@ class Jobs(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
+    def tapDeleteJob(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        delete = el[1]
+        delete = self.testCase.UIType.Button(delete)
+        delete.tap()
+
+    def tapDuplicateJob(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        duplicate = el[0]
+        duplicate = self.testCase.UIType.Button(duplicate)
+        duplicate.tap()
+
+    def tapConfirmDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapCancelDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.cancel')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
     def getErrorMsg(self):
         # get container
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project.job')

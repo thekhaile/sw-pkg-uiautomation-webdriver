@@ -287,3 +287,43 @@ class TestJobs(ProjectBase):
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.nx
+    def testDeleteInProgressJob(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1379235
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        jobName = self.jobs.getJobName(rowOrder=0)
+        self.jobs.tapOverflow()
+        sleep(2)
+        self.jobs.tapDeleteJob()
+        sleep(2)
+        self.jobs.tapConfirmDelete()
+        sleep(2)
+        newJobName = self.jobs.getJobName(rowOrder=0)
+
+        self.assertion.assertNotEqual(jobName, newJobName)
+
+    @pytest.mark.nx
+    def testCancelDeleteInProgressJob(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1379242
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        jobName = self.jobs.getJobName(rowOrder=0)
+        self.jobs.tapOverflow()
+        sleep(2)
+        self.jobs.tapDeleteJob()
+        sleep(2)
+        self.jobs.tapCancelDelete()
+        sleep(3)
+        newJobName = self.jobs.getJobName(rowOrder=0)
+
+        self.assertion.assertEqual(jobName, newJobName)
