@@ -813,6 +813,27 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac
+    def testDeleteCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.circuits.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
 
 
 
