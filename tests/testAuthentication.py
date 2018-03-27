@@ -18,6 +18,7 @@ class TestAuthentication(ProjectBase):
         email = 'khai.le@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300685
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -29,6 +30,7 @@ class TestAuthentication(ProjectBase):
         email = 'khai.le@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300696
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -42,6 +44,7 @@ class TestAuthentication(ProjectBase):
         email = 'khai.le@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300698
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -55,6 +58,7 @@ class TestAuthentication(ProjectBase):
         email = 'khai.le@mutualmobile.com'
         password = 'password1234'
 
+        self.caseId = 1300690
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -67,6 +71,7 @@ class TestAuthentication(ProjectBase):
         incorrectPassword = 'password1234'
         correctPassword = 'password'
 
+        self.caseId = 1300691
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(incorrectPassword)
@@ -81,6 +86,7 @@ class TestAuthentication(ProjectBase):
         correctEmail = 'khai.le@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300689
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(inCorrectEmail)
         self.authentication.enterPassword(password)
@@ -95,6 +101,7 @@ class TestAuthentication(ProjectBase):
         email = 'noexist@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300687
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -103,6 +110,7 @@ class TestAuthentication(ProjectBase):
 
     @pytest.mark.functionality
     def testSubmitButtonDisabledWhenEmailAndPasswordAreEmpty(self):
+        self.caseId = 1381554
         self.navigation.navigateToLoginPage()
         el = self.authentication.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
@@ -110,6 +118,7 @@ class TestAuthentication(ProjectBase):
     @pytest.mark.functionality
     def testSubmitButtonDisabledWhenEmailIsEmpty(self):
         password = 'password'
+        self.caseId = 1381555
         self.navigation.navigateToLoginPage()
         self.authentication.enterPassword(password)
         el = self.authentication.getSubmitButton()
@@ -118,6 +127,7 @@ class TestAuthentication(ProjectBase):
     @pytest.mark.functionality
     def testSubmitButtonDisabledWhenPasswordIsEmpty(self):
         email = 'noexist@mutualmobile.com'
+        self.caseId = 1381556
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         el = self.authentication.getSubmitButton()
@@ -128,6 +138,7 @@ class TestAuthentication(ProjectBase):
         email = 'noexist@mutualmobile.com'
         password = 'password'
 
+        self.caseId = 1300726
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -140,6 +151,7 @@ class TestAuthentication(ProjectBase):
     #     email = 'unverified@mutualmobile.com'
     #     password = 'password'
     #
+    #     self.caseId = 1381557
     #     self.navigation.navigateToLoginPage()
     #     currentUrl = self.driver.current_url
     #     self.authentication.login(email, password)
