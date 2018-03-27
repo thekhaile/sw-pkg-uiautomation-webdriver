@@ -4,6 +4,7 @@ from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
+import unidecode
 
 class TestAuthentication(ProjectBase):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
@@ -146,18 +147,18 @@ class TestAuthentication(ProjectBase):
         el = self.authentication.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
 
-    #
-    # def testLogInWithoutVerifyNewAcct(self):
-    #     email = 'unverified@mutualmobile.com'
-    #     password = 'password'
-    #
-    #     self.caseId = 1381557
-    #     self.navigation.navigateToLoginPage()
-    #     currentUrl = self.driver.current_url
-    #     self.authentication.login(email, password)
-    #     newUrl = self.driver.current_url
-    #     expectedErrorMsg = 'Some Error'
-    #     actualErrorMsg = self.authentication.getErrorMsg()
-    #
-    #     self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-    #     self.assertion.assertNotEqual(currentUrl, newUrl)
+    @pytest.mark.ac
+    def testLogInWithoutVerifyNewAcct(self):
+        email = 'unverified@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381557
+        self.navigation.navigateToLoginPage()
+        currentUrl = self.driver.current_url
+        self.authentication.login(email, password)
+        newUrl = self.driver.current_url
+        expectedErrorMsg = "This account hasn't been verified.\nResend verification email."
+        actualErrorMsg = unidecode.unidecode(self.authentication.getErrorMsg())
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
