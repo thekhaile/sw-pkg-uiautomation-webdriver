@@ -23,6 +23,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376184
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -42,6 +43,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376185
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -61,6 +63,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376186
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -79,6 +82,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376188
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -98,6 +102,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376189
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -116,6 +121,7 @@ class TestRegistration(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376190
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -133,7 +139,8 @@ class TestRegistration(ProjectBase):
     def testEditPhoneField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
-    
+
+        self.caseId = 1376191
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
@@ -148,10 +155,11 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedResult, realResult)
 
     @pytest.mark.ac
-    def testEditUOMField(self):
+    def testEditUniteOfMeasureField(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376192
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
