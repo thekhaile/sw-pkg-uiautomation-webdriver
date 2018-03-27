@@ -38,6 +38,7 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -58,7 +59,9 @@ class TestCircuits(ProjectBase):
         sleep(3)
         newUrl = self.driver.current_url
         newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
         self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
@@ -75,6 +78,7 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -95,7 +99,9 @@ class TestCircuits(ProjectBase):
         sleep(3)
         newUrl = self.driver.current_url
         newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
         self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
@@ -113,6 +119,7 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -135,7 +142,9 @@ class TestCircuits(ProjectBase):
         sleep(3)
         newUrl = self.driver.current_url
         newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
         self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
@@ -1024,7 +1033,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertEqual(oldValue, newValue + 1)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testDuplicateDuplicatedCircuit(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
