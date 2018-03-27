@@ -37,6 +37,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -56,7 +57,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -71,6 +74,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -90,7 +94,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -106,6 +112,7 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
         self.circuits.enterRandomFrom()
@@ -127,7 +134,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -536,7 +545,7 @@ class TestCircuits(ProjectBase):
         self.feederSchedule.tapCreateCircuit()
         self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo()
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
@@ -550,6 +559,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
@@ -560,7 +570,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -592,6 +604,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(2)
+        oldValue = self.circuits.getCircuitTo(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
@@ -602,7 +615,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitTo(rowOrder=0)
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -681,6 +696,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        oldValue = self.circuits.getCircuitSize()
         # end of precondition
         self.circuits.tapOverflow()
         sleep(3)
@@ -694,7 +710,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitSize()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -707,6 +725,7 @@ class TestCircuits(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        oldValue = self.circuits.getCircuitLength()
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
@@ -717,7 +736,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitLength()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -829,17 +850,19 @@ class TestCircuits(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapDeleteCircuit()
         sleep(2)
         self.circuits.tapConfirmDelete()
         sleep(2)
-        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
-        sleep(3)
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
-        self.assertion.assertNotEqual(oldFirstFrom, newFirstFrom)
+        self.assertion.assertEqual(oldRowNumber, newRowNumber + 1)
+        self.assertion.assertNotEqual(oldValue, newValue)
 
     @pytest.mark.ac
     def testCancelDeleteCircuit(self):
@@ -852,24 +875,24 @@ class TestCircuits(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
-        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapDeleteCircuit()
         sleep(2)
         self.circuits.tapCancelDelete()
         sleep(2)
-        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
         sleep(3)
 
-        self.assertion.assertEqual(oldFirstFrom, newFirstFrom)
+        self.assertion.assertEqual(oldValue, newValue)
 
-    @pytest.mark.nx
+    @pytest.mark.ac
     def testDuplicateCircuit(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
-        self.caseId = 00000
+        self.caseId = 1376306
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -894,15 +917,158 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         # end of precondition
-        oldFirstFrom = self.circuits.getCircuitFrom(rowOrder=0)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapDuplicateCircuit()
         sleep(2)
-        newFirstFrom = self.circuits.getCircuitFrom(rowOrder=1)
-        sleep(3)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
 
-        self.assertion.assertEqual(oldFirstFrom, newFirstFrom)
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testEditDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376311
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDeleteDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376312
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        self.circuits.tapConfirmDelete()
+        sleep(2)
+        newValue = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldValue, newValue + 1)
+
+    @pytest.mark.ac1
+    def testDuplicateDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376313
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 2)
+        self.assertion.assertEqual(oldValue, newValue)
 
 
 

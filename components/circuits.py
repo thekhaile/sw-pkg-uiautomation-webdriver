@@ -222,20 +222,29 @@ class Circuits(object):
 
     def getCircuitTo(self, rowOrder=0):
         row = self.getACircuit(rowOrder)
-        circuitTo= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        circuitTo = allTds[1]
         circuitTo = self.testCase.UIType.Element(circuitTo)
         return circuitTo.getLabel()
 
     def getCircuitSize(self, rowOrder=0):
         row = self.getACircuit(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
-        circuitSize = allTds[1]
+        circuitSize = allTds[2]
         circuitSize = self.testCase.UIType.Element(circuitSize)
         return circuitSize.getLabel()
 
     def getCircuitLength(self, rowOrder=0):
         row = self.getACircuit(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
-        circuitLength = allTds[2]
+        circuitLength = allTds[3]
         circuitLength = self.testCase.UIType.Element(circuitLength)
         return circuitLength.getLabel()
+
+    def getNumberOfRows(self):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        return len(rows)
+
