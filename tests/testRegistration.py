@@ -20,6 +20,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithValidInfoForUS(self):
+        self.caseId = 1381580
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -50,8 +51,8 @@ class TestRegistration(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    # Verify
     def testCreateAccountWithValidInfoForCanada(self):
+        self.caseId = 1381581
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -85,6 +86,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithAllFields(self):
+        self.caseId = 1381582
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -118,6 +120,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testExitRegistrationProcess(self):
+        self.caseId = 1307370
         self.navigation.navigateToRegistrationPage()
         sleep(3)
         currentUrl = self.driver.current_url
@@ -131,6 +134,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testNavigateBackToLoginScreenAfterTapCancel(self):
+        self.caseId = 1307377
         self.navigation.navigateToLoginPage()
         sleep(2)
         currentUrl = self.driver.current_url
@@ -145,6 +149,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithOnlyRequiredFields(self):
+        self.caseId = 1381583
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
