@@ -162,3 +162,4 @@ class TestAuthentication(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
+

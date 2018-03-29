@@ -33,7 +33,10 @@ class Authentication(object):
 
     def tapSubmit(self):
         el = self.getSubmitButton()
-        el.tap()
+        if self.testCase.isSafari:
+            el.tapByLocation()
+        else:
+            el.tap()
         sleep(3)
 
     def login(self, email, password):
