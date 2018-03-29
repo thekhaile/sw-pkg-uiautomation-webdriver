@@ -15,7 +15,7 @@ class FeederSchedule(object):
 
     def getCreateCircuit(self):
         createButtons = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
-        el = createButtons[0]
+        el = createButtons[1]
         el = self.testCase.UIType.Button(el)
         return el
 
@@ -26,7 +26,7 @@ class FeederSchedule(object):
 
     def getCreateReel(self):
         createButtons = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
-        el = createButtons[1]
+        el = createButtons[0]
         el = self.testCase.UIType.Button(el)
         return el
 

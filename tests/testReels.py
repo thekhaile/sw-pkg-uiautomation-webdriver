@@ -248,25 +248,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
         self.reels.enterHeight('76')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforUSinMetric(self):
@@ -282,25 +269,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('50')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforUSinMetric(self):
@@ -316,25 +290,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('22')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforUSinMetric(self):
@@ -412,25 +373,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
         self.reels.enterHeight('29')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforUSinStandard(self):
@@ -446,25 +394,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('19')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforUSinStandard(self):
@@ -480,25 +415,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('49')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforUSinStandard(self):
@@ -576,25 +498,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
         self.reels.enterHeight('23')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforCAinStandard(self):
@@ -610,25 +519,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('19')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforCAinStandard(self):
@@ -644,25 +540,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('29')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforCAinStandard(self):
@@ -740,25 +623,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
         self.reels.enterHeight('60')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforCAinMetric(self):
@@ -774,25 +644,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('50')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforCAinMetric(self):
@@ -808,25 +665,12 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('13')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforCAinMetric(self):
@@ -904,28 +748,17 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterRandomReelName()
         sleep(1)
         self.reels.enterHeight('50')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforSIMpullReelinStandard(self):
@@ -941,28 +774,15 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('32')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforSIMpullReelinStandard(self):
@@ -978,28 +798,15 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('729')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforSIMpullReelinStandard(self):
@@ -1083,28 +890,15 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
-        sleep(1)
         self.reels.enterHeight('129')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWidthforSIMpullReelinMetric(self):
@@ -1120,28 +914,15 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
         self.reels.enterWidth('81')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforSIMpullReelinMetric(self):
@@ -1157,28 +938,15 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
         toggle = self.reels.getSIMpullReelToggle()
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
         self.reels.enterWeight('331')
-        sleep(1)
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-        self.reels.tapSubmit()
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testCreateReelRightAtLimitHeightWidthWeightforSIMpullReelinMetric(self):
