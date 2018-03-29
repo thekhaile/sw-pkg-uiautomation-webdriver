@@ -286,8 +286,6 @@ class TestJobs(ProjectBase):
         self.jobs.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterWeight('888')
-        sleep(1)
         self.jobs.enterHeight('888')
         sleep(1)
         self.jobs.enterWidth('888')
@@ -357,6 +355,15 @@ class TestJobs(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        # precondition
+        self.jobs.tapCreateJob()
+        sleep(1)
+        name = self.jobs.generateRandomName()
+        self.jobs.enterJobName(name)
+        sleep(1)
+        self.jobs.tapSubmit()
+        sleep(1)
+        # end of precondition
         jobName = self.jobs.getJobName(rowOrder=0)
         self.jobs.tapOverflow()
         sleep(2)
