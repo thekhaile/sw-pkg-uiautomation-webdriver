@@ -48,3 +48,8 @@ class Authentication(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.secondary')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def getErrorMsg(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()

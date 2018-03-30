@@ -20,6 +20,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithValidInfoForUS(self):
+        self.caseId = 1381580
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -50,8 +51,8 @@ class TestRegistration(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    # Verify
     def testCreateAccountWithValidInfoForCanada(self):
+        self.caseId = 1381581
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -85,6 +86,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithAllFields(self):
+        self.caseId = 1381582
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -118,6 +120,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testExitRegistrationProcess(self):
+        self.caseId = 1307370
         self.navigation.navigateToRegistrationPage()
         sleep(3)
         currentUrl = self.driver.current_url
@@ -131,6 +134,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testNavigateBackToLoginScreenAfterTapCancel(self):
+        self.caseId = 1307377
         self.navigation.navigateToLoginPage()
         sleep(2)
         currentUrl = self.driver.current_url
@@ -145,6 +149,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithOnlyRequiredFields(self):
+        self.caseId = 1381583
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -175,6 +180,7 @@ class TestRegistration(ProjectBase):
     #error handling
     @pytest.mark.ac
     def testCreateAccountWithSameEmail(self):
+        self.caseId = 1307222
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -205,6 +211,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAccountWithUnmatchPassword(self):
+        self.caseId = 1307223
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -235,6 +242,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAcctWithLessThan6CharPassword(self):
+        self.caseId = 1307224
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -264,6 +272,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testAssignSouthwireEmployeeRoleAutomatically(self):
+        self.caseId = 1307220
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterEmail('russ.king@southwire.com')
@@ -279,6 +288,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testRegisterWithInvalidFormatEmail(self):
+        self.caseId = 1307371
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -309,6 +319,7 @@ class TestRegistration(ProjectBase):
     # Error handling for required fields
     @pytest.mark.ac
     def testCreateAcctWithoutEmail(self):
+        self.caseId = 1307231
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -336,6 +347,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAcctWithoutPassword(self):
+        self.caseId = 1307245
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -362,6 +374,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAcctWithoutConfirmPassword(self):
+        self.caseId = 1307258
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -387,7 +400,8 @@ class TestRegistration(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
-    def testCreateAcctWithoutName(self):
+    def testCreateAcctWithoutContactName(self):
+        self.caseId = 1307270
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -413,7 +427,35 @@ class TestRegistration(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
+    def testCreateAcctWithoutCompanyName(self):
+        self.caseId = 1307284
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        self.registration.enterRandomEmail()
+        self.registration.enterPassword('password')
+        sleep(1)
+        self.registration.enterConfirmPassword('password')
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(1)
+        self.registration.selectContactRole(role='Distributor')
+        sleep(1)
+        self.registration.enterCity('Austin')
+        sleep(1)
+        self.registration.selectStateOrProvince(state='Texas')
+        sleep(1)
+        self.registration.tapSubmit()
+
+        newUrl = self.driver.current_url
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+        el = self.registration.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
     def testCreateAcctWithoutRole(self):
+        self.caseId = 1381777
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -440,6 +482,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAcctWithoutCity(self):
+        self.caseId = 1307298
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
@@ -466,6 +509,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCreateAcctWithoutState(self):
+        self.caseId = 1307326
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         currentUrl = self.driver.current_url
