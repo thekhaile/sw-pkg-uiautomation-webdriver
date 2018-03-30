@@ -3,7 +3,6 @@ from projectBase import ProjectBase
 import string
 import random
 
-
 class Jobs(object):
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -56,14 +55,17 @@ class Jobs(object):
                 continue
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
-        el.tap()
+        # This is a work-around for not being able to tap the element in Firefox
+        if self.testCase.app.isFirefox():
+            el.tapByLocation()
+        else:
+            el.tap()
         sleep(3)
 
     def tapCreateJob(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
         el = self.testCase.UIType.Button(el)
         el.tap()
-
 
     def enterJobName(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.job-name')
