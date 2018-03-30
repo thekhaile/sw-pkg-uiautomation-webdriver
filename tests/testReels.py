@@ -47,7 +47,9 @@ class TestReels(ProjectBase):
         sleep(1)
         self.reels.enterRandomWeight()
         sleep(1)
-        self.reels.toggleSIMpullReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
         sleep(1)
         el = self.reels.getSIMpullReelToggle()
         self.assertion.assertTrue(el.isOn())
@@ -79,6 +81,10 @@ class TestReels(ProjectBase):
         self.reels.enterRandomWidth()
         sleep(1)
         self.reels.enterRandomWeight()
+        sleep(1)
+        toggle = self.reels.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.reels.toggleSIMpullReel()
         sleep(1)
         el = self.reels.getSIMpullReelToggle()
         self.assertion.assertFalse(el.isOn())
@@ -227,10 +233,11 @@ class TestReels(ProjectBase):
         el = self.reels.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
+    # restrictions on Height, width, and weight #
     @pytest.mark.ac
-    def testCreateReelWithErrorHeight(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
+    def testCreateReelWithBelowLimitHeightforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
 
         self.caseId = 1378421
         self.navigation.navigateToLoginPage()
@@ -241,33 +248,17 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterHeight('6')
-        sleep(1)
-        self.reels.enterRandomWidth()
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSIMpullReelToggle()
-        self.assertion.assertFalse(el.isOn())
-        self.reels.tapSubmit()
+        self.reels.enterHeight('76')
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
-        actualErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
     @pytest.mark.ac
-    def testCreateReelWithErrorWidth(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
+    def testCreateReelWithBelowLimitWidthforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
 
         self.caseId = 1378423
         self.navigation.navigateToLoginPage()
@@ -278,35 +269,40 @@ class TestReels(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
-        currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
-        sleep(1)
-        self.reels.enterRandomHeight()
-        sleep(1)
-        self.reels.enterWidth('6')
-        sleep(1)
-        self.reels.enterRandomWeight()
-        sleep(1)
-        el = self.reels.getSIMpullReelToggle()
-        self.assertion.assertFalse(el.isOn())
-        self.reels.tapSubmit()
+        self.reels.enterWidth('50')
         sleep(3)
-        newUrl = self.driver.current_url
         expectedErrorMsg = 'No reel available'
-        actualErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-        el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
     @pytest.mark.ac
-    def testCreateReelWithErrorWeight(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
+    def testCreateReelWithBelowLimitWeightforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
 
         self.caseId = 1378425
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWeight('22')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381258
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -318,22 +314,707 @@ class TestReels(ProjectBase):
         currentUrl = self.driver.current_url
         self.reels.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomHeight()
+        self.reels.enterHeight('77')
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reels.enterWidth('51')
         sleep(1)
-        self.reels.enterWeight('6')
+        self.reels.enterWeight('23')
         sleep(1)
-        el = self.reels.getSIMpullReelToggle()
-        self.assertion.assertFalse(el.isOn())
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
         self.reels.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'No reel available'
-        actualErrorMsg = self.reels.getWeightErrorMsg()
 
-        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
-        self.assertion.assertEqual(currentUrl, newUrl)
+        self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforUSinMetric(self):
+        email = 'ningxin.liao+USinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381259
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('80')
+        sleep(1)
+        self.reels.enterWidth('60')
+        sleep(1)
+        self.reels.enterWeight('50')
+        sleep(1)
         el = self.reels.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitHeightforUSinStandard(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381255
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterHeight('29')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWidthforUSinStandard(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381256
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWidth('19')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWeightforUSinStandard(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381257
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWeight('49')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforUSinStandard(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381260
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('30')
+        sleep(1)
+        self.reels.enterWidth('20')
+        sleep(1)
+        self.reels.enterWeight('50')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforUSinStandard(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381261
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('40')
+        sleep(1)
+        self.reels.enterWidth('30')
+        sleep(1)
+        self.reels.enterWeight('80')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitHeightforCAinStandard(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378422
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterHeight('23')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWidthforCAinStandard(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378424
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWidth('19')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWeightforCAinStandard(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378426
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWeight('29')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforCAinStandard(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381265
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('24')
+        sleep(1)
+        self.reels.enterWidth('20')
+        sleep(1)
+        self.reels.enterWeight('30')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforCAinStandard(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381266
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('40')
+        sleep(1)
+        self.reels.enterWidth('30')
+        sleep(1)
+        self.reels.enterWeight('80')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitHeightforCAinMetric(self):
+        email = 'ningxin.liao+CAinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381263
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterHeight('60')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWidthforCAinMetric(self):
+        email = 'ningxin.liao+CAinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381262
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWidth('50')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWeightforCAinMetric(self):
+        email = 'ningxin.liao+CAinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381264
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        self.reels.enterWeight('13')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforCAinMetric(self):
+        email = 'ningxin.liao+CAinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381265
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('61')
+        sleep(1)
+        self.reels.enterWidth('51')
+        sleep(1)
+        self.reels.enterWeight('14')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforCAinMetric(self):
+        email = 'ningxin.liao+CAinMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381266
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('70')
+        sleep(1)
+        self.reels.enterWidth('60')
+        sleep(1)
+        self.reels.enterWeight('100')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitHeightforSIMpullReelinStandard(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378415
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('50')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWidthforSIMpullReelinStandard(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378416
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterWidth('32')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWeightforSIMpullReelinStandard(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1378417
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterWeight('729')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforSIMpullReelinStandard(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381272
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('51')
+        sleep(1)
+        self.reels.enterWidth('33')
+        sleep(1)
+        self.reels.enterWeight('730')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforSIMpullReelinStandard(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381271
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('70')
+        sleep(1)
+        self.reels.enterWidth('60')
+        sleep(1)
+        self.reels.enterWeight('900')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitHeightforSIMpullReelinMetric(self):
+        email = 'ningxin.liao+SIMpullReelMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381267
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterHeight('129')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWidthforSIMpullReelinMetric(self):
+        email = 'ningxin.liao+SIMpullReelMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381268
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterWidth('81')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelWithBelowLimitWeightforSIMpullReelinMetric(self):
+        email = 'ningxin.liao+SIMpullReelMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381270
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterWeight('331')
+        sleep(3)
+        expectedErrorMsg = 'No reel available'
+        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateReelRightAtLimitHeightWidthWeightforSIMpullReelinMetric(self):
+        email = 'ningxin.liao+SIMpullReelMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381269
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('130')
+        sleep(1)
+        self.reels.enterWidth('82')
+        sleep(1)
+        self.reels.enterWeight('332')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testCreateReelAboveLimitHeightWidthWeightforSIMpullReelinMetric(self):
+        email = 'ningxin.liao+SIMpullReelMetric@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381273
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.feederSchedule.tapCreateReel()
+        currentUrl = self.driver.current_url
+        toggle = self.reels.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.reels.toggleSIMpullReel()
+        self.reels.enterRandomReelName()
+        sleep(1)
+        self.reels.enterHeight('200')
+        sleep(1)
+        self.reels.enterWidth('100')
+        sleep(1)
+        self.reels.enterWeight('888')
+        sleep(1)
+        el = self.reels.getSubmitButton()
+        self.assertion.assertTrue(el.isEnabled())
+        self.reels.tapSubmit()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+
+
