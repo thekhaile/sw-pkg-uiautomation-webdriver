@@ -19,6 +19,14 @@ class Circuits(object):
         el = self.testCase.UIType.TextField(el)
         return el
 
+    def generateRandomFrom(self):
+        circuitFrom = ''.join([random.choice(string.ascii_uppercase + string.digits) for i in range(8)])
+        return circuitFrom
+
+    def enterRandomFrom(self):
+        circuitFrom = self.generateRandomFrom()
+        self.enterFrom(circuitFrom)
+
     def enterFrom(self, text):
         el = self.getFrom()
         el.tap()
@@ -29,6 +37,14 @@ class Circuits(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="To"]')
         el = self.testCase.UIType.TextField(el)
         return el
+
+    def generateRandomTo(self):
+        circuitTo = ''.join([random.choice(string.ascii_uppercase + string.digits) for i in range(8)])
+        return circuitTo
+
+    def enterRandomTo(self):
+        circuitTo = self.generateRandomTo()
+        self.enterTo(circuitTo)
 
     def enterTo(self, text):
         el = self.getTo()
@@ -54,13 +70,21 @@ class Circuits(object):
         el = self.getConductorSizePicker()
         el.scrollToValue(size)
 
-    def getCircuitLength(self):
+    def getLength(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Length"]')
         el = self.testCase.UIType.TextField(el)
         return el
 
+    def generateRandomLength(self):
+        circuitLength = ''.join([random.choice(string.digits) for i in range(5)])
+        return circuitLength
+
+    def enterRandomLength(self):
+        circuitLength = self.generateRandomLength()
+        self.enterCircuitLength(circuitLength)
+
     def enterCircuitLength(self, text):
-        el = self.getCircuitLength()
+        el = self.getLength()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -144,7 +168,7 @@ class Circuits(object):
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
-    # Overflow & edit button
+    # Overflow & edit/duplicate/delete button
     def tapOverflow(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
         el = self.testCase.UIType.Button(el)
@@ -155,3 +179,72 @@ class Circuits(object):
         el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def tapDeleteCircuit(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        delete = el[1]
+        delete = self.testCase.UIType.Button(delete)
+        delete.tap()
+
+    def tapDuplicateCircuit(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        duplicate = el[0]
+        duplicate = self.testCase.UIType.Button(duplicate)
+        duplicate.tap()
+
+    def tapConfirmDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapCancelDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.cancel')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    # get available circuit info from table
+    def getACircuit(self, rowOrder):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+
+        selectedRow = rows[rowOrder]
+        return selectedRow
+
+    def getCircuitFrom(self, rowOrder=0):
+        row = self.getACircuit(rowOrder)
+        circuitFrom= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'td.from-cell')
+        circuitFrom = self.testCase.UIType.Element(circuitFrom)
+        return circuitFrom.getLabel()
+
+    def getCircuitTo(self, rowOrder=0):
+        row = self.getACircuit(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        circuitTo = allTds[1]
+        circuitTo = self.testCase.UIType.Element(circuitTo)
+        return circuitTo.getLabel()
+
+    def getCircuitSize(self, rowOrder=0):
+        row = self.getACircuit(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        circuitSize = allTds[2]
+        circuitSize = self.testCase.UIType.Element(circuitSize)
+        return circuitSize.getLabel()
+
+    def getCircuitLength(self, rowOrder=0):
+        row = self.getACircuit(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        circuitLength = allTds[3]
+        circuitLength = self.testCase.UIType.Element(circuitLength)
+        return circuitLength.getLabel()
+
+    def getNumberOfRows(self):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        return len(rows)
+

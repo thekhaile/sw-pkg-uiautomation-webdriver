@@ -38,17 +38,19 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -57,7 +59,11 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -73,17 +79,19 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / RWU')
         sleep(1)
         self.circuits.selectConductorSize(size='350')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -92,7 +100,11 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -100,6 +112,7 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1381368
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
@@ -107,17 +120,19 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.toggleSIMpullHead()
         sleep(1)
@@ -128,7 +143,11 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
 
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -145,9 +164,9 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.tapCancel()
         newUrl = self.driver.current_url
@@ -390,7 +409,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
-    def testCreateCircuitWithoutNOCAndColor(self):
+    def testCreateCircuitWithoutNumberOfConductorAndColor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -525,7 +544,7 @@ class TestCircuits(ProjectBase):
         self.circuits.enterCircuitLength('1234567')
         sleep(1)
         expectedText = '123456'
-        actualText = self.circuits.getCircuitLength().getValue()
+        actualText = self.circuits.getLength().getValue()
 
         self.assertion.assertEqual(expectedText, actualText)
 
@@ -547,15 +566,15 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -563,17 +582,20 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
         sleep(3)
         currentUrl = self.driver.current_url
-        self.circuits.enterFrom('123abc')
+        self.circuits.enterRandomFrom()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitFrom()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -589,9 +611,9 @@ class TestCircuits(ProjectBase):
         self.jobs.tapConfigureJob()
         sleep(3)
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
@@ -605,17 +627,20 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(2)
+        oldValue = self.circuits.getCircuitTo(rowOrder=0)
         self.circuits.tapOverflow()
         sleep(3)
         self.circuits.tapEditCircuit()
         sleep(3)
         currentUrl = self.driver.current_url
-        self.circuits.enterTo('123abc')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitTo(rowOrder=0)
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -632,15 +657,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         # precondition
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -678,15 +703,15 @@ class TestCircuits(ProjectBase):
         sleep(3)
         # precondition
         self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterFrom('ABC123')
+        self.circuits.enterRandomFrom()
         sleep(1)
-        self.circuits.enterTo('QWE098')
+        self.circuits.enterRandomTo()
         sleep(1)
         self.circuits.selectConductorType(type='CU / THHN')
         sleep(1)
         self.circuits.selectConductorSize(size='300')
         sleep(1)
-        self.circuits.enterCircuitLength('123')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.selectNumOfConductor(NOC='4')
         sleep(1)
@@ -694,6 +719,7 @@ class TestCircuits(ProjectBase):
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
+        oldValue = self.circuits.getCircuitSize()
         # end of precondition
         self.circuits.tapOverflow()
         sleep(3)
@@ -707,7 +733,9 @@ class TestCircuits(ProjectBase):
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitSize()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -720,17 +748,20 @@ class TestCircuits(ProjectBase):
         self.projects.selectAProject()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        oldValue = self.circuits.getCircuitLength()
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.circuits.enterCircuitLength('1000')
+        self.circuits.enterRandomLength()
         sleep(1)
         self.circuits.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
+        newValue = self.circuits.getCircuitLength()
 
+        self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -757,7 +788,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testEditNOC(self):
+    def testEditNumberOfConductor(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
@@ -796,6 +827,10 @@ class TestCircuits(ProjectBase):
         self.circuits.tapEditCircuit()
         sleep(2)
         currentUrl = self.driver.current_url
+        self.circuits.tapSelectedColorCircle(circleOrder=0)
+        sleep(1)
+        self.circuits.selectColorOption(color='Black')
+        sleep(1)
         self.circuits.tapSelectedColorCircle(circleOrder=1)
         sleep(1)
         self.circuits.selectColorOption(color='Black')
@@ -827,7 +862,274 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac
+    def testDeleteCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1378723
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        self.circuits.tapConfirmDelete()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber + 1)
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testCancelDeleteCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1378729
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        # end of precondition
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        self.circuits.tapCancelDelete()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=0)
+        sleep(3)
+
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDuplicateCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376306
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testEditDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376311
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapEditCircuit()
+        sleep(2)
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDeleteDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376312
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDeleteCircuit()
+        sleep(2)
+        self.circuits.tapConfirmDelete()
+        sleep(2)
+        newValue = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldValue, newValue + 1)
+
+    @pytest.mark.ac
+    def testDuplicateDuplicatedCircuit(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1376313
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        # precondition
+        self.feederSchedule.tapCreateCircuit()
+        self.circuits.enterRandomFrom()
+        sleep(1)
+        self.circuits.enterRandomTo()
+        sleep(1)
+        self.circuits.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.circuits.selectConductorSize(size='300')
+        sleep(1)
+        self.circuits.enterRandomLength()
+        sleep(1)
+        self.circuits.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.circuits.tapSubmit()
+        sleep(3)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        # end of precondition
+        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
+        self.circuits.tapOverflow()
+        sleep(2)
+        self.circuits.tapDuplicateCircuit()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom(rowOrder=1)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertEqual(oldRowNumber, newRowNumber - 2)
+        self.assertion.assertEqual(oldValue, newValue)
 
 
 

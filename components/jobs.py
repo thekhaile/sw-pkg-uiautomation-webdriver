@@ -102,7 +102,6 @@ class Jobs(object):
         else:
             el.tap()
 
-
     def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
         el = self.testCase.UIType.Button(el)
