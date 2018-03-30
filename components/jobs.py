@@ -60,12 +60,12 @@ class Jobs(object):
             el.tapByLocation()
         else:
             el.tap()
+        sleep(3)
 
     def tapCreateJob(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
         el = self.testCase.UIType.Button(el)
         el.tap()
-
 
     def enterJobName(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.job-name')
@@ -110,7 +110,6 @@ class Jobs(object):
             el.tapByLocation()
         else:
             el.tap()
-
 
     def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
