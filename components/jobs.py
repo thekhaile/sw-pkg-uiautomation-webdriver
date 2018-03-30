@@ -21,6 +21,13 @@ class Jobs(object):
         selectedRow = rows[rowOrder]
         return selectedRow
 
+    def getJobCount(self):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        return len(rows)
+
     def getJobName(self, rowOrder=0):
         row = self.getAJob(rowOrder)
         jobName= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'th')
@@ -129,6 +136,30 @@ class Jobs(object):
     def tapEditSettings(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
         el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapDeleteJob(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        delete = el[1]
+        delete = self.testCase.UIType.Button(delete)
+        delete.tap()
+
+    def tapDuplicateJob(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        duplicate = el[0]
+        duplicate = self.testCase.UIType.Button(duplicate)
+        duplicate.tap()
+
+    def tapConfirmDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapCancelDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.cancel')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
