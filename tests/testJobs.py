@@ -364,6 +364,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapSubmit()
         sleep(1)
         # end of precondition
+        oldJobCount = self.jobs.getJobCount()
         jobName = self.jobs.getJobName(rowOrder=0)
         self.jobs.tapOverflow()
         sleep(2)
@@ -371,9 +372,11 @@ class TestJobs(ProjectBase):
         sleep(2)
         self.jobs.tapConfirmDelete()
         sleep(2)
-        newJobName = self.jobs.getJobName(rowOrder=0)
-
-        self.assertion.assertNotEqual(jobName, newJobName)
+        newJobCount = self.jobs.getJobCount()
+        self.assertEqual(oldJobCount-1, newJobCount)
+        if newJobCount >= 1:
+            newJobName = self.jobs.getJobName(rowOrder=0)
+            self.assertion.assertNotEqual(jobName, newJobName)
 
     @pytest.mark.ac
     def testCancelDeleteInProgressJob(self):

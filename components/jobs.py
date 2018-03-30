@@ -21,6 +21,13 @@ class Jobs(object):
         selectedRow = rows[rowOrder]
         return selectedRow
 
+    def getJobCount(self):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        return len(rows)
+
     def getJobName(self, rowOrder=0):
         row = self.getAJob(rowOrder)
         jobName= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'th')
