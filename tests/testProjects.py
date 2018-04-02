@@ -1,4 +1,5 @@
 from time import sleep
+import random
 from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
@@ -14,20 +15,92 @@ class TestProjects(ProjectBase):
         self.authentication = Authentication(self)
         self.projects = Projects(self)
 
-    # @pytest.mark.ac
-    # def testCreateAProject(self):
-    #     email = 'ningxin.liao@mutualmobile.com'
-    #     password = 'newpassword'
-    #
-    #     self.navigation.navigateToLoginPage()
-    #     self.authentication.login(email, password)
-    #     self.projects.tapCreateProject()
-    #     sleep(2)
-    #     currentUrl = self.driver.current_url
-    #     self.projects.enterProjectName('Test Project Name 2')
-    #     sleep(2)
-    #     self.projects.tapSubmit()
-    #     sleep(2)
-    #     newUrl = self.driver.current_url
-    #
-    #     self.assertion.assertEqual(currentUrl, newUrl)
+    @pytest.mark.ac
+    def testCreateAProject(self):
+        # Verify that user is able to create a project
+        email = 'tuan.nguyen+15usa@mutualmobile.com'
+        password = 'Test123!'
+        randomNumber = random.random()
+        projectName = ("Project %f" %randomNumber)
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.tapCreateProject()
+        sleep(2)
+        self.projects.enterProjectName(projectName)
+        sleep(3)
+        self.projects.tapSubmit()
+
+        viewProjectName = self.projects.getProjectName(rowOrder=0)
+
+        self.assertion.assertEqual(projectName, viewProjectName)
+
+    @pytest.mark.ac
+    def testcancelProjectCreation(self):
+        # Verify that user can cancel a project creation at anytime
+        email = 'tuan.nguyen+15usa@mutualmobile.com'
+        password = 'Test123!'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        currentUrl = "https://southwire-configurator-test.firebaseapp.com/projects"
+        self.projects.tapCreateProject()
+        sleep(2)
+        self.projects.tapOnCancelButton()
+        sleep(2)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testUniqueProjectName(self):
+        # Precondition: Account that had a project name = "Project one"
+        # Verify that project name is unique
+        email = 'tuan.nguyen+15usa@mutualmobile.com'
+        password = 'Test123!'
+        projectName = "Project one"
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.tapCreateProject()
+        sleep(2)
+        self.projects.enterProjectName(projectName)
+        sleep(2)
+        self.projects.tapSubmit()
+        sleep(2)
+        expectedErrorMsg = 'Project name already exists'
+        actualErrorMsg = self.projects.getErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+
+    @pytest.mark.ac
+    def testCreateProjectNameOver30characters(self):
+        # Verify that when user entered more than 30 characters, error message is displayed
+        email = 'tuan.nguyen+15usa@mutualmobile.com'
+        password = 'Test123!'
+        projectName = "Project that is over 30 characters"
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.tapCreateProject()
+        sleep(2)
+        self.projects.enterProjectName(projectName)
+        sleep(2)
+        expectedErrorMsg = 'Project Name cannot exceed 30 characters.'
+        actualErrorMsg = self.projects.getErrorMsg()
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+
+    @pytest.mark.ac
+    def testEmptyProjectName(self):
+        # Verify that when user did not enter project name(empty), the save button is disable
+        email = 'tuan.nguyen+15usa@mutualmobile.com'
+        password = 'Test123!'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.tapCreateProject()
+
+        sleep(2)
+        el = self.projects.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+

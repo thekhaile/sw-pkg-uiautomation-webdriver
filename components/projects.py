@@ -77,3 +77,25 @@ class Projects(object):
         sleep(3)
 
     '''Nngxin's ends here'''
+
+    def tapOnCancelButton(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def getErrorMsg(self):
+        # get container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project')
+        # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
+        allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
+        #get the last P in the list
+        p = allPs[-1]
+        #assign P to an element type
+        p = self.testCase.UIType.Element(p)
+        #return the error message
+        return p.getLabel()
+
+    def getSubmitButton(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
+        el = self.testCase.UIType.Button(el)
+        return el
