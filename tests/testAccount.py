@@ -133,6 +133,7 @@ class TestAccount(ProjectBase):
     def testEditCanadaProvinceField(self):
         email = 'khai.le+SWCA1@mutualmobile.com'
         password = 'password'
+        self.caseId = 1376189
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)

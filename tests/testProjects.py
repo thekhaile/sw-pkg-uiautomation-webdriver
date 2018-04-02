@@ -21,7 +21,7 @@ class TestProjects(ProjectBase):
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
 
-        self.caseId = '1301712'
+        self.caseId = 1301712
         randomNumber = random.random()
         projectName = ("Project %f" %randomNumber)
 
@@ -42,7 +42,7 @@ class TestProjects(ProjectBase):
         # Verify that user can cancel a project creation at anytime
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
-        self.caseId = '1301717'
+        self.caseId = 1301717
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
@@ -61,7 +61,7 @@ class TestProjects(ProjectBase):
         # Verify that project name is unique
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
-        self.caseId = '1301713'
+        self.caseId = 1301713
 
         projectName = "Project one"
         self.navigation.navigateToLoginPage()
@@ -82,7 +82,7 @@ class TestProjects(ProjectBase):
         # Verify that when user entered more than 30 characters, error message is displayed
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
-        self.caseId = '1301719'
+        self.caseId = 1301719
 
         projectName = "Project that is over 30 characters"
         self.navigation.navigateToLoginPage()
@@ -101,7 +101,7 @@ class TestProjects(ProjectBase):
         # Verify that when user did not enter project name(empty), the save button is disable
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
-        self.caseId = '1301727'
+        self.caseId = 1301727
 
 
         self.navigation.navigateToLoginPage()
