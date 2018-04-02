@@ -32,6 +32,8 @@ class Circuits(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.app.isMobile():
+            self.testCase.app.dismissKeyboard()
 
     def getTo(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="To"]')
@@ -51,6 +53,8 @@ class Circuits(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.app.isMobile():
+            self.testCase.app.dismissKeyboard()
 
     def getConductorTypePicker(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Metal / Insulation"]')
@@ -88,6 +92,8 @@ class Circuits(object):
         el.tap()
         el.clearText()
         el.enterText(text)
+        if self.testCase.app.isMobile():
+            self.testCase.app.dismissKeyboard()
 
     def getNumOfConductorPicker(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
@@ -111,7 +117,6 @@ class Circuits(object):
         selectedColors = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//li[@class="selected-color"]')
         selectedColor = selectedColors[circleOrder]
         selectedColor= self.testCase.UIType.Element(selectedColor)
-
         return selectedColor
 
     def tapSelectedColorCircle(self, circleOrder):

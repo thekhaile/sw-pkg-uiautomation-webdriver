@@ -226,6 +226,7 @@ class TestAccount(ProjectBase):
         email = 'ningxin.liao+sw@mutualmobile.com'
         password = 'password'
 
+        self.caseId = '1376187'
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
