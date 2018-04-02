@@ -16,10 +16,12 @@ class TestProjects(ProjectBase):
         self.projects = Projects(self)
 
     @pytest.mark.ac
-    def testCreateAProject(self):
+    def testCreateAProjectSuccessfully(self):
         # Verify that user is able to create a project
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
+
+        self.caseId = '1301712'
         randomNumber = random.random()
         projectName = ("Project %f" %randomNumber)
 
@@ -40,10 +42,11 @@ class TestProjects(ProjectBase):
         # Verify that user can cancel a project creation at anytime
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
+        self.caseId = '1301717'
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        currentUrl = "https://southwire-configurator-test.firebaseapp.com/projects"
+        currentUrl = self.driver.current_url
         self.projects.tapCreateProject()
         sleep(2)
         self.projects.tapOnCancelButton()
@@ -58,6 +61,8 @@ class TestProjects(ProjectBase):
         # Verify that project name is unique
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
+        self.caseId = '1301713'
+
         projectName = "Project one"
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
@@ -77,6 +82,8 @@ class TestProjects(ProjectBase):
         # Verify that when user entered more than 30 characters, error message is displayed
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
+        self.caseId = '1301719'
+
         projectName = "Project that is over 30 characters"
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
@@ -94,11 +101,12 @@ class TestProjects(ProjectBase):
         # Verify that when user did not enter project name(empty), the save button is disable
         email = 'tuan.nguyen+15usa@mutualmobile.com'
         password = 'Test123!'
+        self.caseId = '1301727'
+
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.tapCreateProject()
-
         sleep(2)
         el = self.projects.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
