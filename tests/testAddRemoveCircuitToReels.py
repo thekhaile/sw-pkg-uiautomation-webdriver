@@ -39,3 +39,5 @@ class TestCircuits(ProjectBase):
         self.reels.createReelWithNoRestriction()
         self.circuits.createCircuit()
         sleep(3)
+
+        self.assertion.assertNotExists()
