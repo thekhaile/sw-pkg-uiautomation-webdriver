@@ -255,7 +255,7 @@ class Circuits(object):
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
         return len(rows)
 
-    def createCircuit(self):
+    def createSmallCircuit(self):
         self.feederSchedule.tapCreateCircuit()
         self.enterRandomFrom()
         sleep(1)
@@ -263,9 +263,9 @@ class Circuits(object):
         sleep(1)
         self.selectConductorType(type='CU / THHN')
         sleep(1)
-        self.selectConductorSize(size='300')
+        self.selectConductorSize(size='8')
         sleep(1)
-        self.enterRandomLength()
+        self.enterCircuitLength('100')
         sleep(1)
         self.selectNumOfConductor(NOC='4')
         sleep(1)

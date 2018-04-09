@@ -150,7 +150,29 @@ class Reels(object):
     def createReelWithHeightRestrictionOf50(self):
         self.enterRandomReelName()
         sleep(1)
-        self.enterHeight('50')
+        self.enterHeight('30')
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelWithWidthRestrictionOf50(self):
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterWidth('20')
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelWithWeightRestrictionOf800(self):
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterWeight('1000')
         toggle = self.getSIMpullReelToggle()
         if toggle.isOn():
             self.toggleSIMpullReel()

@@ -36,6 +36,6 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        self.reels.createReel()
+        self.reels.createReelWithNoRestriction()
         self.circuits.createCircuit()
         sleep(3)
