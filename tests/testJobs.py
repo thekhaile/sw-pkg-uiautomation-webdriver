@@ -397,3 +397,25 @@ class TestJobs(ProjectBase):
         newJobName = self.jobs.getJobName(rowOrder=0)
 
         self.assertion.assertEqual(jobName, newJobName)
+
+    @pytest.mark.ac
+    def testDuplicateAJob(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        jobName = self.jobs.getJobName()
+        duplicatedName = jobName + "_duplicate"
+        self.jobs.selectAJob()
+        self.jobs.tapOverflow()
+        sleep(2)
+        self.jobs.tapDuplicateJob()
+        sleep(2)
+        self.jobs.enterJobName(duplicatedName)
+        sleep(2)
+        self.jobs.tapSubmit()
+        recentJobName = self.jobs.getJobName(rowOrder=0)
+
+        self.assertion.assertEqual(duplicatedName, recentJobName)
