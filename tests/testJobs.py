@@ -103,7 +103,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Job name already exists'
+        expectedErrorMsg = 'Job name already exists.'
         actualErrorMsg = self.jobs.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
@@ -130,7 +130,7 @@ class TestJobs(ProjectBase):
         self.jobs.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Project Name cannot exceed 30 characters.'
+        expectedErrorMsg = 'Job name cannot exceed 30 characters.'
         actualErrorMsg = self.jobs.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
