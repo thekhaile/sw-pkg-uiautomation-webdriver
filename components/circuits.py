@@ -309,7 +309,25 @@ class Circuits(object):
         sleep(1)
         self.tapSubmit()
 
-
+    def createCircuitWithSIMpullHead(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='1')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.toggleSIMpullHead()
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
 
     def createGreenCircuit(self):
         self.feederSchedule.tapCreateCircuit()

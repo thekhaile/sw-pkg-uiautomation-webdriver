@@ -425,3 +425,181 @@ class TestCircuits(ProjectBase):
         newRowNumber = self.circuits.getNumberOfRows()
 
         self.assertion.assertTrue(oldRowNumber, newRowNumber)
+
+    @pytest.mark.ac
+    def testCircuitWithSIMpullHeadCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381451
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createCircuitWithSIMpullHead()
+        sleep(2)
+        self.circuits.createCircuitWithSIMpullHead()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 2)
+
+    @pytest.mark.ac
+    def testCircuitWithoutSIMpullHeadCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381452
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 2)
+
+    @pytest.mark.ac
+    def testCircuitWithoutSIMpullHeadCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381453
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createCircuitWithSIMpullHead()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 2)
+
+    @pytest.mark.ac
+    def testCircuitRemovedFromAReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381457
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        sleep(2)
+        self.feederSchedule.confirmRemoval()
+        sleep(2)
+        self.feederSchedule.switchToAvailableCircuitTab()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+
+    @pytest.mark.ac
+    def testCircuitRemovedCanBeReaddedToReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381461
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        sleep(2)
+        self.feederSchedule.confirmRemoval()
+        sleep(2)
+        self.feederSchedule.switchToAvailableCircuitTab()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+
+

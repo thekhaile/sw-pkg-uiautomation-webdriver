@@ -3,6 +3,7 @@ from time import sleep
 from projectBase import ProjectBase
 import string
 import random
+import os
 
 class FeederSchedule(object):
 
@@ -51,10 +52,24 @@ class FeederSchedule(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
+    def confirmRemoval(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
     def getAvalableCircuitTab(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Available Circuits"]')
         el = self.testCase.UIType.Element(el)
         return el
+
+    def tapAvalableCircuit(self):
+        el = self.getAvalableCircuitTab()
+        el.tap()
+
+    def switchToAvailableCircuitTab(self):
+        el = self.getAvalableCircuitTab()
+        if el.ui_object.get_attribute('class') != 'selected':
+            el.tap()
 
     def getCircuitsOnReelTab(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Circuits on Reel"]')
@@ -82,6 +97,6 @@ class FeederSchedule(object):
 
     def uploadTemplate(self, filePath):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="file"]')
-
-        el.send_keys(filePath)
+        cwd = os.getcwd()
+        el.send_keys(cwd + filePath)
 
