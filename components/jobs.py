@@ -68,7 +68,7 @@ class Jobs(object):
         el.tap()
 
     def enterJobName(self, text):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.job-name')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Job Name*"]')
         el = self.testCase.UIType.TextField(el)
         el.tap()
 
@@ -136,9 +136,6 @@ class Jobs(object):
         el.tap()
         sleep(3)
 
-
-    '''Ningxin's code starts here'''
-
     def tapCancel(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
         el = self.testCase.UIType.Button(el)
@@ -181,16 +178,9 @@ class Jobs(object):
         el.tap()
 
     def getErrorMsg(self):
-        # get container
-        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project.job')
-        # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
-        allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
-        #get the last P in the list
-        p = allPs[-1]
-        #assign P to an element type
-        p = self.testCase.UIType.Element(p)
-        #return the error message
-        return p.getLabel()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
 
     def generateRandomName(self):
         randomName = ''.join([random.choice(string.letters + string.digits + " " + " ") for i in range(30)])
