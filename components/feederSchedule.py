@@ -35,10 +35,14 @@ class FeederSchedule(object):
         el.tap()
         sleep(2)
 
-    def tapAddCircuit(self):
+    def getAddButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
                                            'button.icon-button.add-to-reel')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapAddCircuit(self):
+        el = self.getAddButton()
         el.tap()
 
     def tapRemoveCircuit(self):
@@ -58,5 +62,13 @@ class FeederSchedule(object):
         return el
 
     def tapCircuitsOnReel(self):
-        toggle = self.testCase.app.findElements()
+        el = self.getCircuitsOnReelTab()
+        el.tap()
+
+    def switchToCircuitsOnReelTab(self):
+        el = self.getCircuitsOnReelTab()
+        if el.ui_object.get_attribute('class') != 'selected':
+            el.tap()
+
+
 

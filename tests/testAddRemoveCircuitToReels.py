@@ -25,19 +25,22 @@ class TestCircuits(ProjectBase):
         self.circuits = Circuits(self)
         self.feederSchedule = FeederSchedule(self)
 
-    def testAddCircuitToReel(self):
+    def testCircuitCannotBeAddedToReelWhenNoReel(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1381436
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projects.createAProject()
+        self.jobs.createAJob()
+        sleep(3)
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        self.reels.createReelWithNoRestriction()
-        self.circuits.createCircuit()
+        self.circuits.createSmallCircuit()
         sleep(3)
+        add = self.feederSchedule.getAddButton()
 
-        self.assertion.assertNotExists()
+        self.assertion.assertNotExists(add)
