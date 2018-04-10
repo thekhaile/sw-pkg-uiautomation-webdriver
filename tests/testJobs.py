@@ -6,6 +6,8 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
+from southwire_pkg_uiautomation_webdriver.components.reels import Reels
+from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 
 class TestJobs(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
@@ -16,6 +18,8 @@ class TestJobs(ProjectBase):
         self.authentication = Authentication(self)
         self.projects = Projects(self)
         self.jobs = Jobs(self)
+        self.reels = Reels(self)
+        self.feederSchedule = FeederSchedule(self)
 
     # Test SCR-104 Create New Job
 
@@ -399,23 +403,141 @@ class TestJobs(ProjectBase):
         self.assertion.assertEqual(jobName, newJobName)
 
     @pytest.mark.ac
-    def testDuplicateAJob(self):
-        email = 'ningxin.liao@mutualmobile.com'
+    def testDuplicatedJobSettings(self):
+        # Verify the duplicated job's settings are identical to the original
+        email = 'nick.moore+auto1@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1388781
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
-        jobName = self.jobs.getJobName()
-        duplicatedName = jobName + "_duplicate"
-        self.jobs.selectAJob()
-        self.jobs.tapOverflow()
-        sleep(2)
-        self.jobs.tapDuplicateJob()
-        sleep(2)
-        self.jobs.enterJobName(duplicatedName)
-        sleep(2)
+        self.jobs.tapCreateJob()
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.enterHeight("1000")
+        self.jobs.enterWidth("1000")
+        self.jobs.enterWeight("1000")
+        simpullToggle = self.jobs.getSIMpullReelToggle().getValue()
         self.jobs.tapSubmit()
+        sleep(1)
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapDuplicateJob()
+        sleep(1)
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapEditSettings()
+        sleep(1)
+        height = self.jobs.getHeight()
+        width = self.jobs.getWidth()
+        weight = self.jobs.getWeight()
+
+        self.assertion.assertEqual('1000', height)
+        self.assertion.assertEqual('1000', width)
+        self.assertion.assertEqual('1000', weight)
+        self.assertion.assertEqual(simpullToggle, self.jobs.getSIMpullReelToggle().getValue())
+
+    @pytest.mark.ac
+    def testDuplicatedJobReels(self):
+        # Verify the duplicated job's reels are identical to the original
+        email = 'nick.moore+auto1@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1388785
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        sleep(1)
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        for i in range(2):
+            self.feederSchedule.tapCreateReel()
+            self.reels.enterRandomReelName()
+            self.reels.tapSubmit()
+        reelList = self.reels.getReels()
+        self.navigation.navigateToProjectsPage()
+        self.projects.selectAProject()
+        sleep(1)
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapDuplicateJob()
+        sleep(1)
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        self.jobs.selectAJob()
+        self.jobs.tapConfigureJob()
+        newReelList = self.reels.getReels()
+
+        self.assertion.assertEqual(reelList, newReelList)
+
+    @pytest.mark.ac
+    def testDuplicatedJobCount(self):
+        # Verify the list of jobs is incremented after duplication
+        email = 'nick.moore+auto1@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1388791
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        sleep(1)
+        jobCount = self.jobs.getJobCount()
+        sleep(1)
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapDuplicateJob()
+        sleep(1)
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        newJobCount = self.jobs.getJobCount()
+
+        self.assertion.assertEqual(jobCount + 1, newJobCount)
+
+    @pytest.mark.ac1
+    def testDuplicatedJobListPosition(self):
+        # Verify the duplicated job is placed at the top of the job list
+        email = 'nick.moore+auto1@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1388790
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.tapSubmit()
+        sleep(1)
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapDuplicateJob()
+        sleep(1)
+        newJobName = self.jobs.generateRandomName()
+        self.jobs.enterJobName(newJobName)
+        self.jobs.tapSubmit()
+        sleep(1)
         recentJobName = self.jobs.getJobName(rowOrder=0)
 
-        self.assertion.assertEqual(duplicatedName, recentJobName)
+        self.assertion.assertEqual(newJobName, recentJobName)
+
+
+
+
+

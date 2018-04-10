@@ -63,7 +63,7 @@ class Jobs(object):
         sleep(3)
 
     def tapCreateJob(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//a[text()="Create Job"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
@@ -83,6 +83,11 @@ class Jobs(object):
         el.clearText()
         el.enterText(text)
 
+    def getHeight(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.height')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
+
     def enterWidth(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.width')
         el = self.testCase.UIType.TextField(el)
@@ -91,6 +96,11 @@ class Jobs(object):
         el.clearText()
         el.enterText(text)
 
+    def getWidth(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.width')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
+
     def enterWeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.weight')
         el = self.testCase.UIType.TextField(el)
@@ -98,6 +108,11 @@ class Jobs(object):
 
         el.clearText()
         el.enterText(text)
+
+    def getWeight(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.weight')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
 
     def getSIMpullReelToggle(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="checkbox"]')
