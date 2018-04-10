@@ -65,7 +65,7 @@ class Jobs(object):
         sleep(3)
 
     def tapCreateJob(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//a[text()="Create Job"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
