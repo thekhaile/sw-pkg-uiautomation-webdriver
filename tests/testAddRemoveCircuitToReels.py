@@ -25,14 +25,15 @@ class TestCircuits(ProjectBase):
         self.circuits = Circuits(self)
         self.feederSchedule = FeederSchedule(self)
 
+    @pytest.mark.ac
     def testCircuitCannotBeAddedToReelWhenNoReel(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
 
         self.caseId = 1381436
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.createAProject()
+        self.projects.selectAProject()
         self.jobs.createAJob()
         sleep(3)
         self.jobs.selectAJob()
@@ -43,4 +44,384 @@ class TestCircuits(ProjectBase):
         sleep(3)
         add = self.feederSchedule.getAddButton()
 
-        self.assertion.assertNotExists(add)
+        self.assertion.assertNotExists(add.ui_object)
+
+    @pytest.mark.ac
+    def testAddCircuitToSIMpullReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381437
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createSIMpullReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        oldValue = self.circuits.getCircuitFrom()
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        newRowNumber = self.circuits.getNumberOfRows()
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 1)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom()
+
+        self.assertion.assertEqual(oldValue,newValue)
+
+    @pytest.mark.ac
+    def testAddCircuitToNoneSIMpullReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381438
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        oldValue = self.circuits.getCircuitFrom()
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        newRowNumber = self.circuits.getNumberOfRows()
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 1)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        newValue = self.circuits.getCircuitFrom()
+
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testGreenCannotBeAddedToReelWithOtherColors(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381442
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        alert = self.feederSchedule.getIncompatibleAlert()
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+        self.assertion.assertExists(alert.ui_object)
+
+    @pytest.mark.ac
+    def testGreenCircuitOfSameColorCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381443
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+
+    @pytest.mark.ac
+    def testDifferentColorCircuitsCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381444
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createCircuitOfDifferentColors()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 1)
+
+    @pytest.mark.ac
+    def testGreenCircuitOfDifferentSizeCannotBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381445
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        self.circuits.createGreenCircuitOfDifferentSize()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        alert = self.feederSchedule.getIncompatibleAlert()
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+        self.assertion.assertExists(alert.ui_object)
+
+    @pytest.mark.ac
+    def testGreenCircuitOfSameSizeCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381446
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+
+    @pytest.mark.ac
+    def testSameSizeCircuitsCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381447
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 1)
+
+    @pytest.mark.ac
+    def testDifferentSizeCircuitsCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381448
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createCircuitOfDifferentSize()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber + 1)
+
+    @pytest.mark.ac
+    def testGreenCircuitOfDifferentMetalInsulationCannotBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381449
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        self.feederSchedule.tapAddCircuit()
+        self.circuits.createGreenCircuitOfDifferentMetalInsulation()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        alert = self.feederSchedule.getIncompatibleAlert()
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)
+        self.assertion.assertExists(alert.ui_object)
+
+    @pytest.mark.ac
+    def testGreenCircuitOfSameMetalInsulationCanBeAddedOnSameReel(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381450
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        sleep(3)
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldRowNumber = self.circuits.getNumberOfRows()
+        # end of precondition
+        self.circuits.createGreenCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(3)
+        newRowNumber = self.circuits.getNumberOfRows()
+
+        self.assertion.assertTrue(oldRowNumber, newRowNumber)

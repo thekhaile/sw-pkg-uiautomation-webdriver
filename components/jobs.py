@@ -65,7 +65,7 @@ class Jobs(object):
         sleep(3)
 
     def tapCreateJob(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
@@ -185,9 +185,10 @@ class Jobs(object):
         el.tap()
 
     def createAJob(self):
-        self.projects.selectAProject()
         self.tapCreateJob()
+        sleep(2)
         self.enterRandomJobName()
+        sleep(2)
         self.tapSubmit()
 
 

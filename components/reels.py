@@ -128,6 +128,7 @@ class Reels(object):
         el.tap()
 
     def createReelWithNoRestriction(self):
+        self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
         toggle = self.getSIMpullReelToggle()
@@ -138,6 +139,7 @@ class Reels(object):
         sleep(3)
 
     def createSIMpullReelWithNoRestriction(self):
+        self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
         toggle = self.getSIMpullReelToggle()
@@ -148,6 +150,7 @@ class Reels(object):
         sleep(3)
 
     def createReelWithHeightRestrictionOf50(self):
+        self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
         self.enterHeight('30')
@@ -159,6 +162,7 @@ class Reels(object):
         sleep(3)
 
     def createReelWithWidthRestrictionOf50(self):
+        self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
         self.enterWidth('20')
@@ -170,6 +174,7 @@ class Reels(object):
         sleep(3)
 
     def createReelWithWeightRestrictionOf800(self):
+        self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
         self.enterWeight('1000')

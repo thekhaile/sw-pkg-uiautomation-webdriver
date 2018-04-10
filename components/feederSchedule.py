@@ -70,5 +70,18 @@ class FeederSchedule(object):
         if el.ui_object.get_attribute('class') != 'selected':
             el.tap()
 
+    def getExceedsAlert(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.circuit-warning.exceeds')
+        el = self.testCase.UIType.Button(el)
+        return el
 
+    def getIncompatibleAlert(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.circuit-warning.incompatible')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def uploadTemplate(self, filePath):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="file"]')
+
+        el.send_keys(filePath)
 
