@@ -1016,5 +1016,108 @@ class TestReels(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac1
+    def testReelWithNoCircuitCanBeDeleted(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388821
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        oldValue = self.reels.getReelName()
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapDeleteReel()
+        sleep(2)
+        self.reels.tapConfirmDelete()
+        newValue = self.reels.getReelName()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac1
+    def testReelWithOneCircuitCanBeDeleted(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388822
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        oldValue = self.reels.getReelName()
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapDeleteReel()
+        sleep(2)
+        self.reels.tapConfirmDelete()
+        newValue = self.reels.getReelName()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac1
+    def testReelWithMoreThanOneCircuitCanBeDeleted(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388823
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.createAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        oldValue = self.reels.getReelName()
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapDeleteReel()
+        sleep(2)
+        self.reels.tapConfirmDelete()
+        newValue = self.reels.getReelName()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+
 
 

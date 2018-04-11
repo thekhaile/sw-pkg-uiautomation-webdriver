@@ -108,3 +108,5 @@ class Projects(object):
         self.enterRandomProjectName()
         sleep(3)
         self.tapSubmit()
+        sleep(2)
+        self.selectAProject()

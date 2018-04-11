@@ -125,7 +125,6 @@ class Circuits(object):
         el = self.getSelectedColorCircle(circleOrder)
         el.tap()
 
-
     def getColorOption(self, color):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="button" and @id= "%s"]' % color)
         el = self.testCase.UIType.Element(el)
@@ -255,6 +254,7 @@ class Circuits(object):
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
         return len(rows)
 
+    # create circuits with different restrictions
     def createSmallCircuit(self):
         self.feederSchedule.tapCreateCircuit()
         self.enterRandomFrom()
