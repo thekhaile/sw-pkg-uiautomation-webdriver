@@ -12,11 +12,11 @@ from southwire_pkg_uiautomation_webdriver.components.reels import Reels
 from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 import unidecode
 
-class TestReels(ProjectBase):
+class TestTrackReelProgress(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
-        super(TestReels, self).__init__(*args, **kwargs)
+        super(TestTrackReelProgress, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.projects = Projects(self)
@@ -392,3 +392,289 @@ class TestReels(ProjectBase):
         self.assertion.assertEqual(weight, '77%')
         self.assertion.assertEqual(volume, '94%')
         self.assertion.assertExists(alert.ui_object)
+
+    @pytest.mark.ac
+    def testReelSizeIncreaseWhenExceedCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381511
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'C17')
+        self.assertion.assertEqual(weight, '58%')
+        self.assertion.assertEqual(volume, '80%')
+
+    @pytest.mark.ac
+    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381513
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createMediumUSCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'R16')
+        self.assertion.assertEqual(weight, '70%')
+        self.assertion.assertEqual(volume, '44%')
+
+    @pytest.mark.ac
+    def testReelSizeIncreaseWhenExceedCurrentWeightCapacity(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381516
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'C17')
+        self.assertion.assertEqual(weight, '58%')
+        self.assertion.assertEqual(volume, '80%')
+
+    @pytest.mark.ac
+    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381518
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCACircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'A62R')
+        self.assertion.assertEqual(weight, '94%')
+        self.assertion.assertEqual(volume, '96%')
+
+    @pytest.mark.ac
+    def testReelSizeIncreaseWhenExceedCurrentWeightCapacity(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381520
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createSIMpullReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCASIMpullCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, '61"')
+        self.assertion.assertEqual(weight, '93%')
+        self.assertion.assertEqual(volume, '68%')
+
+    @pytest.mark.ac
+    def testReelSizeDecreaseWhenBelowCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381522
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createMiniUSCircuit()
+        sleep(2)
+        self.circuits.createMiniUSCircuit()
+        sleep(2)
+        self.circuits.createMiniUSCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        # end of precondition
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        self.feederSchedule.confirmRemoval()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'N7')
+        self.assertion.assertEqual(weight, '79%')
+        self.assertion.assertEqual(volume, '99%')
+
+    @pytest.mark.ac
+    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381524
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeUSCircuit()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        # end of precondition
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        self.feederSchedule.confirmRemoval()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'N7')
+        self.assertion.assertEqual(weight, '0%')
+        self.assertion.assertEqual(volume, '0%')
+
+    @pytest.mark.nx
+    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacity(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381529
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCACircuit()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        # end of precondition
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        self.feederSchedule.confirmRemoval()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'N7P')
+        self.assertion.assertEqual(weight, '0%')
+        self.assertion.assertEqual(volume, '0%')
+
+
+
+

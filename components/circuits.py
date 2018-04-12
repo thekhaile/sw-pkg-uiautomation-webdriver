@@ -255,6 +255,24 @@ class Circuits(object):
         return len(rows)
 
     # create circuits with different restrictions
+    def createMiniUSCircuit(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='250')
+        sleep(1)
+        self.enterCircuitLength('105')
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
+
     def createSmallCircuit(self):
         self.feederSchedule.tapCreateCircuit()
         self.enterRandomFrom()
@@ -270,6 +288,24 @@ class Circuits(object):
         self.selectNumOfConductor(NOC='4')
         sleep(1)
         self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
+
+    def createMediumUSCircuit(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='600')
+        sleep(1)
+        self.enterCircuitLength('500')
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Black-Black-Black-Black')
         sleep(1)
         self.tapSubmit()
 
