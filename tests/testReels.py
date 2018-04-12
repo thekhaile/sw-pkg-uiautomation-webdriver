@@ -1118,6 +1118,196 @@ class TestReels(ProjectBase):
 
         self.assertion.assertNotEqual(oldValue, newValue)
 
+    @pytest.mark.ac1
+    def testVolumeIsTrackForCurrentLoad(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381492
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        oldValue = self.reels.getVolumePercentage()
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac1
+    def testWeightIsTrackForCurrentLoad(self):
+        email = 'ningxin.liao+testAddRemove@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381493
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        oldValue = self.reels.getWeightPercentage()
+        # end of precondition
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        newValue = self.reels.getWeightPercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac1
+    def testLargestProductIsCorrectWhenReelHasNoRestrictionOnUSNonSIMpullReel(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381494
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        package = self.reels.getReelPackage()
+
+        self.assertion.assertEqual(package, 'A62R')
+
+    @pytest.mark.ac1
+    def testLargestProductIsCorrectWhenReelHasNoRestrictionOnCANonSIMpullReel(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381495
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCACircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        package = self.reels.getReelPackage()
+
+        self.assertion.assertEqual(package, 'A62R')
+
+    @pytest.mark.ac1
+    def testLargestProductIsCorrectWhenReelHasNoRestrictionOnSIMpullReel(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381496
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createSIMpullReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCASIMpullCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        package = self.reels.getReelPackage()
+
+        self.assertion.assertEqual(package, '61"')
+
+    @pytest.mark.ac1
+    def testLargestProductIsCorrectWhenReelHasOverLimitRestrictionsOnUSNonSIMpullReel(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381497
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelOverRestrictions()
+        sleep(3)
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        package = self.reels.getReelPackage()
+
+        self.assertion.assertEqual(package, 'A62R')
+
+    @pytest.mark.nx
+    def testLargestProductIsCorrectWhenHeightIsTheLimitingFactor(self):
+        email = 'ningxin.liao+USinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381502
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithHeightRestrictionOf30()
+        sleep(3)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        self.circuits.createSmallCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        alert = self.feederSchedule.getExceedsAlert()
+        package = self.reels.getReelPackage()
+
+        self.assertion.assertEqual(package, 'N7')
+        self.assertion.assertExists(alert.ui_object)
+
 
 
 
