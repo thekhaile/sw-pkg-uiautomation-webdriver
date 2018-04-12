@@ -509,7 +509,7 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(jobCount + 1, newJobCount)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testDuplicatedJobListPosition(self):
         # Verify the duplicated job is placed at the top of the job list
         email = 'nick.moore+auto1@mutualmobile.com'
@@ -537,7 +537,30 @@ class TestJobs(ProjectBase):
 
         self.assertion.assertEqual(newJobName, recentJobName)
 
+    @pytest.mark.ac
+    def testDuplicatedJobWithNonUniqueName(self):
+        # Verify when a non-unique job name is added that an error appears
+        email = 'nick.moore+auto1@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1388773
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        self.jobs.tapCreateJob()
+        jobName = self.jobs.generateRandomName()
+        self.jobs.enterJobName(jobName)
+        self.jobs.tapSubmit()
+        sleep(1)
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapOverflow()
+        sleep(1)
+        self.jobs.tapDuplicateJob()
+        sleep(1)
+        self.jobs.enterJobName(jobName)
+        self.jobs.tapSubmit()
+        expectedErrorMsg = 'Job name already exists.'
+        actualErrorMsg = self.jobs.getErrorMsg()
 
-
-
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
