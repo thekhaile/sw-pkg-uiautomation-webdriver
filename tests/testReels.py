@@ -1016,6 +1016,163 @@ class TestReels(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac1
+    def testReelNameCanBeEdited(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381684
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        # precondition
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        # end of precondition
+        oldValue = self.reels.getReelName()
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapEditReel()
+        sleep(2)
+        self.reels.enterRandomReelName()
+        sleep(2)
+        self.reels.tapSubmit()
+        sleep(2)
+        newValue = self.reels.getReelName()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac1
+    def testEditedReelNameCanNotBeTheSameAsOtherReels(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381685
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        # precondition
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        self.feederSchedule.tapCreateReel()
+        sleep(1)
+        self.reels.enterReelName('Same Name')
+        sleep(1)
+        self.reels.tapSubmit()
+        sleep(2)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapEditReel()
+        sleep(2)
+        self.reels.enterReelName('Same Name')
+        sleep(2)
+        self.reels.tapSubmit()
+        sleep(2)
+        errorMsg = self.reels.getReelNameErrorMsg()
+
+        self.assertion.assertEqual(errorMsg, 'Reel name already exists.')
+
+    @pytest.mark.ac1
+    def testEditedReelNameCanNotExceed30Char(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381686
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        # precondition
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapEditReel()
+        sleep(2)
+        self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
+        sleep(2)
+        self.reels.tapSubmit()
+        sleep(2)
+        errorMsg = self.reels.getReelNameErrorMsg()
+
+        self.assertion.assertEqual(errorMsg, 'Reel name cannot exceed 30 characters.')
+
+    @pytest.mark.ac1
+    def testSubmitButtonIsDisabledWhenNameFieldIsEmpty(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381687
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        # precondition
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapEditReel()
+        sleep(2)
+        self.reels.enterReelName(' ')
+        sleep(2)
+        self.reels.tapSubmit()
+        sleep(2)
+        button = self.reels.getSubmitButton()
+
+        self.assertion.assertFalse(button.isEnabled())
+
+    @pytest.mark.ac1
+    def testSubmitButtonIsDisabledWhenThereIsAnError(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381690
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projects.selectAProject()
+        # precondition
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(1)
+        self.jobs.tapConfigureJob()
+        sleep(1)
+        self.reels.createReelWithNoRestriction()
+        sleep(2)
+        # end of precondition
+        self.reels.tapOverflow()
+        sleep(2)
+        self.reels.tapEditReel()
+        sleep(2)
+        self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
+        sleep(2)
+        self.reels.tapSubmit()
+        sleep(2)
+        button = self.reels.getSubmitButton()
+
+        self.assertion.assertFalse(button.isEnabled())
+
 
 
 
