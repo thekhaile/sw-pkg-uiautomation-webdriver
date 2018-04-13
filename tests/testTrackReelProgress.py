@@ -530,7 +530,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(volume, '96%')
 
     @pytest.mark.ac
-    def testReelSizeIncreaseWhenExceedCurrentWeightCapacity(self):
+    def testSIMpullReelSizeIncreaseWhenExceedCurrentWeightCapacity(self):
         email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
         password = 'password'
 
@@ -640,7 +640,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(weight, '0%')
         self.assertion.assertEqual(volume, '0%')
 
-    @pytest.mark.nx
+    @pytest.mark.ac
     def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacity(self):
         email = 'ningxin.liao+CAinStd@mutualmobile.com'
         password = 'password'
@@ -674,6 +674,80 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(newValue, 'N7P')
         self.assertion.assertEqual(weight, '0%')
         self.assertion.assertEqual(volume, '0%')
+
+    @pytest.mark.ac
+    def testSIMpullReelSizeDecreaseWhenExceedCurrentWeightCapacity(self):
+        email = 'ningxin.liao+SIMpullReestdl@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381530
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createSIMpullReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCASIMpullCircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        self.feederSchedule.tapRemoveCircuit()
+        sleep(2)
+        self.feederSchedule.confirmRemoval()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'SIM51')
+        self.assertion.assertEqual(weight, '0%')
+        self.assertion.assertEqual(volume, '0%')
+
+    @pytest.mark.ac
+    def testCircuitsCanBeAddToReelUntilExceedVolumeCapacity(self):
+        email = 'ningxin.liao+CAinStd@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381534
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        # precondition
+        self.projects.selectAProject()
+        self.jobs.createAJob()
+        self.jobs.selectAJob()
+        sleep(3)
+        self.jobs.tapConfigureJob()
+        sleep(3)
+        self.reels.createReelWithNoRestriction()
+        sleep(3)
+        self.circuits.createLargeCACircuit()
+        sleep(2)
+        self.circuits.createLargeCACircuit()
+        sleep(2)
+        # end of precondition
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        oldValue = self.reels.getReelPackage()
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.getExceedsAlert()
+        newValue = self.reels.getReelPackage()
+        weight = self.reels.getWeightPercentage()
+        volume = self.reels.getVolumePercentage()
+
+        self.assertion.assertEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, 'A62R')
+        self.assertion.assertEqual(weight, '94%')
+        self.assertion.assertEqual(volume, '96%')
 
 
 
