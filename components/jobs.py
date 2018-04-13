@@ -85,6 +85,11 @@ class Jobs(object):
         el.clearText()
         el.enterText(text)
 
+    def getHeight(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.height')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
+
     def enterWidth(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.width')
         el = self.testCase.UIType.TextField(el)
@@ -93,6 +98,11 @@ class Jobs(object):
         el.clearText()
         el.enterText(text)
 
+    def getWidth(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.width')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
+
     def enterWeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.weight')
         el = self.testCase.UIType.TextField(el)
@@ -100,6 +110,11 @@ class Jobs(object):
 
         el.clearText()
         el.enterText(text)
+
+    def getWeight(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input.weight')
+        el = self.testCase.UIType.TextField(el)
+        return el.getValue()
 
     def getSIMpullReelToggle(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="checkbox"]')
@@ -149,8 +164,8 @@ class Jobs(object):
 
     def tapDuplicateJob(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        duplicate = el[0]
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        duplicate = el[1]
         duplicate = self.testCase.UIType.Button(duplicate)
         duplicate.tap()
 
