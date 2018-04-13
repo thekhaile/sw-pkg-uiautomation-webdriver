@@ -283,13 +283,10 @@ class Reels(object):
         self.tapSubmit()
         sleep(3)
 
-
-
-
-
-
-
-
-
-
-
+    def getReels(self):
+        els = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.header-left')
+        reels = []
+        for i in els:
+            i = self.testCase.UIType.Element(i)
+            reels.append(i.getLabel())
+        return reels
