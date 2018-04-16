@@ -3,6 +3,7 @@ from time import sleep
 from projectBase import ProjectBase
 import string
 import random
+from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
 
 class Circuits(object):
 
@@ -12,6 +13,7 @@ class Circuits(object):
         :param testCase: will be the ProjectBase object when a test is run.
         """
         self.testCase = testCase
+        self.feederSchedule = FeederSchedule(self.testCase)
 
     # Required Fields
     def getFrom(self):
@@ -252,4 +254,134 @@ class Circuits(object):
         # get the list of rows from the table
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
         return len(rows)
+
+    def createSmallCircuit(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='8')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
+
+    def createCircuitOfDifferentColors(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='1')
+        sleep(1)
+        self.enterCircuitLength('500')
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Brown-Orange-Yellow-Gray')
+        sleep(1)
+        self.tapSubmit()
+
+    def createCircuitOfDifferentSize(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='1')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
+
+    def createCircuitWithSIMpullHead(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='1')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.toggleSIMpullHead()
+        sleep(1)
+        self.selectNumOfConductor(NOC='4')
+        sleep(1)
+        self.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        sleep(1)
+        self.tapSubmit()
+
+    def createGreenCircuit(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='4')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.selectNumOfConductor(NOC='1')
+        sleep(1)
+        self.selectColorOption(color='Green')
+        sleep(1)
+        self.tapSubmit()
+
+    def createGreenCircuitOfDifferentSize(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='CU / THHN')
+        sleep(1)
+        self.selectConductorSize(size='300')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.selectNumOfConductor(NOC='1')
+        sleep(1)
+        self.selectColorOption(color='Green')
+        sleep(1)
+        self.tapSubmit()
+
+    def createGreenCircuitOfDifferentMetalInsulation(self):
+        self.feederSchedule.tapCreateCircuit()
+        self.enterRandomFrom()
+        sleep(1)
+        self.enterRandomTo()
+        sleep(1)
+        self.selectConductorType(type='AL / THHN')
+        sleep(1)
+        self.selectConductorSize(size='4')
+        sleep(1)
+        self.enterCircuitLength('100')
+        sleep(1)
+        self.selectNumOfConductor(NOC='1')
+        sleep(1)
+        self.selectColorOption(color='Green')
+        sleep(1)
+        self.tapSubmit()
+
+
 

@@ -2,6 +2,7 @@ from time import sleep
 from projectBase import ProjectBase
 import string
 import random
+from southwire_pkg_uiautomation_webdriver.components.projects import Projects
 
 class Jobs(object):
     def __init__(self, testCase):
@@ -10,6 +11,7 @@ class Jobs(object):
         :param testCase: will be the ProjectBase object when a test is run.
         """
         self.testCase = testCase
+        self.projects = Projects(self.testCase)
 
     def getAJob(self, rowOrder):
         # get table
@@ -196,6 +198,13 @@ class Jobs(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.tertiary')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def createAJob(self):
+        self.tapCreateJob()
+        sleep(2)
+        self.enterRandomJobName()
+        sleep(2)
+        self.tapSubmit()
 
 
 

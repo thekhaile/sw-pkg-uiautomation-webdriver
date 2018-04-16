@@ -3,6 +3,8 @@ from time import sleep
 from projectBase import ProjectBase
 import string
 import random
+from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
+
 
 class Reels(object):
 
@@ -12,6 +14,7 @@ class Reels(object):
         :param testCase: will be the ProjectBase object when a test is run.
         """
         self.testCase = testCase
+        self.feederSchedule = FeederSchedule(self.testCase)
 
     # Required Fields
     def generateRandomName(self):
@@ -123,6 +126,64 @@ class Reels(object):
     def tapSubmit(self):
         el = self.getSubmitButton()
         el.tap()
+
+    def createReelWithNoRestriction(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createSIMpullReelWithNoRestriction(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        toggle = self.getSIMpullReelToggle()
+        if not toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelWithHeightRestrictionOf50(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterHeight('30')
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelWithWidthRestrictionOf50(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterWidth('20')
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelWithWeightRestrictionOf800(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterWeight('1000')
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
 
     def getReels(self):
         els = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.header-left')

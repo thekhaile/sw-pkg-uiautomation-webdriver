@@ -1,5 +1,7 @@
 from time import sleep
 from projectBase import ProjectBase
+import string
+import random
 
 class Projects(object):
 
@@ -53,11 +55,18 @@ class Projects(object):
 
         sleep(3)
 
-    '''Nngxin's starts from here'''
     def tapCreateProject(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def generateRandomProjectName(self):
+        projectName = ''.join([random.choice(string.ascii_uppercase + string.digits) for i in range(5)])
+        return projectName
+
+    def enterRandomProjectName(self):
+        projectName = self.generateRandomProjectName()
+        self.enterProjectName(projectName)
 
     def enterProjectName(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
@@ -76,8 +85,6 @@ class Projects(object):
         el.tap()
         sleep(3)
 
-    '''Nngxin's ends here'''
-
     def tapOnCancelButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button"]')
         el = self.testCase.UIType.Button(el)
@@ -88,14 +95,16 @@ class Projects(object):
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project')
         # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
         allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
-        #get the last P in the list
+        # get the last P in the list
         p = allPs[-1]
-        #assign P to an element type
+        # assign P to an element type
         p = self.testCase.UIType.Element(p)
-        #return the error message
+        # return the error message
         return p.getLabel()
 
-    def getSubmitButton(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
-        el = self.testCase.UIType.Button(el)
-        return el
+    def createAProject(self):
+        self.tapCreateProject()
+        sleep(2)
+        self.enterRandomProjectName()
+        sleep(3)
+        self.tapSubmit()

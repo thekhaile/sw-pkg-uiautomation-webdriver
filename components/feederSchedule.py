@@ -3,6 +3,7 @@ from time import sleep
 from projectBase import ProjectBase
 import string
 import random
+import os
 
 class FeederSchedule(object):
 
@@ -34,3 +35,68 @@ class FeederSchedule(object):
         el = self.getCreateReel()
         el.tap()
         sleep(2)
+
+    def getAddButton(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                           'button.icon-button.add-to-reel')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapAddCircuit(self):
+        el = self.getAddButton()
+        el.tap()
+
+    def tapRemoveCircuit(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                           'button.icon-button.remove-from-reel')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def confirmRemoval(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def getAvalableCircuitTab(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Available Circuits"]')
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def tapAvalableCircuit(self):
+        el = self.getAvalableCircuitTab()
+        el.tap()
+
+    def switchToAvailableCircuitTab(self):
+        el = self.getAvalableCircuitTab()
+        if el.ui_object.get_attribute('class') != 'selected':
+            el.tap()
+
+    def getCircuitsOnReelTab(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Circuits on Reel"]')
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def tapCircuitsOnReel(self):
+        el = self.getCircuitsOnReelTab()
+        el.tap()
+
+    def switchToCircuitsOnReelTab(self):
+        el = self.getCircuitsOnReelTab()
+        if el.ui_object.get_attribute('class') != 'selected':
+            el.tap()
+
+    def getExceedsAlert(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.circuit-warning.exceeds')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def getIncompatibleAlert(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.circuit-warning.incompatible')
+        el = self.testCase.UIType.Button(el)
+        return el
+
+    def uploadTemplate(self, filePath):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="file"]')
+        cwd = os.getcwd()
+        el.send_keys(cwd + filePath)
+
