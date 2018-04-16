@@ -135,9 +135,10 @@ class Reels(object):
 
     def tapEditReel(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
-        el = self.testCase.UIType.Button(el)
-        el.tap()
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        edit = el[0]
+        edit = self.testCase.UIType.Button(edit)
+        edit.tap()
 
     def tapDeleteReel(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')

@@ -558,29 +558,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376011
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
-        sleep(3)
-        self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterRandomFrom()
-        sleep(1)
-        self.circuits.enterRandomTo()
-        sleep(1)
-        self.circuits.selectConductorType(type='CU / THHN')
-        sleep(1)
-        self.circuits.selectConductorSize(size='300')
-        sleep(1)
-        self.circuits.enterRandomLength()
-        sleep(1)
-        self.circuits.selectNumOfConductor(NOC='4')
-        sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
-        sleep(1)
-        self.circuits.tapSubmit()
+        self.circuits.createLargeUSCircuit()
         sleep(3)
         oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         self.circuits.tapOverflow()
@@ -603,29 +589,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376012
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
-        sleep(3)
-        self.feederSchedule.tapCreateCircuit()
-        self.circuits.enterRandomFrom()
-        sleep(1)
-        self.circuits.enterRandomTo()
-        sleep(1)
-        self.circuits.selectConductorType(type='CU / THHN')
-        sleep(1)
-        self.circuits.selectConductorSize(size='300')
-        sleep(1)
-        self.circuits.enterCircuitLength('123')
-        sleep(1)
-        self.circuits.selectNumOfConductor(NOC='4')
-        sleep(1)
-        self.circuits.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
-        sleep(1)
-        self.circuits.tapSubmit()
+        self.circuits.createLargeUSCircuit()
         sleep(2)
         oldValue = self.circuits.getCircuitTo(rowOrder=0)
         self.circuits.tapOverflow()
@@ -648,9 +620,11 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376013
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
@@ -694,9 +668,11 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376014
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
@@ -743,11 +719,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376015
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
         oldValue = self.circuits.getCircuitLength()
         self.circuits.tapOverflow()
         sleep(2)
@@ -769,11 +749,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376016
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
@@ -792,11 +776,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376019
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
@@ -817,11 +805,14 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376018
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        self.circuits.createCircuitOfDifferentColors()
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
@@ -846,11 +837,15 @@ class TestCircuits(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1376017
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        self.jobs.createAJob()
         self.jobs.selectAJob()
         self.jobs.tapConfigureJob()
+        self.circuits.createLargeUSCircuit()
+        sleep(2)
         self.circuits.tapOverflow()
         sleep(2)
         self.circuits.tapEditCircuit()
