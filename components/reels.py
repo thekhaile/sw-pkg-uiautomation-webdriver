@@ -127,10 +127,108 @@ class Reels(object):
         el = self.getSubmitButton()
         el.tap()
 
+    # overflow for edit and delete
+    def tapOverflow(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapEditReel(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapDeleteReel(self):
+        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
+        delete = el[1]
+        delete = self.testCase.UIType.Button(delete)
+        delete.tap()
+
+    def tapConfirmDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapCancelDelete(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.cancel')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    # get the reels table info
+    def getSeletedReel(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                           'div.selected.reel-list-item-container')
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def getReelName(self):
+        # get the selected reel container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                                  'div.selected.reel-list-item-container')
+        reelName = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.header-left')
+        reelName = self.testCase.UIType.Element(reelName)
+        return reelName.getLabel()
+
+    def getReelPackage(self):
+        # get the selected reel container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                                  'div.selected.reel-list-item-container')
+        package = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.package-name')
+        package = self.testCase.UIType.Element(package)
+        return package.getLabel()
+
+    def getReelSize(self):
+        # get reel size info
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[contains(text(), "Reel Size")]')
+        # get numeric size
+        size = el.text
+        number = size.split(' ')[-1]
+        number = self.testCase.UIType.Element(number)
+        return number
+
+    def getVolumePercentage(self):
+        # get the selected reel container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                                  'div.selected.reel-list-item-container')
+        # get volume bar
+        reelBar = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-bar')
+        volumeBar = reelBar[0]
+        percentage = volumeBar.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.display')
+        percentage = self.testCase.UIType.Element(percentage)
+        return percentage.getLabel()
+
+    def getWeightPercentage(self):
+        # get the selected reel container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
+                                                  'div.selected.reel-list-item-container')
+        # get weight bar
+        reelBar = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-bar')
+        weightBar = reelBar[1]
+        percentage = weightBar.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.display')
+        percentage = self.testCase.UIType.Element(percentage)
+        return percentage.getLabel()
+
+    # create reel with different restrictions
     def createReelWithNoRestriction(self):
         self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
+        toggle = self.getSIMpullReelToggle()
+        if toggle.isOn():
+            self.toggleSIMpullReel()
+        sleep(1)
+        self.tapSubmit()
+        sleep(3)
+
+    def createReelOverRestrictions(self):
+        self.feederSchedule.tapCreateReel()
+        self.enterRandomReelName()
+        sleep(1)
+        self.enterHeight('999999')
+        self.enterWidth('999999')
+        self.enterWeight('999999')
         toggle = self.getSIMpullReelToggle()
         if toggle.isOn():
             self.toggleSIMpullReel()
@@ -149,11 +247,11 @@ class Reels(object):
         self.tapSubmit()
         sleep(3)
 
-    def createReelWithHeightRestrictionOf50(self):
+    def createReelWithHeightRestrictionOf31(self):
         self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
-        self.enterHeight('30')
+        self.enterHeight('31')
         toggle = self.getSIMpullReelToggle()
         if toggle.isOn():
             self.toggleSIMpullReel()
@@ -161,11 +259,11 @@ class Reels(object):
         self.tapSubmit()
         sleep(3)
 
-    def createReelWithWidthRestrictionOf50(self):
+    def createReelWithWidthRestrictionOf21(self):
         self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
-        self.enterWidth('20')
+        self.enterWidth('21')
         toggle = self.getSIMpullReelToggle()
         if toggle.isOn():
             self.toggleSIMpullReel()
@@ -173,7 +271,7 @@ class Reels(object):
         self.tapSubmit()
         sleep(3)
 
-    def createReelWithWeightRestrictionOf800(self):
+    def createReelWithWeightRestrictionOf1000(self):
         self.feederSchedule.tapCreateReel()
         self.enterRandomReelName()
         sleep(1)
@@ -192,13 +290,3 @@ class Reels(object):
             i = self.testCase.UIType.Element(i)
             reels.append(i.getLabel())
         return reels
-
-
-
-
-
-
-
-
-
-
