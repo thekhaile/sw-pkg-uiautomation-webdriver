@@ -546,12 +546,12 @@ class TestTrackReelProgress(ProjectBase):
         sleep(3)
         self.reels.createSIMpullReelWithNoRestriction()
         sleep(3)
+        oldValue = self.reels.getReelPackage()
         self.circuits.createLargeCASIMpullCircuit()
         sleep(2)
         # end of precondition
         self.feederSchedule.tapAddCircuit()
         sleep(2)
-        oldValue = self.reels.getReelPackage()
         newValue = self.reels.getReelPackage()
         weight = self.reels.getWeightPercentage()
         volume = self.reels.getVolumePercentage()
