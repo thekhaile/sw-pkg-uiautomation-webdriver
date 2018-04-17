@@ -251,8 +251,11 @@ class Circuits(object):
         # get table
         table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
         # get the list of rows from the table
-        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
-        return len(rows)
+        if table:
+            rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+            return len(rows)
+        else:
+            return 0
 
     # create circuits with different restrictions
     def createMiniUSCircuit(self):

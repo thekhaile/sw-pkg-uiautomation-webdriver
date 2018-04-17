@@ -149,7 +149,7 @@ class TestAuthentication(ProjectBase):
 
     @pytest.mark.ac
     def testLogInWithoutVerifyNewAcct(self):
-        email = 'unverified@mutualmobile.com'
+        email = 'ningxin.liao+unverified@mutualmobile.com'
         password = 'password'
 
         self.caseId = 1381557

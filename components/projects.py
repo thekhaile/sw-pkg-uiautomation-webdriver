@@ -85,7 +85,7 @@ class Projects(object):
         el.tap()
         sleep(3)
 
-    def tapOnCancelButton(self):
+    def tapCancelButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="button"]')
         el = self.testCase.UIType.Button(el)
         el.tap()

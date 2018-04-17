@@ -38,11 +38,11 @@ class TestCircuits(ProjectBase):
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterRandomFrom()
+        fromText = self.circuits.generateRandomFrom()
+        self.circuits.enterFrom(fromText)
         sleep(1)
         self.circuits.enterRandomTo()
         sleep(1)
@@ -63,7 +63,7 @@ class TestCircuits(ProjectBase):
         newRowNumber = self.circuits.getNumberOfRows()
 
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
-        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(fromText, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
@@ -75,15 +75,18 @@ class TestCircuits(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """precondition"""
+        self.jobs.createAJob()
+        """end of precondition"""
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterRandomFrom()
+        fromText = self.circuits.generateRandomFrom()
+        self.circuits.enterFrom(fromText)
         sleep(1)
         self.circuits.enterRandomTo()
         sleep(1)
@@ -104,10 +107,10 @@ class TestCircuits(ProjectBase):
         newRowNumber = self.circuits.getNumberOfRows()
 
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
-        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(fromText, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac
+    @pytest.mark.ac1
     def testCreateCircuitWithAllFields(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -116,15 +119,18 @@ class TestCircuits(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """precondition"""
+        self.jobs.createAJob()
+        """end of precondition"""
         self.jobs.selectAJob()
         sleep(3)
         self.jobs.tapConfigureJob()
         sleep(3)
-        oldValue = self.circuits.getCircuitFrom(rowOrder=0)
         oldRowNumber = self.circuits.getNumberOfRows()
         self.feederSchedule.tapCreateCircuit()
         currentUrl = self.driver.current_url
-        self.circuits.enterRandomFrom()
+        fromText = self.circuits.generateRandomFrom()
+        self.circuits.enterFrom(fromText)
         sleep(1)
         self.circuits.enterRandomTo()
         sleep(1)
@@ -147,7 +153,7 @@ class TestCircuits(ProjectBase):
         newRowNumber = self.circuits.getNumberOfRows()
 
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 1)
-        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(fromText, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac

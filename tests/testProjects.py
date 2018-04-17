@@ -40,18 +40,18 @@ class TestProjects(ProjectBase):
     @pytest.mark.ac
     def testcancelProjectCreation(self):
         # Verify that user can cancel a project creation at anytime
-        email = 'tuan.nguyen+15usa@mutualmobile.com'
-        password = 'Test123!'
+        email = 'khai.le+SW1@mutualmobile.com'
+        password = 'password'
         self.caseId = 1301717
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        currentUrl = self.driver.current_url
         self.projects.tapCreateProject()
         sleep(2)
-        newUrl = self.driver.current_url
-        self.projects.tapOnCancelButton()
+        currentUrl = self.driver.current_url
+        self.projects.tapCancelButton()
         sleep(2)
+        newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 

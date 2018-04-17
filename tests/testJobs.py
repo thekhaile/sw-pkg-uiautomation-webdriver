@@ -492,7 +492,7 @@ class TestJobs(ProjectBase):
         self.authentication.login(email, password)
         self.projects.selectAProject()
         self.jobs.tapCreateJob()
-        self.jobs.enterJobName(self.jobs.generateRandomName())
+        self.jobs.enterRandomJobName()
         self.jobs.tapSubmit()
         sleep(1)
         jobCount = self.jobs.getJobCount()
