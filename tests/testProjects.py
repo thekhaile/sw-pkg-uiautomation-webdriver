@@ -49,11 +49,11 @@ class TestProjects(ProjectBase):
         currentUrl = self.driver.current_url
         self.projects.tapCreateProject()
         sleep(2)
+        newUrl = self.driver.current_url
         self.projects.tapOnCancelButton()
         sleep(2)
-        newUrl = self.driver.current_url
 
-        self.assertion.assertEqual(currentUrl, newUrl)
+        self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
     def testUniqueProjectName(self):
