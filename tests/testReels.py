@@ -34,6 +34,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -68,6 +71,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -103,6 +109,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -128,6 +137,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -153,6 +165,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -178,6 +193,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -205,6 +223,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -243,13 +264,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterHeight('76')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -264,19 +288,22 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWidth('50')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
-    @pytest.mark.ac
+    @pytest.mark.ac1
     def testCreateReelWithBelowLimitWeightforUSinMetric(self):
         email = 'ningxin.liao+USinMetric@mutualmobile.com'
         password = 'password'
@@ -285,13 +312,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWeight('22')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -306,6 +336,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -337,6 +370,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -368,13 +404,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterHeight('29')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -389,13 +428,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWidth('19')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
@@ -410,13 +452,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWeight('49')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -431,6 +476,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -462,6 +510,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -493,13 +544,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterHeight('23')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -514,13 +568,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWidth('19')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
@@ -535,13 +592,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWeight('29')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -556,6 +616,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -587,6 +650,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -618,13 +684,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterHeight('60')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -639,13 +708,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWidth('50')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
@@ -660,13 +732,16 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
         sleep(1)
         self.feederSchedule.tapCreateReel()
         self.reels.enterWeight('13')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -681,6 +756,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -698,7 +776,7 @@ class TestReels(ProjectBase):
         el = self.reels.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
         self.reels.tapSubmit()
-        sleep(3)
+        sleep(5)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -712,6 +790,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -743,6 +824,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -754,7 +838,7 @@ class TestReels(ProjectBase):
         self.reels.enterRandomReelName()
         sleep(1)
         self.reels.enterHeight('50')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -769,6 +853,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -778,7 +865,7 @@ class TestReels(ProjectBase):
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterWidth('32')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
@@ -793,6 +880,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -802,7 +892,7 @@ class TestReels(ProjectBase):
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterWeight('729')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -817,6 +907,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -851,6 +944,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -885,6 +981,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -894,7 +993,7 @@ class TestReels(ProjectBase):
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterHeight('129')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualHeightErrorMsg = self.reels.getHeightErrorMsg()
 
@@ -909,6 +1008,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -918,7 +1020,7 @@ class TestReels(ProjectBase):
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterWidth('81')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWidthErrorMsg = self.reels.getWidthErrorMsg()
 
@@ -933,6 +1035,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -942,7 +1047,7 @@ class TestReels(ProjectBase):
         if not toggle.isOn():
             self.reels.toggleSIMpullReel()
         self.reels.enterWeight('331')
-        sleep(3)
+        sleep(6)
         expectedErrorMsg = 'No reel available'
         actualWeightErrorMsg = self.reels.getWeightErrorMsg()
 
@@ -957,6 +1062,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -991,6 +1099,9 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
+        """preconditions"""
+        self.jobs.createAJob()
+        """end of preconditions"""
         self.jobs.selectAJob()
         sleep(1)
         self.jobs.tapConfigureJob()
@@ -1016,7 +1127,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testReelNameCanBeEdited(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -1025,7 +1136,7 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
-        # precondition
+        """precondition"""
         self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(1)
@@ -1033,7 +1144,7 @@ class TestReels(ProjectBase):
         sleep(1)
         self.reels.createReelWithNoRestriction()
         sleep(2)
-        # end of precondition
+        """end of precondition"""
         oldValue = self.reels.getReelName()
         self.reels.tapOverflow()
         sleep(2)
@@ -1047,7 +1158,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertNotEqual(oldValue, newValue)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testEditedReelNameCanNotBeTheSameAsOtherReels(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -1056,7 +1167,7 @@ class TestReels(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projects.selectAProject()
-        # precondition
+        """start of precondtion"""
         self.jobs.createAJob()
         self.jobs.selectAJob()
         sleep(1)
@@ -1070,7 +1181,7 @@ class TestReels(ProjectBase):
         sleep(1)
         self.reels.tapSubmit()
         sleep(2)
-        # end of precondition
+        """end of precondtion"""
         self.reels.tapOverflow()
         sleep(2)
         self.reels.tapEditReel()
@@ -1083,7 +1194,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertEqual(errorMsg, 'Reel name already exists.')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testEditedReelNameCanNotExceed30Char(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -1113,7 +1224,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertEqual(errorMsg, 'Reel name cannot exceed 30 characters.')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testSubmitButtonIsDisabledWhenNameFieldIsEmpty(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
@@ -1143,7 +1254,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertFalse(button.isEnabled())
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testSubmitButtonIsDisabledWhenThereIsAnError(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
