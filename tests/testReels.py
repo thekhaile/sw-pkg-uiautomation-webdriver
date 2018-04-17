@@ -303,7 +303,7 @@ class TestReels(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testCreateReelWithBelowLimitWeightforUSinMetric(self):
         email = 'ningxin.liao+USinMetric@mutualmobile.com'
         password = 'password'

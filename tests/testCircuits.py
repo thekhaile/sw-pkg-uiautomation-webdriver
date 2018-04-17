@@ -110,7 +110,7 @@ class TestCircuits(ProjectBase):
         self.assertion.assertEqual(fromText, newValue)
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testCreateCircuitWithAllFields(self):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
