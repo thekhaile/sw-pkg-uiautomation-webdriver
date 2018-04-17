@@ -184,7 +184,7 @@ class TestAccount(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.registration.tapAccount()
-        sleep(2)
+        sleep(3)
         phone = self.registration.generateRandomPhone()
         self.registration.enterPhoneNumber(phone)
         sleep(2)
