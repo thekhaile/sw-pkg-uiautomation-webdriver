@@ -219,7 +219,7 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterPassword('password')
         sleep(1)
-        self.registration.enterConfirmPassword('wrongpassword')
+        self.registration.enterConfirmPassword('Password')
         sleep(1)
         self.registration.enterContactName('Ningxin Liao')
         sleep(1)
