@@ -50,11 +50,10 @@ class Jobs(object):
 
     def selectAJob(self, rowOrder=0):
         # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
-        if self.testCase.app.isMicrosoftEdge():
-            count = 0
-            while not self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,'tbody') or count <= 100:
-                count += 1
-                continue
+        count = 0
+        while not self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody') or count <= 100:
+            count += 1
+            continue
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         # This is a work-around for not being able to tap the element in Firefox
@@ -144,30 +143,36 @@ class Jobs(object):
         el.tap()
         sleep(3)
 
+    def getOverflow(self):
+        els = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        if len(els) > 1:
+            el = els[1]
+        else:
+            el = els[0]
+        return el
+
     def tapOverflow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = self.getOverflow()
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapEditSettings(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        overflow = self.getOverflow()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapDeleteJob(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        delete = el[1]
-        delete = self.testCase.UIType.Button(delete)
-        delete.tap()
+        overflow = self.getOverflow()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete Job"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapDuplicateJob(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
-        duplicate = el[1]
-        duplicate = self.testCase.UIType.Button(duplicate)
-        duplicate.tap()
+        overflow = self.getOverflow()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate Job"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapConfirmDelete(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
