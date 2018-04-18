@@ -15,19 +15,20 @@ class FeederSchedule(object):
         self.testCase = testCase
 
     def getCreateCircuit(self):
-        createButtons = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
-        el = createButtons[1]
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[text()="Create Circuit"]')
         el = self.testCase.UIType.Button(el)
         return el
 
     def tapCreateCircuit(self):
+        if self.testCase.isChromium:
+            self.testCase.driver.refresh()
+            sleep(7)
         el = self.getCreateCircuit()
         el.tap()
         sleep(2)
 
     def getCreateReel(self):
-        createButtons = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//button[@class="add"]')
-        el = createButtons[0]
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[text()="Create Reel"]')
         el = self.testCase.UIType.Button(el)
         return el
 
