@@ -126,26 +126,36 @@ class Reels(object):
     def tapSubmit(self):
         el = self.getSubmitButton()
         el.tap()
+        sleep(3)
+        if self.testCase.isChromium:
+            self.testCase.app.driver.refresh()
+            sleep(6)
 
     # overflow for edit and delete
-    def tapOverflow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def getOverflows(self):
+        # find overflow container
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-item-container')
+        # find overflow list
+        overflows = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.overflow')
+        return overflows
+
+    def tapOverflow(self, reelOrder=0):
+        overflows = self.getOverflows()
+        el = overflows[reelOrder]
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapEditReel(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        edit = el[0]
-        edit = self.testCase.UIType.Button(edit)
-        edit.tap()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapDeleteReel(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        delete = el[1]
-        delete = self.testCase.UIType.Button(delete)
-        delete.tap()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapConfirmDelete(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')

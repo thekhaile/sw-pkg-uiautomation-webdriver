@@ -1188,10 +1188,10 @@ class TestReels(ProjectBase):
         sleep(2)
         self.reels.enterReelName('Same Name')
         sleep(2)
-        self.reels.tapSubmit()
-        sleep(2)
+        # self.reels.tapSubmit()
+        # sleep(2)
         errorMsg = self.reels.getReelNameErrorMsg()
-
+        
         self.assertion.assertEqual(errorMsg, 'Reel name already exists.')
 
     @pytest.mark.ac
@@ -1218,8 +1218,8 @@ class TestReels(ProjectBase):
         sleep(2)
         self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
         sleep(2)
-        self.reels.tapSubmit()
-        sleep(2)
+        # self.reels.tapSubmit()
+        # sleep(2)
         errorMsg = self.reels.getReelNameErrorMsg()
 
         self.assertion.assertEqual(errorMsg, 'Reel name cannot exceed 30 characters.')
@@ -1248,8 +1248,8 @@ class TestReels(ProjectBase):
         sleep(2)
         self.reels.enterReelName(' ')
         sleep(2)
-        self.reels.tapSubmit()
-        sleep(2)
+        # self.reels.tapSubmit()
+        # sleep(2)
         button = self.reels.getSubmitButton()
 
         self.assertion.assertFalse(button.isEnabled())
@@ -1278,8 +1278,8 @@ class TestReels(ProjectBase):
         sleep(2)
         self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
         sleep(2)
-        self.reels.tapSubmit()
-        sleep(2)
+        # self.reels.tapSubmit()
+        # sleep(2)
         button = self.reels.getSubmitButton()
 
         self.assertion.assertFalse(button.isEnabled())
