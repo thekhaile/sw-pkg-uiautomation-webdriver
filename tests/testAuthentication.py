@@ -45,7 +45,7 @@ class TestAuthentication(ProjectBase):
         email = 'khai.le@mutualmobile.com'
         password = 'password'
 
-        self.caseId = 1300698
+        self.caseId = 1300693
         self.navigation.navigateToLoginPage()
         self.authentication.enterEmail(email)
         self.authentication.enterPassword(password)
@@ -162,4 +162,20 @@ class TestAuthentication(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac1
+    def testMultipleFailedAttemptsAtLogin(self):
+        email = 'khai.le+SW1@mutualmobile.com'
+        password = 'passwor'
+
+        self.caseId = 1300692
+        self.navigation.navigateToLoginPage()
+        currentUrl = self.driver.current_url
+        for i in range(5):
+            self.authentication.login(email, password)
+            newUrl = self.driver.current_url
+            expectedErrorMsg = "This email or password is incorrect."
+            actualErrorMsg = unidecode.unidecode(self.authentication.getErrorMsg())
+            self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+            self.assertion.assertEqual(currentUrl, newUrl)
 
