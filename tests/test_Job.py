@@ -313,7 +313,7 @@ class TestJob(ProjectBase):
         self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Job name already exists'
+        expectedErrorMsg = 'Job name already exists.'
         actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
