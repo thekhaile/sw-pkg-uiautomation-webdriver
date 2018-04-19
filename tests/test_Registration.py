@@ -1,5 +1,3 @@
-__author__ = 'ningxinliao'
-import sys, os
 from time import sleep
 from projectBase import ProjectBase
 import pytest
@@ -10,7 +8,6 @@ import unidecode
 
 
 class TestRegistration(ProjectBase):
-    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/register'
 
     def __init__(self, *args, **kwargs):
         super(TestRegistration, self).__init__(*args, **kwargs)
@@ -177,7 +174,7 @@ class TestRegistration(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    #error handling
+    """Error handling"""
     @pytest.mark.ac
     def testCreateAccountWithSameEmail(self):
         self.caseId = 1307222
@@ -316,7 +313,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    # Error handling for required fields
+    """Error handling for required fields"""
     @pytest.mark.ac
     def testCreateAcctWithoutEmail(self):
         self.caseId = 1307231
@@ -533,29 +530,3 @@ class TestRegistration(ProjectBase):
 
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

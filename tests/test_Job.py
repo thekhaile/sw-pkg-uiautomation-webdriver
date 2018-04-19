@@ -1,28 +1,32 @@
-import sys, os
 from time import sleep
-from projectBase import ProjectBase
 import pytest
-from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
+from projectBase import ProjectBase
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
-from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
-from southwire_pkg_uiautomation_webdriver.components.reels import Reels
-from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
+from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule import FeederSchedule
+from southwire_pkg_uiautomation_webdriver.components.job import Job
+from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
+from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
+from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
+from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
+from southwire_pkg_uiautomation_webdriver.components.reel import Reel
+from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
 
-class TestJobs(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
+
+class TestJob(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestJobs, self).__init__(*args, **kwargs)
+        super(TestJob, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
-        self.jobs = Jobs(self)
-        self.reels = Reels(self)
+        self.projectList = ProjectList(self)
+        self.job = Job(self)
+        self.jobList = JobList(self)
+        self.reelList = ReelList(self)
         self.feederSchedule = FeederSchedule(self)
+        self.jobSummary = JobSummary(self)
+        self.reel = Reel(self)
 
-    # Test SCR-104 Create New Job
-
+    """Create job"""
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOn(self):
         # Verify that a new job with unique name can be created on Create New Job page and Toggle On
@@ -32,25 +36,25 @@ class TestJobs(ProjectBase):
         self.caseId = 1301968
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.generateRandomName()
-        self.jobs.enterJobName(jobName)
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
         sleep(1)
-        self.jobs.enterWeight('88')
+        self.job.enterWeight('88')
         sleep(1)
-        self.jobs.enterHeight('999')
+        self.job.enterHeight('999')
         sleep(1)
-        self.jobs.enterWidth('66')
+        self.job.enterWidth('66')
         sleep(1)
-        self.jobs.toggleSIMpullReel()
+        self.job.toggleSIMpullReel()
         sleep(1)
-        self.assertion.assertTrue(self.jobs.getSIMpullReelToggle().isOn(), 'Toggle has the off state after being tapped')
-        self.jobs.tapSubmit()
+        self.assertion.assertTrue(self.job.getSIMpullReelToggle().isOn(), 'Toggle has the off state after being tapped')
+        self.job.tapSubmit()
         sleep(1)
-        viewJobName = self.jobs.getJobName(rowOrder=0)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -65,17 +69,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1301974
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.generateRandomName()
-        self.jobs.enterJobName(jobName)
-        self.jobs.enterWeight('99')
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        self.job.enterWeight('99')
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(1)
-        viewJobName = self.jobs.getJobName(rowOrder=0)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -90,30 +94,30 @@ class TestJobs(ProjectBase):
         self.caseId = 1301969
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         # Preconditions: Set up an existing job
-        self.jobs.tapCreateJob()
+        self.jobList.tapCreateJob()
         sleep(1)
-        name = self.jobs.generateRandomName()
-        self.jobs.enterJobName(name)
+        name = self.job.generateRandomName()
+        self.job.enterJobName(name)
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(1)
         # End of preconditions
-        self.jobs.tapCreateJob()
+        self.jobList.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName(name)
-        self.jobs.tapSubmit()
+        self.job.enterJobName(name)
+        self.job.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Job name already exists.'
-        actualErrorMsg = self.jobs.getErrorMsg()
+        actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.jobs.getSubmitButton()
+        el = self.job.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
@@ -125,22 +129,22 @@ class TestJobs(ProjectBase):
         self.caseId = 1301994
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName('abc def ghi jkl mno pqrs tuv w1')
+        self.job.enterJobName('abc def ghi jkl mno pqrs tuv w1')
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Job name cannot exceed 30 characters.'
-        actualErrorMsg = self.jobs.getErrorMsg()
+        actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.jobs.getSubmitButton()
+        el = self.job.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
@@ -152,21 +156,21 @@ class TestJobs(ProjectBase):
         self.caseId = 1301979
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
+        self.job.enterRandomJobName()
         sleep(1)
-        self.jobs.enterWeight('88')
+        self.job.enterWeight('88')
         sleep(1)
-        self.jobs.tapCancel()
+        self.job.tapCancel()
         sleep(2)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Test SCR-105 Edit Job Settings
+    """Edit job settings"""
 
     @pytest.mark.ac
     def testEditJobNameWithNewName(self):
@@ -177,17 +181,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1302074
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        jobName = self.jobs.generateRandomName()
-        self.jobs.enterJobName(jobName)
-        self.jobs.tapSubmit()
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        self.job.tapSubmit()
         sleep(2)
-        viewJobName = self.jobs.getJobName(rowOrder=0)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
@@ -202,29 +206,29 @@ class TestJobs(ProjectBase):
         self.caseId = 1302075
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        self.jobs.enterRandomJobName()
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterRandomJobName()
+        self.job.tapSubmit()
         # Get the job name of the second row
-        name = self.jobs.getJobName(rowOrder=1)
-        self.jobs.tapOverflow()
+        name = self.jobList.getJobName(rowOrder=1)
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterJobName(name)
+        self.job.enterJobName(name)
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Job name already exists'
-        actualErrorMsg = self.jobs.getErrorMsg()
+        actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.jobs.getSubmitButton()
+        el = self.job.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
     @pytest.mark.ac
@@ -236,15 +240,15 @@ class TestJobs(ProjectBase):
         self.caseId = 1302082
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.toggleSIMpullReel()
+        self.job.toggleSIMpullReel()
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
 
@@ -259,17 +263,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1302086
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterRandomJobName()
+        self.job.enterRandomJobName()
         sleep(1)
-        self.jobs.toggleSIMpullReel()
+        self.job.toggleSIMpullReel()
         sleep(1)
-        self.jobs.tapCancel()
+        self.job.tapCancel()
         sleep(1)
         newUrl = self.driver.current_url
 
@@ -284,17 +288,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1302080
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterHeight('888')
+        self.job.enterHeight('888')
         sleep(1)
-        self.jobs.enterWidth('888')
+        self.job.enterWidth('888')
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
 
@@ -309,17 +313,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1302078
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterWeight('888')
+        self.job.enterWeight('888')
         sleep(1)
-        self.jobs.enterHeight('888')
+        self.job.enterHeight('888')
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
 
@@ -334,17 +338,17 @@ class TestJobs(ProjectBase):
         self.caseId = 1302079
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.jobs.enterWeight('888')
+        self.job.enterWeight('888')
         sleep(1)
-        self.jobs.enterWidth('888')
+        self.job.enterWidth('888')
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
 
@@ -358,28 +362,28 @@ class TestJobs(ProjectBase):
         self.caseId = 1379235
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         # precondition
-        self.jobs.tapCreateJob()
+        self.jobList.tapCreateJob()
         sleep(1)
-        name = self.jobs.generateRandomName()
-        self.jobs.enterJobName(name)
+        name = self.job.generateRandomName()
+        self.job.enterJobName(name)
         sleep(1)
-        self.jobs.tapSubmit()
+        self.job.tapSubmit()
         sleep(1)
         # end of precondition
-        oldJobCount = self.jobs.getJobCount()
-        jobName = self.jobs.getJobName(rowOrder=0)
-        self.jobs.tapOverflow()
+        oldJobCount = self.jobList.getJobCount()
+        jobName = self.jobList.getJobName(rowOrder=0)
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapDeleteJob()
+        self.jobList.tapDeleteJob()
         sleep(2)
-        self.jobs.tapConfirmDelete()
+        self.jobList.tapConfirmDelete()
         sleep(2)
-        newJobCount = self.jobs.getJobCount()
+        newJobCount = self.jobList.getJobCount()
         self.assertEqual(oldJobCount-1, newJobCount)
         if newJobCount >= 1:
-            newJobName = self.jobs.getJobName(rowOrder=0)
+            newJobName = self.jobList.getJobName(rowOrder=0)
             self.assertion.assertNotEqual(jobName, newJobName)
 
     @pytest.mark.ac
@@ -390,15 +394,15 @@ class TestJobs(ProjectBase):
         self.caseId = 1379242
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        jobName = self.jobs.getJobName(rowOrder=0)
-        self.jobs.tapOverflow()
+        self.projectList.selectAProject()
+        jobName = self.jobList.getJobName(rowOrder=0)
+        self.jobList.tapOverflow()
         sleep(2)
-        self.jobs.tapDeleteJob()
+        self.jobList.tapDeleteJob()
         sleep(2)
-        self.jobs.tapCancelDelete()
+        self.jobList.tapCancelDelete()
         sleep(3)
-        newJobName = self.jobs.getJobName(rowOrder=0)
+        newJobName = self.jobList.getJobName(rowOrder=0)
 
         self.assertion.assertEqual(jobName, newJobName)
 
@@ -411,37 +415,37 @@ class TestJobs(ProjectBase):
         self.caseId = 1388781
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.enterHeight("1000")
-        self.jobs.enterWidth("1000")
-        self.jobs.enterWeight("1000")
-        simpullToggle = self.jobs.getSIMpullReelToggle().getValue()
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.enterHeight("1000")
+        self.job.enterWidth("1000")
+        self.job.enterWeight("1000")
+        simpullToggle = self.job.getSIMpullReelToggle().getValue()
+        self.job.tapSubmit()
         sleep(1)
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapDuplicateJob()
+        self.jobList.tapDuplicateJob()
         sleep(1)
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.tapSubmit()
-        self.jobs.selectAJob()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapEditSettings()
+        self.jobList.tapEditSettings()
         sleep(1)
-        height = self.jobs.getHeight()
-        width = self.jobs.getWidth()
-        weight = self.jobs.getWeight()
+        height = self.job.getHeight()
+        width = self.job.getWidth()
+        weight = self.job.getWeight()
 
         self.assertion.assertEqual('1000', height)
         self.assertion.assertEqual('1000', width)
         self.assertion.assertEqual('1000', weight)
-        self.assertion.assertEqual(simpullToggle, self.jobs.getSIMpullReelToggle().getValue())
+        self.assertion.assertEqual(simpullToggle, self.job.getSIMpullReelToggle().getValue())
 
     @pytest.mark.ac
     def testDuplicatedJobReels(self):
@@ -452,32 +456,32 @@ class TestJobs(ProjectBase):
         self.caseId = 1388785
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
         sleep(1)
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
         for i in range(2):
-            self.feederSchedule.tapCreateReel()
-            self.reels.enterRandomReelName()
-            self.reels.tapSubmit()
-        reelList = self.reels.getReels()
+            self.reelList.tapCreateReel()
+            self.reel.enterRandomReelName()
+            self.reel.tapSubmit()
+        reelList = self.reelList.getReels()
         self.navigation.navigateToProjectsPage()
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         sleep(1)
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapDuplicateJob()
+        self.jobList.tapDuplicateJob()
         sleep(1)
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.tapSubmit()
-        self.jobs.selectAJob()
-        self.jobs.tapConfigureJob()
-        newReelList = self.reels.getReels()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        newReelList = self.reelList.getReels()
 
         self.assertion.assertEqual(reelList, newReelList)
 
@@ -490,22 +494,22 @@ class TestJobs(ProjectBase):
         self.caseId = 1388791
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        self.jobs.enterRandomJobName()
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterRandomJobName()
+        self.job.tapSubmit()
         sleep(1)
-        jobCount = self.jobs.getJobCount()
+        jobCount = self.jobList.getJobCount()
         sleep(1)
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapDuplicateJob()
+        self.jobList.tapDuplicateJob()
         sleep(1)
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.tapSubmit()
-        newJobCount = self.jobs.getJobCount()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
+        newJobCount = self.jobList.getJobCount()
 
         self.assertion.assertEqual(jobCount + 1, newJobCount)
 
@@ -518,22 +522,22 @@ class TestJobs(ProjectBase):
         self.caseId = 1388790
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        self.jobs.enterJobName(self.jobs.generateRandomName())
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
         sleep(1)
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapDuplicateJob()
+        self.jobList.tapDuplicateJob()
         sleep(1)
-        newJobName = self.jobs.generateRandomName()
-        self.jobs.enterJobName(newJobName)
-        self.jobs.tapSubmit()
+        newJobName = self.job.generateRandomName()
+        self.job.enterJobName(newJobName)
+        self.job.tapSubmit()
         sleep(1)
-        recentJobName = self.jobs.getJobName(rowOrder=0)
+        recentJobName = self.jobList.getJobName(rowOrder=0)
 
         self.assertion.assertEqual(newJobName, recentJobName)
 
@@ -546,21 +550,21 @@ class TestJobs(ProjectBase):
         self.caseId = 1388773
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
-        self.jobs.tapCreateJob()
-        jobName = self.jobs.generateRandomName()
-        self.jobs.enterJobName(jobName)
-        self.jobs.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        self.job.tapSubmit()
         sleep(1)
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapOverflow()
+        self.jobList.tapOverflow()
         sleep(1)
-        self.jobs.tapDuplicateJob()
+        self.jobList.tapDuplicateJob()
         sleep(1)
-        self.jobs.enterJobName(jobName)
-        self.jobs.tapSubmit()
+        self.job.enterJobName(jobName)
+        self.job.tapSubmit()
         expectedErrorMsg = 'Job name already exists.'
-        actualErrorMsg = self.jobs.getErrorMsg()
+        actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)

@@ -1,4 +1,3 @@
-__author__ = 'ningxinliao'
 import sys, os
 from time import sleep
 from projectBase import ProjectBase
@@ -8,8 +7,8 @@ from southwire_pkg_uiautomation_webdriver.components.registration import Registr
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 import unidecode
 
+
 class TestAccount(ProjectBase):
-    REGISTRATION_PAGE = 'https://southwire-configurator-test.firebaseapp.com/register'
 
     def __init__(self, *args, **kwargs):
         super(TestAccount, self).__init__(*args, **kwargs)
@@ -17,7 +16,7 @@ class TestAccount(ProjectBase):
         self.navigation = Navigation(self)
         self.registration = Registration(self)
 
-    # Edit Account Info
+    """Edit account info"""
     @pytest.mark.ac
     def testEditNameField(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -220,7 +219,6 @@ class TestAccount(ProjectBase):
         newValue = self.registration.getSelectedUnitOfMeasure()
 
         self.assertion.assertEqual(newValue, uom)
-
 
     @pytest.mark.ac
     def testSouthwireEmployeeCannotEditRole(self):

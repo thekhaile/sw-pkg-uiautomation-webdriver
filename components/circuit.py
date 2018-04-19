@@ -1,11 +1,13 @@
 __author__ = 'ningxinliao'
-from time import sleep
-from projectBase import ProjectBase
-import string
 import random
-from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
+import string
+from time import sleep
 
-class Circuits(object):
+from projectBase import ProjectBase
+from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule import FeederSchedule
+
+
+class Circuit(object):
 
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
@@ -174,88 +176,6 @@ class Circuits(object):
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
-    # Overflow & edit/duplicate/delete button
-    def tapOverflow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = self.testCase.UIType.Button(el)
-        el.tap()
-
-    def tapEditCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
-        el = self.testCase.UIType.Button(el)
-        el.tap()
-
-    def tapDeleteCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        delete = el[1]
-        delete = self.testCase.UIType.Button(delete)
-        delete.tap()
-
-    def tapDuplicateCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'li.actionable')
-        duplicate = el[0]
-        duplicate = self.testCase.UIType.Button(duplicate)
-        duplicate.tap()
-
-    def tapConfirmDelete(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
-        el = self.testCase.UIType.Button(el)
-        el.tap()
-
-    def tapCancelDelete(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.cancel')
-        el = self.testCase.UIType.Button(el)
-        el.tap()
-
-    # get available circuit info from table
-    def getACircuit(self, rowOrder):
-        # get table
-        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
-        # get the list of rows from the table
-        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
-
-        selectedRow = rows[rowOrder]
-        return selectedRow
-
-    def getCircuitFrom(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
-        circuitFrom= row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR,'td.from-cell')
-        circuitFrom = self.testCase.UIType.Element(circuitFrom)
-        return circuitFrom.getLabel()
-
-    def getCircuitTo(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
-        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
-        circuitTo = allTds[1]
-        circuitTo = self.testCase.UIType.Element(circuitTo)
-        return circuitTo.getLabel()
-
-    def getCircuitSize(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
-        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
-        circuitSize = allTds[2]
-        circuitSize = self.testCase.UIType.Element(circuitSize)
-        return circuitSize.getLabel()
-
-    def getCircuitLength(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
-        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
-        circuitLength = allTds[3]
-        circuitLength = self.testCase.UIType.Element(circuitLength)
-        return circuitLength.getLabel()
-
-    def getNumberOfRows(self):
-        # get table
-        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
-        # get the list of rows from the table
-        if table:
-            rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
-            return len(rows)
-        else:
-            return 0
 
     # create circuits with different restrictions
     def createMiniUSCircuit(self):

@@ -1,29 +1,28 @@
-__author__ = 'ningxinliao'
-import sys, os
 from time import sleep
 from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
-from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
-from southwire_pkg_uiautomation_webdriver.components.circuits import Circuits
-from southwire_pkg_uiautomation_webdriver.components.reels import Reels
-from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
-import unidecode
+from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
+from southwire_pkg_uiautomation_webdriver.components.job import Job
+from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
+from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
+from southwire_pkg_uiautomation_webdriver.components.reel import Reel
+from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
 
-class TestReels(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
+
+class TestReel(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestReels, self).__init__(*args, **kwargs)
+        super(TestReel, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
-        self.jobs = Jobs(self)
-        self.circuits = Circuits(self)
-        self.reels = Reels(self)
-        self.feederSchedule = FeederSchedule(self)
+        self.projectList = ProjectList(self)
+        self.job = Job(self)
+        self.reel = Reel(self)
+        self.jobSummary = JobSummary(self)
+        self.jobList = JobList(self)
+        self.reelList = ReelList(self)
 
     @pytest.mark.ac
     def testCreateReelWithUniqueNameAndToggleOn(self):
@@ -33,30 +32,30 @@ class TestReels(ProjectBase):
         self.caseId = 1378402
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
-        self.feederSchedule.tapCreateReel()
+        self.jobSummary.tapConfigureJob()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomHeight()
+        self.reel.enterRandomHeight()
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reel.enterRandomWidth()
         sleep(1)
-        self.reels.enterRandomWeight()
+        self.reel.enterRandomWeight()
         sleep(1)
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
+            self.reel.toggleSIMpullReel()
         sleep(1)
-        el = self.reels.getSIMpullReelToggle()
+        el = self.reel.getSIMpullReelToggle()
         self.assertion.assertTrue(el.isOn())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -70,31 +69,31 @@ class TestReels(ProjectBase):
         self.caseId = 1378397
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomHeight()
+        self.reel.enterRandomHeight()
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reel.enterRandomWidth()
         sleep(1)
-        self.reels.enterRandomWeight()
+        self.reel.enterRandomWeight()
         sleep(1)
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if toggle.isOn():
-            self.reels.toggleSIMpullReel()
+            self.reel.toggleSIMpullReel()
         sleep(1)
-        el = self.reels.getSIMpullReelToggle()
+        el = self.reel.getSIMpullReelToggle()
         self.assertion.assertFalse(el.isOn())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -108,21 +107,21 @@ class TestReels(ProjectBase):
         self.caseId = 1378404
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomHeight()
+        self.reel.enterRandomHeight()
         sleep(1)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
 
@@ -136,21 +135,21 @@ class TestReels(ProjectBase):
         self.caseId = 1378408
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reel.enterRandomWidth()
         sleep(1)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
 
@@ -164,21 +163,21 @@ class TestReels(ProjectBase):
         self.caseId = 1378411
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomWeight()
+        self.reel.enterRandomWeight()
         sleep(1)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
 
@@ -192,28 +191,28 @@ class TestReels(ProjectBase):
         self.caseId = 1378861
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reel.enterRandomWidth()
         sleep(1)
-        self.reels.tapCancel()
+        self.reel.tapCancel()
         sleep(5)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Error handling
+    """Error handling"""
     @pytest.mark.ac
     def testCreateReelWithSameName(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -222,39 +221,39 @@ class TestReels(ProjectBase):
         self.caseId = 1378398
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        name = self.reels.generateRandomName()
-        self.reels.enterReelName(name)
+        self.reelList.tapCreateReel()
+        name = self.reel.generateRandomName()
+        self.reel.enterReelName(name)
         sleep(1)
-        self.reels.enterRandomWidth()
+        self.reel.enterRandomWidth()
         sleep(1)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         sleep(1)
         currentUrl = self.driver.current_url
-        self.reels.enterReelName(name)
-        self.jobs.tapSubmit()
+        self.reel.enterReelName(name)
+        self.job.tapSubmit()
         sleep(1)
         newUrl = self.driver.current_url
         expectedErrorMsg = 'Reel name already exists'
-        actualErrorMsg = self.reels.getReelNameErrorMsg()
+        actualErrorMsg = self.reel.getReelNameErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    # restrictions on Height, width, and weight #
+    """Restrictions on Height, width, and weight"""
     @pytest.mark.ac
     def testCreateReelWithBelowLimitHeightforUSinMetric(self):
         email = 'ningxin.liao+USinMetric@mutualmobile.com'
@@ -263,19 +262,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378421
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterHeight('76')
+        self.reelList.tapCreateReel()
+        self.reel.enterHeight('76')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -287,19 +286,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378423
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWidth('50')
+        self.reelList.tapCreateReel()
+        self.reel.enterWidth('50')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -311,19 +310,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378425
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWeight('22')
+        self.reelList.tapCreateReel()
+        self.reel.enterWeight('22')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -335,27 +334,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381258
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('77')
+        self.reel.enterHeight('77')
         sleep(1)
-        self.reels.enterWidth('51')
+        self.reel.enterWidth('51')
         sleep(1)
-        self.reels.enterWeight('23')
+        self.reel.enterWeight('23')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -369,27 +368,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381259
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('80')
+        self.reel.enterHeight('80')
         sleep(1)
-        self.reels.enterWidth('60')
+        self.reel.enterWidth('60')
         sleep(1)
-        self.reels.enterWeight('50')
+        self.reel.enterWeight('50')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -403,19 +402,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381255
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterHeight('29')
+        self.reelList.tapCreateReel()
+        self.reel.enterHeight('29')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -427,19 +426,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381256
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWidth('19')
+        self.reelList.tapCreateReel()
+        self.reel.enterWidth('19')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -451,19 +450,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381257
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWeight('49')
+        self.reelList.tapCreateReel()
+        self.reel.enterWeight('49')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -475,27 +474,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381260
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('30')
+        self.reel.enterHeight('30')
         sleep(1)
-        self.reels.enterWidth('20')
+        self.reel.enterWidth('20')
         sleep(1)
-        self.reels.enterWeight('50')
+        self.reel.enterWeight('50')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -509,27 +508,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381261
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('40')
+        self.reel.enterHeight('40')
         sleep(1)
-        self.reels.enterWidth('30')
+        self.reel.enterWidth('30')
         sleep(1)
-        self.reels.enterWeight('80')
+        self.reel.enterWeight('80')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -543,19 +542,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378422
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterHeight('23')
+        self.reelList.tapCreateReel()
+        self.reel.enterHeight('23')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -567,19 +566,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378424
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWidth('19')
+        self.reelList.tapCreateReel()
+        self.reel.enterWidth('19')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -591,19 +590,19 @@ class TestReels(ProjectBase):
         self.caseId = 1378426
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWeight('29')
+        self.reelList.tapCreateReel()
+        self.reel.enterWeight('29')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -615,27 +614,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381265
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('24')
+        self.reel.enterHeight('24')
         sleep(1)
-        self.reels.enterWidth('20')
+        self.reel.enterWidth('20')
         sleep(1)
-        self.reels.enterWeight('30')
+        self.reel.enterWeight('30')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -649,27 +648,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381266
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('40')
+        self.reel.enterHeight('40')
         sleep(1)
-        self.reels.enterWidth('30')
+        self.reel.enterWidth('30')
         sleep(1)
-        self.reels.enterWeight('80')
+        self.reel.enterWeight('80')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -683,19 +682,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381263
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterHeight('60')
+        self.reelList.tapCreateReel()
+        self.reel.enterHeight('60')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -707,19 +706,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381262
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWidth('50')
+        self.reelList.tapCreateReel()
+        self.reel.enterWidth('50')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -731,19 +730,19 @@ class TestReels(ProjectBase):
         self.caseId = 1381264
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        self.reels.enterWeight('13')
+        self.reelList.tapCreateReel()
+        self.reel.enterWeight('13')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -755,27 +754,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381265
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('61')
+        self.reel.enterHeight('61')
         sleep(1)
-        self.reels.enterWidth('51')
+        self.reel.enterWidth('51')
         sleep(1)
-        self.reels.enterWeight('14')
+        self.reel.enterWeight('14')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(5)
         newUrl = self.driver.current_url
 
@@ -789,27 +788,27 @@ class TestReels(ProjectBase):
         self.caseId = 1381266
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('70')
+        self.reel.enterHeight('70')
         sleep(1)
-        self.reels.enterWidth('60')
+        self.reel.enterWidth('60')
         sleep(1)
-        self.reels.enterWeight('100')
+        self.reel.enterWeight('100')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -823,24 +822,24 @@ class TestReels(ProjectBase):
         self.caseId = 1378415
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
+            self.reel.toggleSIMpullReel()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('50')
+        self.reel.enterHeight('50')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -852,22 +851,22 @@ class TestReels(ProjectBase):
         self.caseId = 1378416
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterWidth('32')
+            self.reel.toggleSIMpullReel()
+        self.reel.enterWidth('32')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -879,22 +878,22 @@ class TestReels(ProjectBase):
         self.caseId = 1378417
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterWeight('729')
+            self.reel.toggleSIMpullReel()
+        self.reel.enterWeight('729')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -906,30 +905,30 @@ class TestReels(ProjectBase):
         self.caseId = 1381272
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
+            self.reel.toggleSIMpullReel()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('51')
+        self.reel.enterHeight('51')
         sleep(1)
-        self.reels.enterWidth('33')
+        self.reel.enterWidth('33')
         sleep(1)
-        self.reels.enterWeight('730')
+        self.reel.enterWeight('730')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -943,30 +942,30 @@ class TestReels(ProjectBase):
         self.caseId = 1381271
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
+            self.reel.toggleSIMpullReel()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('70')
+        self.reel.enterHeight('70')
         sleep(1)
-        self.reels.enterWidth('60')
+        self.reel.enterWidth('60')
         sleep(1)
-        self.reels.enterWeight('900')
+        self.reel.enterWeight('900')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -980,22 +979,22 @@ class TestReels(ProjectBase):
         self.caseId = 1381267
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterHeight('129')
+            self.reel.toggleSIMpullReel()
+        self.reel.enterHeight('129')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualHeightErrorMsg = self.reels.getHeightErrorMsg()
+        actualHeightErrorMsg = self.reel.getHeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualHeightErrorMsg)
 
@@ -1007,22 +1006,22 @@ class TestReels(ProjectBase):
         self.caseId = 1381268
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterWidth('81')
+            self.reel.toggleSIMpullReel()
+        self.reel.enterWidth('81')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWidthErrorMsg = self.reels.getWidthErrorMsg()
+        actualWidthErrorMsg = self.reel.getWidthErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWidthErrorMsg)
 
@@ -1034,22 +1033,22 @@ class TestReels(ProjectBase):
         self.caseId = 1381270
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
-        toggle = self.reels.getSIMpullReelToggle()
+        self.reelList.tapCreateReel()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterWeight('331')
+            self.reel.toggleSIMpullReel()
+        self.reel.enterWeight('331')
         sleep(6)
         expectedErrorMsg = 'No reel available'
-        actualWeightErrorMsg = self.reels.getWeightErrorMsg()
+        actualWeightErrorMsg = self.reel.getWeightErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualWeightErrorMsg)
 
@@ -1061,30 +1060,30 @@ class TestReels(ProjectBase):
         self.caseId = 1381269
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
+            self.reel.toggleSIMpullReel()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('130')
+        self.reel.enterHeight('130')
         sleep(1)
-        self.reels.enterWidth('82')
+        self.reel.enterWidth('82')
         sleep(1)
-        self.reels.enterWeight('332')
+        self.reel.enterWeight('332')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
@@ -1098,35 +1097,36 @@ class TestReels(ProjectBase):
         self.caseId = 1381273
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """preconditions"""
-        self.jobs.createAJob()
+        self.job.createAJob()
         """end of preconditions"""
-        self.jobs.selectAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         currentUrl = self.driver.current_url
-        toggle = self.reels.getSIMpullReelToggle()
+        toggle = self.reel.getSIMpullReelToggle()
         if not toggle.isOn():
-            self.reels.toggleSIMpullReel()
-        self.reels.enterRandomReelName()
+            self.reel.toggleSIMpullReel()
+        self.reel.enterRandomReelName()
         sleep(1)
-        self.reels.enterHeight('200')
+        self.reel.enterHeight('200')
         sleep(1)
-        self.reels.enterWidth('100')
+        self.reel.enterWidth('100')
         sleep(1)
-        self.reels.enterWeight('888')
+        self.reel.enterWeight('888')
         sleep(1)
-        el = self.reels.getSubmitButton()
+        el = self.reel.getSubmitButton()
         self.assertion.assertTrue(el.isEnabled())
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(3)
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    """Edit Reel Settings"""
     @pytest.mark.ac
     def testReelNameCanBeEdited(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -1135,26 +1135,26 @@ class TestReels(ProjectBase):
         self.caseId = 1381684
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """precondition"""
-        self.jobs.createAJob()
-        self.jobs.selectAJob()
+        self.job.createAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.reels.createReelWithNoRestriction()
+        self.reel.createReelWithNoRestriction()
         sleep(2)
         """end of precondition"""
-        oldValue = self.reels.getReelName()
-        self.reels.tapOverflow()
+        oldValue = self.reelList.getReelName()
+        self.reelList.tapOverflow()
         sleep(2)
-        self.reels.tapEditReel()
+        self.reelList.tapEditReel()
         sleep(2)
-        self.reels.enterRandomReelName()
+        self.reel.enterRandomReelName()
         sleep(2)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(2)
-        newValue = self.reels.getReelName()
+        newValue = self.reelList.getReelName()
 
         self.assertion.assertNotEqual(oldValue, newValue)
 
@@ -1166,31 +1166,31 @@ class TestReels(ProjectBase):
         self.caseId = 1381685
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         """start of precondtion"""
-        self.jobs.createAJob()
-        self.jobs.selectAJob()
+        self.job.createAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.reels.createReelWithNoRestriction()
+        self.reel.createReelWithNoRestriction()
         sleep(2)
-        self.feederSchedule.tapCreateReel()
+        self.reelList.tapCreateReel()
         sleep(1)
-        self.reels.enterReelName('Same Name')
+        self.reel.enterReelName('Same Name')
         sleep(1)
-        self.reels.tapSubmit()
+        self.reel.tapSubmit()
         sleep(2)
         """end of precondtion"""
-        self.reels.tapOverflow()
+        self.reelList.tapOverflow()
         sleep(2)
-        self.reels.tapEditReel()
+        self.reelList.tapEditReel()
         sleep(2)
-        self.reels.enterReelName('Same Name')
+        self.reel.enterReelName('Same Name')
         sleep(2)
         # self.reels.tapSubmit()
         # sleep(2)
-        errorMsg = self.reels.getReelNameErrorMsg()
+        errorMsg = self.reel.getReelNameErrorMsg()
         
         self.assertion.assertEqual(errorMsg, 'Reel name already exists.')
 
@@ -1202,25 +1202,25 @@ class TestReels(ProjectBase):
         self.caseId = 1381686
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         # precondition
-        self.jobs.createAJob()
-        self.jobs.selectAJob()
+        self.job.createAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.reels.createReelWithNoRestriction()
+        self.reel.createReelWithNoRestriction()
         sleep(2)
         # end of precondition
-        self.reels.tapOverflow()
+        self.reelList.tapOverflow()
         sleep(2)
-        self.reels.tapEditReel()
+        self.reelList.tapEditReel()
         sleep(2)
-        self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
+        self.reel.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
         sleep(2)
         # self.reels.tapSubmit()
         # sleep(2)
-        errorMsg = self.reels.getReelNameErrorMsg()
+        errorMsg = self.reel.getReelNameErrorMsg()
 
         self.assertion.assertEqual(errorMsg, 'Reel name cannot exceed 30 characters.')
 
@@ -1232,25 +1232,25 @@ class TestReels(ProjectBase):
         self.caseId = 1381687
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         # precondition
-        self.jobs.createAJob()
-        self.jobs.selectAJob()
+        self.job.createAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.reels.createReelWithNoRestriction()
+        self.reel.createReelWithNoRestriction()
         sleep(2)
         # end of precondition
-        self.reels.tapOverflow()
+        self.reelList.tapOverflow()
         sleep(2)
-        self.reels.tapEditReel()
+        self.reelList.tapEditReel()
         sleep(2)
-        self.reels.enterReelName(' ')
+        self.reel.enterReelName(' ')
         sleep(2)
         # self.reels.tapSubmit()
         # sleep(2)
-        button = self.reels.getSubmitButton()
+        button = self.reel.getSubmitButton()
 
         self.assertion.assertFalse(button.isEnabled())
 
@@ -1262,25 +1262,25 @@ class TestReels(ProjectBase):
         self.caseId = 1381690
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.selectAProject()
+        self.projectList.selectAProject()
         # precondition
-        self.jobs.createAJob()
-        self.jobs.selectAJob()
+        self.job.createAJob()
+        self.jobList.selectAJob()
         sleep(1)
-        self.jobs.tapConfigureJob()
+        self.jobSummary.tapConfigureJob()
         sleep(1)
-        self.reels.createReelWithNoRestriction()
+        self.reel.createReelWithNoRestriction()
         sleep(2)
         # end of precondition
-        self.reels.tapOverflow()
+        self.reelList.tapOverflow()
         sleep(2)
-        self.reels.tapEditReel()
+        self.reelList.tapEditReel()
         sleep(2)
-        self.reels.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
+        self.reel.enterReelName('OjHiHsYaHCTVyFe7UKmYyBX0Vwswjfdbs')
         sleep(2)
         # self.reels.tapSubmit()
         # sleep(2)
-        button = self.reels.getSubmitButton()
+        button = self.reel.getSubmitButton()
 
         self.assertion.assertFalse(button.isEnabled())
 

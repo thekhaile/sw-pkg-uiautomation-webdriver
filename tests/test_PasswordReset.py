@@ -1,14 +1,12 @@
-import sys, os
 from time import sleep
 from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.passwordReset import PasswordReset
-import unidecode
+
 
 class TestAuthentication(ProjectBase):
-    LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
 
     def __init__(self, *args, **kwargs):
         super(TestAuthentication, self).__init__(*args, **kwargs)
@@ -32,7 +30,6 @@ class TestAuthentication(ProjectBase):
         expectedMsg = 'Password reset sent. Please check your email and follow the link to reset your password. Resend password reset email.'
 
         self.assertion.assertEqual(actualMsg, expectedMsg)
-
 
     @pytest.mark.ac
     def testResetAnNonExistingAccount(self):

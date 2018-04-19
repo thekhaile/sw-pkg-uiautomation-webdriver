@@ -1,4 +1,3 @@
-import sys, os
 from time import sleep
 from projectBase import ProjectBase
 import pytest
@@ -8,7 +7,6 @@ from southwire_pkg_uiautomation_webdriver.components.registration import Registr
 
 
 class TestLogOut(ProjectBase):
-    LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
 
     def __init__(self, *args, **kwargs):
         super(TestLogOut, self).__init__(*args, **kwargs)

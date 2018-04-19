@@ -6,6 +6,7 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 import unidecode
 
+
 class TestAuthentication(ProjectBase):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
 
@@ -157,13 +158,13 @@ class TestAuthentication(ProjectBase):
         currentUrl = self.driver.current_url
         self.authentication.login(email, password)
         newUrl = self.driver.current_url
-        expectedErrorMsg = "This account hasn't been verified.Resend verification email."
+        expectedErrorMsg = "This account hasn't been verified.\nResend verification email."
         actualErrorMsg = unidecode.unidecode(self.authentication.getErrorMsg())
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testMultipleFailedAttemptsAtLogin(self):
         email = 'khai.le+SW1@mutualmobile.com'
         password = 'passwor'

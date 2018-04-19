@@ -4,16 +4,18 @@ from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
+from southwire_pkg_uiautomation_webdriver.components.project import Project
+from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
 
-class TestProjects(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
+
+class TestProject(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestProjects, self).__init__(*args, **kwargs)
+        super(TestProject, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
+        self.project = Project(self)
+        self.projectList = ProjectList(self)
 
     @pytest.mark.ac
     def testCreateAProjectSuccessfully(self):
@@ -27,18 +29,18 @@ class TestProjects(ProjectBase):
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.tapCreateProject()
+        self.projectList.tapCreateProject()
         sleep(2)
-        self.projects.enterProjectName(projectName)
+        self.project.enterProjectName(projectName)
         sleep(3)
-        self.projects.tapSubmit()
+        self.project.tapSubmit()
 
-        viewProjectName = self.projects.getProjectName(rowOrder=0)
+        viewProjectName = self.projectList.getProjectName(rowOrder=0)
 
         self.assertion.assertEqual(projectName, viewProjectName)
 
     @pytest.mark.ac
-    def testcancelProjectCreation(self):
+    def testCancelProjectCreation(self):
         # Verify that user can cancel a project creation at anytime
         email = 'khai.le+SW1@mutualmobile.com'
         password = 'password'
@@ -46,10 +48,10 @@ class TestProjects(ProjectBase):
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.tapCreateProject()
+        self.projectList.tapCreateProject()
         sleep(2)
         currentUrl = self.driver.current_url
-        self.projects.tapCancelButton()
+        self.project.tapCancelButton()
         sleep(2)
         newUrl = self.driver.current_url
 
@@ -66,14 +68,14 @@ class TestProjects(ProjectBase):
         projectName = "Project one"
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.tapCreateProject()
+        self.projectList.tapCreateProject()
         sleep(2)
-        self.projects.enterProjectName(projectName)
+        self.project.enterProjectName(projectName)
         sleep(2)
-        self.projects.tapSubmit()
+        self.project.tapSubmit()
         sleep(2)
         expectedErrorMsg = 'Project name already exists'
-        actualErrorMsg = self.projects.getErrorMsg()
+        actualErrorMsg = self.project.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
@@ -87,12 +89,12 @@ class TestProjects(ProjectBase):
         projectName = "Project that is over 30 characters"
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.tapCreateProject()
+        self.projectList.tapCreateProject()
         sleep(2)
-        self.projects.enterProjectName(projectName)
+        self.project.enterProjectName(projectName)
         sleep(2)
         expectedErrorMsg = 'Project Name cannot exceed 30 characters.'
-        actualErrorMsg = self.projects.getErrorMsg()
+        actualErrorMsg = self.project.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
@@ -106,9 +108,9 @@ class TestProjects(ProjectBase):
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        self.projects.tapCreateProject()
+        self.projectList.tapCreateProject()
         sleep(2)
-        el = self.projects.getSubmitButton()
+        el = self.project.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
 
