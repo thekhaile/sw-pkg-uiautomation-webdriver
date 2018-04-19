@@ -284,4 +284,13 @@ class Registration(object):
         return el.getLabel()
 
 
+    """Log Out"""
+    def tapLogOut(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.logout')
+        el = self.testCase.UIType.Element(el)
+        el.tap()
+
+
+
+
 
