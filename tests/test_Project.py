@@ -74,7 +74,7 @@ class TestProject(ProjectBase):
         sleep(2)
         self.project.tapSubmit()
         sleep(2)
-        expectedErrorMsg = 'Project name already exists'
+        expectedErrorMsg = 'Project name already exists.'
         actualErrorMsg = self.project.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)

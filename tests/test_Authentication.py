@@ -180,3 +180,21 @@ class TestAuthentication(ProjectBase):
             self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
             self.assertion.assertEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac
+    def testAlertDisplayedWhenInvalidEmailFormatIsEntered(self):
+        email = 'mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1300686
+        self.navigation.navigateToLoginPage()
+        currentUrl = self.driver.current_url
+        self.authentication.enterEmail(email)
+        self.authentication.enterPassword(password)
+        self.authentication.tapSubmit()
+        newUrl = self.driver.current_url
+        expectedErrorMsg = "This email format is invalid."
+        actualErrorMsg = unidecode.unidecode(self.authentication.getErrorMsg())
+
+        self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+        self.assertion.assertEqual(currentUrl, newUrl)
+
