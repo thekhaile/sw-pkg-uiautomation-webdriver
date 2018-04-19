@@ -651,12 +651,11 @@ class TestRegistration(ProjectBase):
         self.registration.selectUnitOfMeasure(UOM='Metric')
         sleep(1)
 
-    # @pytest.mark.ac1
-    # def testSouthwireEmployeeCannotModifyRole(self):
-    #     self.caseId = 1307221
-    #     self.navigation.navigateToRegistrationPage()
-    #     sleep(1)
-    #     self.registration.enterEmail('ningxin.test+sw@mutualmobile.com')
-    #     self.registration.selectContactRole(role='Sales/Agent')
-    #     role = self.registration.getRolePicker().getLabel()
-    #     self.assertion.assertEqual(role, 'Southwire Employee')
+    @pytest.mark.ac
+    def testSouthwireEmployeeCannotModifyRole(self):
+        self.caseId = 1307221
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterEmail('ningxin.test+sw@mutualmobile.com')
+        role = self.registration.getSelectedRole()
+        self.assertion.assertEqual(role, 'Southwire Employee')
