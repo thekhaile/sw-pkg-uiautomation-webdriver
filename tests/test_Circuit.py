@@ -1133,5 +1133,37 @@ class TestCircuit(ProjectBase):
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 2)
         self.assertion.assertEqual(oldValue, newValue)
 
+    @pytest.mark.ac1
+    def testCircuitAddedToFeederSchedule(self):
+        # Verify a successfully added circuit is displayed in the feeder schedule
+        email = 'nick.moore+auto8@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1311235
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        self.job.enterJobName(self.job.generateRandomName())
+        self.job.tapSubmit()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.enterFrom('A')
+        self.circuit.enterTo('B')
+        self.circuit.selectConductorType(type='CU / THHN')
+        self.circuit.selectConductorSize(size='300')
+        self.circuit.enterCircuitLength('1000')
+        self.circuit.selectNumOfConductor(NOC='4')
+        self.circuit.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
+        self.circuit.tapSubmit()
+        sleep(1)
+        fromText = self.feederSchedule.getCircuitFrom()
+        toText = self.feederSchedule.getCircuitTo()
+        size = self.feederSchedule.getCircuitSize()
+        length = self.feederSchedule.getCircuitLength()
 
+        self.assertion.assertEqual('A', fromText)
+        self.assertion.assertEqual('B', toText)
+        self.assertion.assertEqual('300', size)
+        self.assertion.assertEqual("1000'", length)
