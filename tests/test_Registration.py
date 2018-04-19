@@ -530,3 +530,133 @@ class TestRegistration(ProjectBase):
 
         el = self.registration.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testContactNameCanBeEntered(self):
+        self.caseId = 1307200
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(3)
+
+    @pytest.mark.ac
+    def testCompanyNameCanBeEntered(self):
+        self.caseId = 1307200
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterCompanyName('Mutual Mobile')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testContactNameCanBeEntered(self):
+        self.caseId = 1307206
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterContactName('Ningxin Liao')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testEmailCanBeEntered(self):
+        self.caseId = 1307207
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterRandomEmail()
+        sleep(1)
+
+    @pytest.mark.ac
+    def testCityCanBeEntered(self):
+        self.caseId = 1307208
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterCity('Austin')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testZipCodeCanBeEntered(self):
+        self.caseId = 1307212
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterZipCode('78701')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testPhoneNumberCanBeEntered(self):
+        self.caseId = 1307213
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterPhoneNumber('5120000000')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testPasswordCanBeEntered(self):
+        self.caseId = 1307216
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterPassword('password')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testConfirmPasswordCanBeEntered(self):
+        self.caseId = 1307217
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.enterConfirmPassword('password')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testSouthwireEmployeeRoleCanBeSelected(self):
+        self.caseId = 1307201
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectContactRole(role='Southwire Employee')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testSalesAgentRoleCanBeSelected(self):
+        self.caseId = 1307203
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectContactRole(role='Sales/Agent')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testOtherRoleCanBeSelected(self):
+        self.caseId = 1307204
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectContactRole(role='Other')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testStateProvinceCanBeSelected(self):
+        self.caseId = 1307211
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectStateOrProvince(state='Texas')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testSTDUnitOfMeasureCanBeSelected(self):
+        self.caseId = 1307214
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectUnitOfMeasure(UOM='Standard')
+        sleep(1)
+
+    @pytest.mark.ac
+    def testMetricUnitOfMeasureCanBeSelected(self):
+        self.caseId = 1307215
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectUnitOfMeasure(UOM='Metric')
+        sleep(1)
+
+    # @pytest.mark.ac1
+    # def testSouthwireEmployeeCannotModifyRole(self):
+    #     self.caseId = 1307221
+    #     self.navigation.navigateToRegistrationPage()
+    #     sleep(1)
+    #     self.registration.enterEmail('ningxin.test+sw@mutualmobile.com')
+    #     self.registration.selectContactRole(role='Sales/Agent')
+    #     role = self.registration.getRolePicker().getLabel()
+    #     self.assertion.assertEqual(role, 'Southwire Employee')
