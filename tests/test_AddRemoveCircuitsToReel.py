@@ -199,7 +199,7 @@ class TestAddRemoveCircuitsToReel(ProjectBase):
         self.projectList.selectAProject()
         self.job.createAJob()
         sleep(3)
-        self.jobList.selectAJob()()
+        self.jobList.selectAJob()
         sleep(3)
         self.jobSummary.tapConfigureJob()
         sleep(3)

@@ -13,10 +13,10 @@ from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary impor
 import unidecode
 
 
-class TestCircuits(ProjectBase):
+class TestCircuit(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestCircuits, self).__init__(*args, **kwargs)
+        super(TestCircuit, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.projectList = ProjectList(self)

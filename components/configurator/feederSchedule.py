@@ -49,7 +49,7 @@ class FeederSchedule(object):
         el.tap()
 
     def getAvalableCircuitTab(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Available Circuit"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Available Circuits"]')
         el = self.testCase.UIType.Element(el)
         return el
 
@@ -63,7 +63,7 @@ class FeederSchedule(object):
             el.tap()
 
     def getCircuitsOnReelTab(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Circuit on Reel"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Circuits on Reel"]')
         el = self.testCase.UIType.Element(el)
         return el
 
@@ -94,23 +94,21 @@ class FeederSchedule(object):
 
     def tapEditCircuit(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"')
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapDeleteCircuit(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate"')
-        delete = el[1]
-        delete = self.testCase.UIType.Button(delete)
-        delete.tap()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapDuplicateCircuit(self):
         overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"')
-        duplicate = el[0]
-        duplicate = self.testCase.UIType.Button(duplicate)
-        duplicate.tap()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
 
     def tapConfirmDelete(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
