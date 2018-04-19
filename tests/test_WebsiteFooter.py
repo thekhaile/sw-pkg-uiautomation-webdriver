@@ -1,5 +1,3 @@
-__author__ = 'ningxinliao'
-import sys, os
 from time import sleep
 from projectBase import ProjectBase
 import pytest
@@ -9,10 +7,7 @@ from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.footer import Footer
 
 
-import unidecode
-
 class TestWebsiteFooter(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
         super(TestWebsiteFooter, self).__init__(*args, **kwargs)

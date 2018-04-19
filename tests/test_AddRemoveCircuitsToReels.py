@@ -13,7 +13,6 @@ from southwire_pkg_uiautomation_webdriver.components.job import Job
 
 
 class TestAddRemoveCircuitsToReel(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
         super(TestAddRemoveCircuitsToReel, self).__init__(*args, **kwargs)

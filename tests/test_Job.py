@@ -13,7 +13,6 @@ from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary impor
 
 
 class TestJob(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
         super(TestJob, self).__init__(*args, **kwargs)
@@ -27,8 +26,7 @@ class TestJob(ProjectBase):
         self.jobSummary = JobSummary(self)
         self.reel = Reel(self)
 
-    # Test SCR-104 Create New Job
-
+    """Create job"""
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOn(self):
         # Verify that a new job with unique name can be created on Create New Job page and Toggle On
@@ -172,7 +170,7 @@ class TestJob(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Test SCR-105 Edit Job Settings
+    """Edit job settings"""
 
     @pytest.mark.ac
     def testEditJobNameWithNewName(self):

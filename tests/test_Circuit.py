@@ -1,4 +1,3 @@
-__author__ = 'ningxinliao'
 import sys, os
 from time import sleep
 from projectBase import ProjectBase
@@ -13,8 +12,8 @@ from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
 import unidecode
 
+
 class TestCircuits(ProjectBase):
-    PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
 
     def __init__(self, *args, **kwargs):
         super(TestCircuits, self).__init__(*args, **kwargs)
@@ -26,8 +25,6 @@ class TestCircuits(ProjectBase):
         self.circuit = Circuit(self)
         self.feederSchedule = FeederSchedule(self)
         self.jobSummary = JobSummary(self)
-
-    # TEST SCR-28 Add Circuit to Feeder Schedule
 
     @pytest.mark.ac
     def testCreateCircuitWithOnlyRequiredFieldsForUS(self):
@@ -183,7 +180,7 @@ class TestCircuits(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    # Error Msg
+    """Error messages"""
     @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -243,7 +240,7 @@ class TestCircuits(ProjectBase):
         el = self.circuit.getSIMpullHeadToggle()
         self.assertion.assertFalse(el.isEnabled())
 
-    # Missing Required Fields
+    """Missing required fields"""
     @pytest.mark.ac
     def testCreateCircuitWithoutFrom(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -488,7 +485,7 @@ class TestCircuits(ProjectBase):
         el = self.circuit.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    # create circuit with long text
+    """Long texts"""
     @pytest.mark.ac
     def testMaxCharacterLimitInTheFromFieldOfCreateCircuit(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -561,7 +558,7 @@ class TestCircuits(ProjectBase):
         el = self.circuit.getSubmitButton()
         self.assertFalse(el.isEnabled())
 
-    '''Edit circuit'''
+    """Edit Circuit"""
 
     @pytest.mark.ac
     def testEditFromField(self):

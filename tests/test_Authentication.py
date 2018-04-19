@@ -6,6 +6,7 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 import unidecode
 
+
 class TestAuthentication(ProjectBase):
     LOGIN_PAGE = 'https://southwire-configurator-test.firebaseapp.com/login'
 
