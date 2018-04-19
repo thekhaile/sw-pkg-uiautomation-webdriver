@@ -53,3 +53,15 @@ class Authentication(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
+
+    """Reset Password"""
+
+    def tapForgotPassword(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.forgot-password')
+        el = self.testCase.UIType.Element(el)
+        el.tap()
+
+    def getConfirmationMsg(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.toast.scroll-down')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
