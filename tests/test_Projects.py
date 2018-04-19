@@ -4,7 +4,7 @@ from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
+from southwire_pkg_uiautomation_webdriver.components.project import Project
 
 class TestProjects(ProjectBase):
     PROJECTS_PAGE = 'https://southwire-configurator-test.firebaseapp.com/projects'
@@ -13,7 +13,7 @@ class TestProjects(ProjectBase):
         super(TestProjects, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
+        self.projects = Project(self)
 
     @pytest.mark.ac
     def testCreateAProjectSuccessfully(self):

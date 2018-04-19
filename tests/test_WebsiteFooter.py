@@ -5,7 +5,7 @@ from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
+from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.footer import Footer
 
 
@@ -18,7 +18,7 @@ class TestWebsiteFooter(ProjectBase):
         super(TestWebsiteFooter, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
+        self.projects = Project(self)
         self.footer = Footer(self)
 
     @pytest.mark.ac

@@ -5,11 +5,11 @@ from projectBase import ProjectBase
 import pytest
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
-from southwire_pkg_uiautomation_webdriver.components.projects import Projects
-from southwire_pkg_uiautomation_webdriver.components.jobs import Jobs
-from southwire_pkg_uiautomation_webdriver.components.circuits import Circuits
-from southwire_pkg_uiautomation_webdriver.components.reels import Reels
-from southwire_pkg_uiautomation_webdriver.components.feederSchedule import FeederSchedule
+from southwire_pkg_uiautomation_webdriver.components.project import Project
+from southwire_pkg_uiautomation_webdriver.components.job import Job
+from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
+from southwire_pkg_uiautomation_webdriver.components.reel import Reel
+from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule import FeederSchedule
 import unidecode
 
 class TestReels(ProjectBase):
@@ -19,10 +19,10 @@ class TestReels(ProjectBase):
         super(TestReels, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
-        self.projects = Projects(self)
-        self.jobs = Jobs(self)
-        self.circuits = Circuits(self)
-        self.reels = Reels(self)
+        self.projects = Project(self)
+        self.jobs = Job(self)
+        self.circuits = Circuit(self)
+        self.reels = Reel(self)
         self.feederSchedule = FeederSchedule(self)
 
     @pytest.mark.ac
