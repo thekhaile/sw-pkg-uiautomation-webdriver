@@ -47,6 +47,20 @@ class JobList(object):
         jobModifiedDate = self.testCase.UIType.Element(jobModifiedDate)
         return jobModifiedDate.getLabel()
 
+    def getNumberOfCircuits(self, rowOrder=0):
+        row = self.getAJob(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        numCircuits = allTds[2]
+        numCircuits = self.testCase.UIType.Element(numCircuits)
+        return numCircuits.getLabel()
+
+    def getNumberOfReels(self, rowOrder=0):
+        row = self.getAJob(rowOrder)
+        allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'td')
+        numCircuits = allTds[3]
+        numCircuits = self.testCase.UIType.Element(numCircuits)
+        return numCircuits.getLabel()
+
     def selectAJob(self, rowOrder=0):
         # This is a work-around for MicrosoftEdge not displaying the project table in the timely manner
         count = 0
