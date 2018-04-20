@@ -44,5 +44,4 @@ class JobSummary(object):
         # get submitted date
         text = el.text
         date = text.split(' ')[-1]
-        date = self.testCase.UIType.Element(date)
         return date

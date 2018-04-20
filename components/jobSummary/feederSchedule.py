@@ -96,7 +96,6 @@ class FeederSchedule(object):
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         text = el.text
         metal = text.split(' ')[3]
-        metal = self.testCase.UIType.Element(metal)
         return metal
 
     def getInsulation(self):
@@ -104,7 +103,6 @@ class FeederSchedule(object):
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         text = el.text
         insulation = text.split(' ')[5]
-        insulation = self.testCase.UIType.Element(insulation)
         return insulation
 
     def getColor(self):
@@ -114,9 +112,9 @@ class FeederSchedule(object):
         return el.getLabel()
 
     def getToggle(self):
-        container = self.testCase.app.findElements(self.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
-        el = self.testCase.UIType.Element(el)
+        el = self.testCase.UIType.Switch(el)
         return el
 
 

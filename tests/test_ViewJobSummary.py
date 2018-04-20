@@ -14,13 +14,10 @@ from southwire_pkg_uiautomation_webdriver.components.jobSummary.feederSchedule i
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.reels import Reels
 
 
-
-
-
-class TestJob(ProjectBase):
+class TestViewJobSummary(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestJob, self).__init__(*args, **kwargs)
+        super(TestViewJobSummary, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.projectList = ProjectList(self)
@@ -32,4 +29,62 @@ class TestJob(ProjectBase):
         self.reel = Reel(self)
         self.reels = Reels(self)
 
-    def test(self):
+    @pytest.mark.ac
+    def testJobTitleIsPresented(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393651
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        el = self.jobSummary.getJobNameOnViewJobSummary()
+        self.assertion.assertEqual(el, '1')
+
+    @pytest.mark.ac
+    def testDateCreatedIsPresented(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393652
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        el = self.jobSummary.getDateCreated()
+        self.assertion.assertEqual(el, '4/20/2018')
+
+    @pytest.mark.ac
+    def testDateModifiedIsPresented(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393653
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        el = self.jobSummary.getDateCreated()
+        self.assertion.assertEqual(el, '4/20/2018')
+
+    @pytest.mark.ac
+    def testDateSentForRFQIsPresented(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393654
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        el = self.jobSummary.getQuoteSubmittedDate()
+        self.assertion.assertEqual(el, '4/20/18')
+
+    @pytest.mark.ac
+    def testDateSentForRFQIsPresented(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393654
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        el = self.jobSummary.getQuoteSubmittedDate()
+        self.assertion.assertEqual(el, '4/20/18')

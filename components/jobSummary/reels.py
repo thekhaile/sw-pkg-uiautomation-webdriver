@@ -34,39 +34,34 @@ class Reels(object):
     # get the reels table info
     def getReelName(self):
         # get the selected reel container
-        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
-                                                  'div.selected.reel-list-item-container')
-        reelName = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.header-left')
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.reel-summary-item')
+        reelName = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'th')
         reelName = self.testCase.UIType.Element(reelName)
         return reelName.getLabel()
 
     def getReelPackage(self):
         # get the selected reel container
-        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
-                                                  'div.selected.reel-list-item-container')
-        package = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.package-name')
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.reel-summary-item')
+        tds = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
+        package = tds[0]
         package = self.testCase.UIType.Element(package)
         return package.getLabel()
 
     def getReelSize(self):
         # get reel size info
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,
-                                           '//div[contains(text(), "Reel Size")]')
-        # get numeric size
-        size = el.text
-        number = size.split(' ')[-1]
-        number = self.testCase.UIType.Element(number)
-        return number
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.reel-summary-item')
+        tds = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
+        size = tds[1]
+        size = self.testCase.UIType.Element(size)
+        return size
 
     def getReelWeight(self):
         # get reel weight info
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH,
-                                           '//div[contains(text(), "Reel Weight")]')
-        # get numeric size
-        weight = el.text
-        number = weight.split(' ')[-1]
-        number = self.testCase.UIType.Element(number)
-        return number
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.reel-summary-item')
+        tds = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
+        weight = tds[2]
+        weight = self.testCase.UIType.Element(weight)
+        return weight
 
     def tapExpandArrow(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
@@ -115,7 +110,6 @@ class Reels(object):
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         text = el.text
         metal = text.split(' ')[3]
-        metal = self.testCase.UIType.Element(metal)
         return metal
 
     def getCircuitInsulation(self):
@@ -123,7 +117,6 @@ class Reels(object):
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         text = el.text
         insulation = text.split(' ')[5]
-        insulation = self.testCase.UIType.Element(insulation)
         return insulation
 
     def getCircuitColor(self):
