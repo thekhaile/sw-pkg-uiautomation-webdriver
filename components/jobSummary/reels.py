@@ -68,11 +68,12 @@ class Reels(object):
         number = self.testCase.UIType.Element(number)
         return number
 
-    def tapExpandButton(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, '')
+    def tapExpandArrow(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
+    # get circuit on reel info
     def getACircuitOnReel(self, rowOrder):
         # get table
         table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
@@ -83,33 +84,61 @@ class Reels(object):
         return selectedRow
 
     def getCircuitFromOnReel(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
+        row = self.getACircuitOnReel(rowOrder)
         circuitFrom = row.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'td.from-cell')
         circuitFrom = self.testCase.UIType.Element(circuitFrom)
         return circuitFrom.getLabel()
 
     def getCircuitToOnReel(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
+        row = self.getACircuitOnReel(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
         circuitTo = allTds[1]
         circuitTo = self.testCase.UIType.Element(circuitTo)
         return circuitTo.getLabel()
 
     def getCircuitSizeOnReel(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
+        row = self.getACircuitOnReel(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
         circuitSize = allTds[2]
         circuitSize = self.testCase.UIType.Element(circuitSize)
         return circuitSize.getLabel()
 
     def getCircuitLengthOnReel(self, rowOrder=0):
-        row = self.getACircuit(rowOrder)
+        row = self.getACircuitOnReel(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
         circuitLength = allTds[3]
         circuitLength = self.testCase.UIType.Element(circuitLength)
         return circuitLength.getLabel()
 
-    def getConductorTypeOnReel(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, '')
+    def getCircuitMetal(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expanded-header')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
+        text = el.text
+        metal = text.split(' ')[3]
+        metal = self.testCase.UIType.Element(metal)
+        return metal
+
+    def getCircuitInsulation(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expanded-header')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
+        text = el.text
+        insulation = text.split(' ')[5]
+        insulation = self.testCase.UIType.Element(insulation)
+        return insulation
+
+    def getCircuitColor(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.selected-color')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.color-label')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
+
+    def getCircuitToggle(self):
+        container = self.testCase.app.findElements(self.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def getBullseyeVisualization(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'svg.reel-bullseye')
+        el = self.testCase.UIType.Element(el)
+        return el 
