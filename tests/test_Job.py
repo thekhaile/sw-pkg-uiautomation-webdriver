@@ -659,3 +659,4 @@ class TestJob(ProjectBase):
         actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
+
