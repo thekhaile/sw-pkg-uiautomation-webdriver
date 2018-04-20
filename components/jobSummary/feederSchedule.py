@@ -68,10 +68,10 @@ class FeederSchedule(object):
         circuitLength = self.testCase.UIType.Element(circuitLength)
         return circuitLength.getLabel()
 
-    def getCircuitReel(self, rowOrder=0):
+    def getCircuitReelName(self, rowOrder=0):
         row = self.getACircuit(rowOrder)
         allTds = row.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
-        circuitReel = allTds[3]
+        circuitReel = allTds[4]
         circuitReel = self.testCase.UIType.Element(circuitReel)
         return circuitReel.getLabel()
 
