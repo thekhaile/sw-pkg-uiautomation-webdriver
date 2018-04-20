@@ -1203,3 +1203,125 @@ class TestCircuit(ProjectBase):
         actualConductorList = self.circuit.getConductorTypeList()
 
         self.assertion.assertEqual(CanadaConductorList, actualConductorList)
+
+    @pytest.mark.ac
+    def testVerifySIMpullHeadSuccessfullyAdded(self):
+        # Verify that a circuit with SIMpull head is successfully added
+        email = 'nick.moore+auto11@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311236
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.circuit.createCircuitWithSIMpullHead()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), True)
+
+    @pytest.mark.ac
+    def testVerifySIMpullHeadNotAdded(self):
+        # Verify that a circuit with SIMpull head is not added
+        email = 'nick.moore+auto12@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311237
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.circuit.createGreenCircuit()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+
+    @pytest.mark.ac
+    def testVerifySIMpullNotAvailableSize6(self):
+        # Verify that SIMpull option is not available with size 6 circuit
+        email = 'nick.moore+auto13@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311238
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize(size='6')
+        errorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
+
+        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getErrorMsg()), errorMsg)
+
+    @pytest.mark.ac
+    def testVerifySIMpullNotAvailableSize8(self):
+        # Verify that SIMpull option is not available with size 8 circuit
+        email = 'nick.moore+auto14@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311239
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize(size='8')
+        errorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
+
+        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getErrorMsg()), errorMsg)
+
+    @pytest.mark.ac
+    def testVerifySIMpullOffByDefault(self):
+        # Verify that the SIMpull option is off by default
+        email = 'nick.moore+auto15@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311256
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+
+    @pytest.mark.ac
+    def testVerifyMaxNumberOfConductorsIs6(self):
+        # Verify that the max number of conductors is 6
+        email = 'nick.moore+auto15@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311259
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        sizeList = ['1', '2', '3', '4', '5', '6']
+
+        self.assertion.assertEqual(self.circuit.getConductorSizeList(), sizeList)
+
+
+
+
+
+
+
