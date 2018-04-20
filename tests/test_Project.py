@@ -197,6 +197,46 @@ class TestProject(ProjectBase):
         newValue = self.projectList.getProjectName()
         self.assertion.assertNotEqual(oldValue, newValue)
 
+    @pytest.mark.ac
+    def testProjectNameIsPresented(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301715
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        oldValue = self.project.generateRandomProjectName()
+        self.projectList.tapCreateProject()
+        sleep(2)
+        self.project.enterProjectName(oldValue)
+        sleep(3)
+        self.project.tapSubmit()
+        sleep(2)
+        newValue = self.projectList.getProjectName()
+        self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testNewProjectIsOnTheTopOfProjectList(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301716
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        sleep(2)
+        oldValue = self.projectList.getProjectName()
+        self.projectList.tapCreateProject()
+        sleep(2)
+        self.project.enterRandomProjectName()
+        sleep(3)
+        self.project.tapSubmit()
+        sleep(2)
+        newValue = self.projectList.getProjectName()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+
+
+
 
 
 
