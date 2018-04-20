@@ -28,12 +28,14 @@ class JobSummary(object):
         return el.getLabel()
 
     def getDateCreated(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'dd')
+        dates = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'dd')
+        el = dates[0]
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
     def getDateModified(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, ' ')
+        dates = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'dd')
+        el = dates[1]
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 

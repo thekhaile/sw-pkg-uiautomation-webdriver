@@ -10,6 +10,11 @@ from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
 from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
 from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
+from southwire_pkg_uiautomation_webdriver.components.jobSummary.feederSchedule import FeederSchedule
+from southwire_pkg_uiautomation_webdriver.components.jobSummary.reels import Reels
+
+
+
 
 
 class TestJob(ProjectBase):
@@ -25,5 +30,6 @@ class TestJob(ProjectBase):
         self.feederSchedule = FeederSchedule(self)
         self.jobSummary = JobSummary(self)
         self.reel = Reel(self)
+        self.reels = Reels(self)
 
     def test(self):
