@@ -67,13 +67,11 @@ class Circuit(object):
 
     def getConductorTypeList(self):
         conductorTypeList = []
-        els = self.testCase.app.findElements(self.testCase.app.getStrategy().TAG_NAME, 'option')
-        for i in els:
-            if i.text == 'Select Size':
-                break
-            else:
-                conductorTypeList.append(i.text)
-        conductorTypeList.pop(0)
+        els = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Metal / Insulation"]')
+        values = els.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        values.pop(0)
+        for i in values:
+            conductorTypeList.append(i.text)
         return conductorTypeList
 
     def selectConductorType(self, type):
