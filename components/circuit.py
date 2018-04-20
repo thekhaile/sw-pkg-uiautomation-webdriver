@@ -65,6 +65,17 @@ class Circuit(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
+    def getConductorTypeList(self):
+        conductorTypeList = []
+        els = self.testCase.app.findElements(self.testCase.app.getStrategy().TAG_NAME, 'option')
+        for i in els:
+            if i.text == 'Select Size':
+                break
+            else:
+                conductorTypeList.append(i.text)
+        conductorTypeList.pop(0)
+        return conductorTypeList
+
     def selectConductorType(self, type):
         el = self.getConductorTypePicker()
         el.scrollToValue(type)

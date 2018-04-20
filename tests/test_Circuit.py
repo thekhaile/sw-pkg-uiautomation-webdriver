@@ -1133,7 +1133,7 @@ class TestCircuit(ProjectBase):
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 2)
         self.assertion.assertEqual(oldValue, newValue)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testCircuitAddedToFeederSchedule(self):
         # Verify a successfully added circuit is displayed in the feeder schedule
         email = 'nick.moore+auto8@mutualmobile.com'
@@ -1143,9 +1143,7 @@ class TestCircuit(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
-        self.jobList.tapCreateJob()
-        self.job.enterJobName(self.job.generateRandomName())
-        self.job.tapSubmit()
+        self.job.createAJob()
         self.jobList.selectAJob()
         self.jobSummary.tapConfigureJob()
         self.feederSchedule.tapCreateCircuit()
@@ -1167,3 +1165,41 @@ class TestCircuit(ProjectBase):
         self.assertion.assertEqual('B', toText)
         self.assertion.assertEqual('300', size)
         self.assertion.assertEqual("1000'", length)
+
+    @pytest.mark.ac
+    def testVerifyCircuitMetalOptionsUS(self):
+        # Verify circuit options are correct for a US user
+        email = 'nick.moore+auto9@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311227
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        USConductorList = ['CU / THHN', 'CU / XHHW', 'CU / USE', 'AL / THHN', 'AL / XHHW', 'AL / USE']
+        actualConductorList = self.circuit.getConductorTypeList()
+
+        self.assertion.assertEqual(USConductorList, actualConductorList)
+
+    @pytest.mark.ac
+    def testVerifyCircuitMetalOptionsCanada(self):
+        # Verify circuit options are correct for a Canada user
+        email = 'nick.moore+auto10@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311228
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        CanadaConductorList = ['CU / RW90', 'CU / RWU', 'CU / T90', 'CU / THHN', 'AL / RW90', 'AL / RWU', 'AL / T90', 'AL / THHN']
+        actualConductorList = self.circuit.getConductorTypeList()
+
+        self.assertion.assertEqual(CanadaConductorList, actualConductorList)
