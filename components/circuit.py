@@ -85,8 +85,8 @@ class Circuit(object):
 
     def getConductorSizeList(self):
         conductorSizeList = []
-        els = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
-        sizes = els.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
+        sizes = el.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
         sizes.pop(0)
         for i in sizes:
             conductorSizeList.append(i.text)
