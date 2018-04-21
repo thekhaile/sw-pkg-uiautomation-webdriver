@@ -1417,3 +1417,53 @@ class TestCircuit(ProjectBase):
             self.circuit.tapSelectedColorCircle(i)
             self.circuit.selectColorOption(colors[i])
             self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colors[i])
+
+    @pytest.mark.ac
+    def testVerifySIMpullDisabledWithSizes6And8(self):
+        # Verify when SIMpull head is already selected, changing to size 6 or 8 disables the SIMpull option
+        email = 'nick.moore+auto20@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311246
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.toggleSIMpullHead()
+        self.circuit.selectConductorSize('8')
+        sleep(1)
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+        self.circuit.selectConductorSize('4')
+        self.circuit.toggleSIMpullHead()
+        self.circuit.selectConductorSize('6')
+        sleep(1)
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+
+    @pytest.mark.ac
+    def testVerifyColorPresetOverridesPartialColorSelection(self):
+        # Verify that when colors have been partially selected, selecting a preset updates the color selection
+        email = 'nick.moore+auto21@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311250
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectColorOption('Blue')
+        sleep(1)
+        colorPreset = ['Brown', 'Orange', 'Yellow']
+        self.circuit.selectCommonPreset('Brown-Orange-Yellow')
+
+        for i in range(3):
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colorPreset[i])
