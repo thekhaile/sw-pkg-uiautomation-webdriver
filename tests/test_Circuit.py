@@ -1304,7 +1304,7 @@ class TestCircuit(ProjectBase):
     @pytest.mark.ac
     def testVerifyMaxNumberOfConductorsIs6(self):
         # Verify that the max number of conductors is 6
-        email = 'nick.moore+auto15@mutualmobile.com'
+        email = 'nick.moore+auto16@mutualmobile.com'
         password = 'newpassword'
 
         self.caseId = 1311259
@@ -1319,9 +1319,101 @@ class TestCircuit(ProjectBase):
 
         self.assertion.assertEqual(self.circuit.getConductorSizeList(), sizeList)
 
+    @pytest.mark.ac
+    def testVerifyUnitsForStandardAccount(self):
+        # Verify that units are displayed in feet for standard account
+        email = 'nick.moore+autostandard@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1311258
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
 
+        self.assertion.assertEqual(self.circuit.getLength().ui_object.get_attribute('placeholder'), 'Feet')
 
+    @pytest.mark.ac
+    def testVerifyUnitsForMetricAccount(self):
+        # Verify that units are displayed in meters for metric account
+        email = 'nick.moore+autometric@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1311257
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
 
+        self.assertion.assertEqual(self.circuit.getLength().ui_object.get_attribute('placeholder'), 'Meters')
 
+    @pytest.mark.ac
+    def testVerifyGreenAvailableForOneConductor(self):
+        # Verify that the green color is available with one conductor selected
+        email = 'nick.moore+auto17@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311254
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectNumOfConductor('1')
+        self.circuit.selectConductorSize('4')
+
+        self.assertion.assertExists(self.circuit.getColorOption('Green'))
+
+    @pytest.mark.ac
+    def testVerifyGreenNotAvailableForMoreThanOneConductor(self):
+        # Verify that the green color is not an option when >1 conductor selected
+        email = 'nick.moore+auto18@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311255
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+
+        for i in range(2, 7, 1):
+            self.circuit.selectNumOfConductor(str(i))
+            self.assertion.assertNotExists(self.circuit.getColorOption('Green').ui_object)
+
+    @pytest.mark.ac
+    def testVerifyColorSwapAfterChoosingPreset(self):
+        # Verify colors can be swapped out after choosing a preset
+        email = 'nick.moore+auto19@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311249
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Red-Blue')
+        colors = ['Yellow', 'White', 'Pink']
+        for i in range(3):
+            self.circuit.tapSelectedColorCircle(i)
+            self.circuit.selectColorOption(colors[i])
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colors[i])
