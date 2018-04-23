@@ -151,3 +151,7 @@ class TestProject(ProjectBase):
         sleep(2)
         newValue = self.projectList.getProjectName()
         self.assertion.assertEqual(newValue, name)
+
+    @pytest.mark.ac1
+    def testCurrentProjectNameIsPresentedOnEditProjectSettings(self):
+

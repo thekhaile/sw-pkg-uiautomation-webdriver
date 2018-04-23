@@ -57,3 +57,6 @@ class Project(object):
         self.tapSubmit()
         sleep(2)
         self.projectList.selectAProject()
+
+    def getProjectNameOnEditSettings(self):
+        el = self.testCase.
