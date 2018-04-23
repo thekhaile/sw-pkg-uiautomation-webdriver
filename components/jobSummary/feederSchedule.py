@@ -13,7 +13,7 @@ class FeederSchedule(object):
         self.testCase = testCase
 
     def getFeederScheduleTab(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Feeder Schedule"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//span[text()="Feeder Schedule"]')
         el = self.testCase.UIType.Element(el)
         return el
 

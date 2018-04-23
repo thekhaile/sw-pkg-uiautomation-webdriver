@@ -13,7 +13,7 @@ class Reels(object):
         self.testCase = testCase
 
     def getReelsTab(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[text()="Reels"]')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//span[text()="Reels"]')
         el = self.testCase.UIType.Element(el)
         return el
 
@@ -53,7 +53,7 @@ class Reels(object):
         tds = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
         size = tds[1]
         size = self.testCase.UIType.Element(size)
-        return size
+        return size.getLabel()
 
     def getReelWeight(self):
         # get reel weight info
@@ -61,7 +61,7 @@ class Reels(object):
         tds = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'td')
         weight = tds[2]
         weight = self.testCase.UIType.Element(weight)
-        return weight
+        return weight.getLabel()
 
     def tapExpandArrow(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
@@ -71,9 +71,9 @@ class Reels(object):
     # get circuit on reel info
     def getACircuitOnReel(self, rowOrder):
         # get table
-        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-summary-circuits')
         # get the list of rows from the table
-        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr.reel-summary-circuit-item')
 
         selectedRow = rows[rowOrder]
         return selectedRow
@@ -126,7 +126,7 @@ class Reels(object):
         return el.getLabel()
 
     def getCircuitToggle(self):
-        container = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
         el = self.testCase.UIType.Switch(el)
         return el

@@ -12,6 +12,7 @@ from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.feederSchedule import FeederSchedule
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.reels import Reels
+import unidecode
 
 
 class TestViewJobSummary(ProjectBase):
@@ -197,7 +198,7 @@ class TestViewJobSummary(ProjectBase):
         el = self.feederSchedule.getToggle()
         self.assertion.assertTrue(el.isOn())
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testReelNameIsPresentedOnReelConfigurator(self):
         email = 'ningxin.liao+test4@mutualmobile.com'
         password = 'password'
@@ -207,7 +208,241 @@ class TestViewJobSummary(ProjectBase):
         self.projectList.selectAProject()
         self.jobList.selectAJob()
         sleep(2)
-        self.reels.tapCircuitsOnReel()
+        self.reels.switchToReelsTab()
         sleep(2)
         el = self.reels.getReelName()
         self.assertion.assertEqual(el, 'reel 1')
+
+    @pytest.mark.ac
+    def testReelPackageIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393664
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        el = self.reels.getReelPackage()
+        self.assertion.assertEqual(el, 'N7')
+
+    @pytest.mark.ac
+    def testReelSizeIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393665
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        el = unidecode.unidecode(self.reels.getReelSize())
+        self.assertion.assertEqual(el, '30"')
+
+    @pytest.mark.ac
+    def testReelWeightIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393667
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        el = self.reels.getReelWeight()
+        self.assertion.assertEqual(el, '87 lb')
+
+    @pytest.mark.ac
+    def testCircuitFromIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393669
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitFromOnReel()
+        self.assertion.assertEqual(el, 'a')
+
+    @pytest.mark.ac
+    def testCircuitToIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393670
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitToOnReel()
+        self.assertion.assertEqual(el, 'b')
+
+    @pytest.mark.ac
+    def testCircuitSizeIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393671
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitSizeOnReel()
+        self.assertion.assertEqual(el, '1')
+
+    @pytest.mark.ac
+    def testCircuitLengthIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393672
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitLengthOnReel()
+        self.assertion.assertEqual(el, "123'")
+
+    @pytest.mark.ac
+    def testCircuitMetalIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393674
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitMetal()
+        self.assertion.assertEqual(el, 'CU')
+
+    @pytest.mark.ac
+    def testCircuitInsulationIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1396878
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitInsulation()
+        self.assertion.assertEqual(el, 'THHN')
+
+    @pytest.mark.ac
+    def testCircuitColorIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393677
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitColor()
+        self.assertion.assertEqual(el, 'Green')
+
+    @pytest.mark.ac
+    def testCorrectCircuitSIMpullHeadInfoIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393675
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getCircuitToggle()
+        self.assertion.assertTrue(el.isOn())
+
+    @pytest.mark.ac
+    def testBullseyeVisualizationIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393678
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        self.reels.tapExpandArrow()
+        sleep(2)
+        el = self.reels.getBullseyeVisualization()
+        self.assertion.assertExists(el)
+
+    @pytest.mark.ac
+    def testEmptyStateForFeederScheduleIsCorrect(self):
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393683
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        el = unidecode.unidecode(self.feederSchedule.getFeederScheduleEmptyState())
+        self.assertion.assertEqual(el, "You haven't configured a feeder schedule for this job yet.")
+
+    @pytest.mark.ac
+    def testEmptyStateForReelConfiguratorIsCorrect(self):
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393684
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.switchToReelsTab()
+        sleep(2)
+        el = unidecode.unidecode(self.reels.getReelsEmptyState())
+        self.assertion.assertEqual(el, "You haven't configured reels for this job yet.")
