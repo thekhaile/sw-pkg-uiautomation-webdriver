@@ -21,3 +21,27 @@ class JobSummary(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.tertiary')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def getJobNameOnViewJobSummary(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'h2')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getDateCreated(self):
+        dates = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'dd')
+        el = dates[0]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getDateModified(self):
+        dates = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'dd')
+        el = dates[1]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getQuoteSubmittedDate(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.quote-submitted')
+        # get submitted date
+        text = el.text
+        date = text.split(' ')[-1]
+        return date
