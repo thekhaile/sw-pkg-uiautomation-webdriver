@@ -123,15 +123,15 @@ class TestProject(ProjectBase):
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        oldValue = self.project.generateRandomProjectName()
         self.projectList.tapCreateProject()
         sleep(2)
-        self.project.enterProjectName(oldValue)
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
         sleep(3)
         self.project.tapSubmit()
         sleep(2)
-        newValue = self.projectList.getProjectName()
-        self.assertion.assertEqual(oldValue, newValue)
+        el = self.app.findElement(self.app.getStrategy().XPATH, '//*[text()="%s"]' % name)
+        self.assertion.assertExists(el)
 
     @pytest.mark.ac
     def testNewProjectIsOnTheTopOfProjectList(self):
@@ -142,25 +142,12 @@ class TestProject(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(2)
-        oldValue = self.projectList.getProjectName()
         self.projectList.tapCreateProject()
         sleep(2)
-        self.project.enterRandomProjectName()
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
         sleep(3)
         self.project.tapSubmit()
         sleep(2)
         newValue = self.projectList.getProjectName()
-        self.assertion.assertNotEqual(oldValue, newValue)
-
-
-
-
-
-
-
-
-
-
-
-
-
+        self.assertion.assertEqual(newValue, name)

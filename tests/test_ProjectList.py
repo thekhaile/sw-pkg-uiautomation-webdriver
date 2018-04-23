@@ -11,7 +11,7 @@ from southwire_pkg_uiautomation_webdriver.components.job import Job
 class TestProjectList(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestProject, self).__init__(*args, **kwargs)
+        super(TestProjectList, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.project = Project(self)

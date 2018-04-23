@@ -10,7 +10,7 @@ class Navigation(object):
     def __init__(self, testCase):
         # type: (ProjectBase) -> None
         """
-        :param testc=Case: will be the ProjectBase object when a test is run.
+        :param testCase: will be the ProjectBase object when a test is run.
         """
         self.testCase = testCase
 
