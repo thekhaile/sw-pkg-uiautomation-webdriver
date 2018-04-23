@@ -10,9 +10,9 @@ class ProjectList(object):
         self.testCase = testCase
 
     def getAProject(self, rowOrder):
-        #get table
+        # get table
         table= self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,'tbody')
-        #get the list of rows from the table
+        # get the list of rows from the table
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR,'tr')
 
         selectedRow = rows[rowOrder]
@@ -55,3 +55,10 @@ class ProjectList(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.action.create')
         el = self.testCase.UIType.Button(el)
         el.tap()
+
+    def getProjectCount(self):
+        # get table
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'tbody')
+        # get the list of rows from the table
+        rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
+        return len(rows)

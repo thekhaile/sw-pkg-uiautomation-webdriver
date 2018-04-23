@@ -98,7 +98,7 @@ class TestJobList(ProjectBase):
         self.assertion.assertEqual('1', self.jobList.getNumberOfReels(1))
         self.assertion.assertEqual('2', self.jobList.getNumberOfReels(2))
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testVerifyRecentJobListPosition(self):
         # Verify the most recent created job is at the top of the job list
         email = 'nick.moore+autojoblist@mutualmobile.com'
