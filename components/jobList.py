@@ -106,10 +106,14 @@ class JobList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDuplicateJob(self):
+    def getDuplicateJobButton(self):
         overflow = self.getOverflow()
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate Job"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapDuplicateJob(self):
+        el = self.getDuplicateJobButton()
         el.tap()
 
     def tapConfirmDelete(self):

@@ -660,3 +660,20 @@ class TestJob(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
+    @pytest.mark.ac
+    def testDuplicateButtonIsEnabledForInprogressJob(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388770
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        el = self.jobList.getDuplicateJobButton()
+        self.assertion.assertExists(el)
+
