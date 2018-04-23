@@ -73,7 +73,7 @@ class TestWebsiteFooter(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
-        self.caseId = 138129
+        self.caseId = 1381329
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(3)
@@ -86,7 +86,7 @@ class TestWebsiteFooter(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
-        self.caseId = 138131
+        self.caseId = 1381331
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(3)
@@ -99,7 +99,7 @@ class TestWebsiteFooter(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
-        self.caseId = 138133
+        self.caseId = 1381333
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(3)

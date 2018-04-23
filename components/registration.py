@@ -22,8 +22,12 @@ class Registration(object):
         email = self.generateRandomEmail()
         self.enterEmail(email)
 
-    def enterEmail(self,text):
+    def getEmail(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Email"]')
+        return el
+
+    def enterEmail(self,text):
+        el = self.getEmail()
         el = self.testCase.UIType.TextField(el)
         el.tap()
         el.clearText()
@@ -31,18 +35,26 @@ class Registration(object):
         if self.testCase.isChromium:
             self.testCase.app.dismissKeyboard()
 
-    def enterPassword(self, text):
+    def getPassword(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Password"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterPassword(self, text):
+        el = self.getPassword()
         el.tap()
         el.clearText()
         el.enterText(text)
         if self.testCase.isChromium:
             self.testCase.app.dismissKeyboard()
 
-    def enterConfirmPassword(self, text):
+    def getConfirmPassword(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Confirm Password"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterConfirmPassword(self, text):
+        el = self.getConfirmPassword()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -166,10 +178,6 @@ class Registration(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
-    def selectStateOrProvince(self, state):
-        el = self.getStateOrProvince()
-        el.scrollToValue(state)
-
     def getSelectedStateOrProvince(self):
         select = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="State/Province"]')
         options = select.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
@@ -178,6 +186,10 @@ class Registration(object):
                 break
         el = self.testCase.UIType.Element(option)
         return el.getLabel()
+
+    def selectStateOrProvince(self, state):
+        el = self.getStateOrProvince()
+        el.scrollToValue(state)
 
     def generateRandomUnitOfMeasure(self):
         options = ['Standard', 'Metric']

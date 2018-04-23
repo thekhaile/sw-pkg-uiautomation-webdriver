@@ -170,6 +170,97 @@ class TestJob(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    @pytest.mark.ac
+    def testCreateJobWithoutInputtingWidthField(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1301971
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        sleep(1)
+        self.job.enterWeight('88')
+        sleep(1)
+        self.job.enterHeight('999')
+        sleep(1)
+        self.job.toggleSIMpullReel()
+        sleep(1)
+        self.assertion.assertTrue(self.job.getSIMpullReelToggle().isOn(), 'Toggle has the off state after being tapped')
+        self.job.tapSubmit()
+        sleep(1)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
+
+    @pytest.mark.ac
+    def testCreateJobWithoutInputtingHeightField(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1301972
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        sleep(1)
+        self.job.enterWeight('88')
+        sleep(1)
+        self.job.enterWidth('66')
+        sleep(1)
+        self.job.toggleSIMpullReel()
+        sleep(1)
+        self.assertion.assertTrue(self.job.getSIMpullReelToggle().isOn(), 'Toggle has the off state after being tapped')
+        self.job.tapSubmit()
+        sleep(1)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
+
+    @pytest.mark.ac
+    def testCreateJobWithoutInputtingWeightField(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1301973
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        sleep(1)
+        self.job.enterHeight('999')
+        sleep(1)
+        self.job.enterWidth('66')
+        sleep(1)
+        self.job.toggleSIMpullReel()
+        sleep(1)
+        self.assertion.assertTrue(self.job.getSIMpullReelToggle().isOn(),
+                                  'Toggle has the off state after being tapped')
+        self.job.tapSubmit()
+        sleep(1)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
+
     """Edit job settings"""
 
     @pytest.mark.ac
@@ -222,7 +313,7 @@ class TestJob(ProjectBase):
         self.job.tapSubmit()
         sleep(2)
         newUrl = self.driver.current_url
-        expectedErrorMsg = 'Job name already exists'
+        expectedErrorMsg = 'Job name already exists.'
         actualErrorMsg = self.job.getErrorMsg()
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)

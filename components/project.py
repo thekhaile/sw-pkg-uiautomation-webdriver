@@ -45,16 +45,9 @@ class Project(object):
         el.tap()
 
     def getErrorMsg(self):
-        # get container
-        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.project')
-        # find all the Ps listed in the container. Be careful this is finding Ps in Selenium, not our library!!
-        allPs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'p')
-        # get the last P in the list
-        p = allPs[-1]
-        # assign P to an element type
-        p = self.testCase.UIType.Element(p)
-        # return the error message
-        return p.getLabel()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.field-alert.alerted')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
 
     def createAProject(self):
         self.projectList.tapCreateProject()
