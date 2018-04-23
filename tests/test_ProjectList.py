@@ -21,25 +21,18 @@ class TestProjectList(ProjectBase):
 
     @pytest.mark.ac
     def testCurrentProjectListIsPresented(self):
-        email = 'ningxin.liao+test3@mutualmobile.com'
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
         password = 'password'
         self.caseId = 1301862
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
-        oldValue = self.projectList.getProjectCount()
-        self.projectList.tapCreateProject()
-        sleep(2)
-        self.project.enterRandomProjectName()
-        sleep(3)
-        self.project.tapSubmit()
-        sleep(2)
-        newValue = self.projectList.getProjectCount()
-        self.assertion.assertEqual(oldValue, newValue - 1 )
+        projectCount = self.projectList.getProjectCount()
+        self.assertion.assertEqual(projectCount, 3)
 
     @pytest.mark.ac
     def testProjectNameIsPresented(self):
-        email = 'ningxin.liao+test3@mutualmobile.com'
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
         password = 'password'
         self.caseId = 1301863
 
@@ -47,56 +40,39 @@ class TestProjectList(ProjectBase):
         self.authentication.login(email, password)
         sleep(2)
         name = self.projectList.getProjectName()
-        self.assertion.assertExists(name)
+        self.assertion.assertEqual(name, 'project 3')
 
     @pytest.mark.ac
     def testNumberOfJobIsPresented(self):
-        email = 'ningxin.liao+test3@mutualmobile.com'
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
         password = 'password'
         self.caseId = 1301864
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(2)
-        self.projectList.tapCreateProject()
-        sleep(2)
-        self.project.enterRandomProjectName()
-        sleep(3)
-        self.project.tapSubmit()
-        sleep(2)
-        self.projectList.selectAProject()
-        self.job.createAJob()
-        self.navigation.navigateToProjectsPage()
-        sleep(2)
         jobCount = self.projectList.getProjectJobCount()
-        self.assertion.assertEqual(jobCount, '1')
+        self.assertion.assertEqual(jobCount, '2')
 
     @pytest.mark.ac
     def testCreatedDateIsPresented(self):
-        email = 'ningxin.liao+test3@mutualmobile.com'
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
         password = 'password'
         self.caseId = 1301865
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         date = self.projectList.getProjectDate()
-        self.assertion.assertExists(date)
+        self.assertion.assertEqual(date, '4/23/2018')
 
     @pytest.mark.ac
     def testMostRecentProjectIsOnTheTopOfProjectList(self):
-        email = 'ningxin.liao+test3@mutualmobile.com'
+        email = 'ningxin.liao+testProjectList@mutualmobile.com'
         password = 'password'
         self.caseId = 1301866
 
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(2)
-        oldValue = self.projectList.getProjectName()
-        self.projectList.tapCreateProject()
-        sleep(2)
-        self.project.enterRandomProjectName()
-        sleep(3)
-        self.project.tapSubmit()
-        sleep(2)
-        newValue = self.projectList.getProjectName()
-        self.assertion.assertNotEqual(oldValue, newValue)
+        name = self.projectList.getProjectName()
+        self.assertion.assertEqual(name, 'project 3')
