@@ -6,10 +6,14 @@ from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule
 from southwire_pkg_uiautomation_webdriver.components.job import Job
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
+from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
 from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
 from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
+from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
+from southwire_pkg_uiautomation_webdriver.components.requestQuote import RequestQuote
+
 
 
 class TestJob(ProjectBase):
@@ -25,6 +29,9 @@ class TestJob(ProjectBase):
         self.feederSchedule = FeederSchedule(self)
         self.jobSummary = JobSummary(self)
         self.reel = Reel(self)
+        self.project = Project(self)
+        self.circuit = Circuit(self)
+        self.requestQuote = RequestQuote(self)
 
     """Create job"""
     @pytest.mark.ac
@@ -671,6 +678,47 @@ class TestJob(ProjectBase):
         self.projectList.selectAProject()
         sleep(2)
         self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        el = self.jobList.getDuplicateJobButton()
+        self.assertion.assertExists(el)
+
+    @pytest.mark.ac
+    def testDuplicateButtonIsEnabledForJobSubmittedForRFQ(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388771
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        '''precondition'''
+        self.project.createAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        self.circuit.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapRequestQuote()
+        sleep(2)
+        self.requestQuote.tapSubmit()
+        sleep(2)
+        '''end of precondition'''
+        self.jobList.selectAJob()
         sleep(2)
         self.jobList.tapOverflow()
         sleep(2)
