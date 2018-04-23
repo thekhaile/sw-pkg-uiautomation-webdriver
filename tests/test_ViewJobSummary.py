@@ -125,7 +125,7 @@ class TestViewJobSummary(ProjectBase):
         el = self.feederSchedule.getCircuitLength()
         self.assertion.assertEqual(el, "123'")
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testReelIsPresentedOnFeederSchedule(self):
         email = 'ningxin.liao+test4@mutualmobile.com'
         password = 'password'
@@ -135,4 +135,79 @@ class TestViewJobSummary(ProjectBase):
         self.projectList.selectAProject()
         self.jobList.selectAJob()
         el = self.feederSchedule.getCircuitReelName()
+        self.assertion.assertEqual(el, 'reel 1')
+
+    @pytest.mark.ac
+    def testConductorMetalIsPresentedOnFeederSchedule(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393659
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow()
+        sleep(2)
+        el = self.feederSchedule.getMetal()
+        self.assertion.assertEqual(el, 'CU')
+
+    @pytest.mark.ac
+    def testConductorInsulationIsPresentedOnFeederSchedule(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1396868
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow()
+        sleep(2)
+        el = self.feederSchedule.getInsulation()
+        self.assertion.assertEqual(el, 'THHN')
+
+    @pytest.mark.ac
+    def testConductorColorIsPresentedOnFeederSchedule(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393660
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow()
+        sleep(2)
+        el = self.feederSchedule.getColor()
+        self.assertion.assertEqual(el, 'Green')
+
+    @pytest.mark.ac
+    def testSIMpullHeadIsPresentedOnFeederSchedule(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393661
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow()
+        sleep(2)
+        el = self.feederSchedule.getToggle()
+        self.assertion.assertTrue(el.isOn())
+
+    @pytest.mark.ac1
+    def testReelNameIsPresentedOnReelConfigurator(self):
+        email = 'ningxin.liao+test4@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1393663
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        sleep(2)
+        self.reels.tapCircuitsOnReel()
+        sleep(2)
+        el = self.reels.getReelName()
         self.assertion.assertEqual(el, 'reel 1')

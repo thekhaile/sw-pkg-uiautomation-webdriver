@@ -126,9 +126,9 @@ class Reels(object):
         return el.getLabel()
 
     def getCircuitToggle(self):
-        container = self.testCase.app.findElements(self.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
+        container = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.checkbox-toggle')
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'input')
-        el = self.testCase.UIType.Element(el)
+        el = self.testCase.UIType.Switch(el)
         return el
 
     def getBullseyeVisualization(self):
