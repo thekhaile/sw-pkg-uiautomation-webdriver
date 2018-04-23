@@ -183,12 +183,15 @@ class TestCircuit(ProjectBase):
     """Error messages"""
     @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
+        # Verify that SIMpull option is not available with size 6 circuit
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311238
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
+        self.job.createAJob()
         self.jobList.selectAJob()
         sleep(1)
         self.jobSummary.tapConfigureJob()
@@ -202,8 +205,8 @@ class TestCircuit(ProjectBase):
         sleep(1)
         self.circuit.selectConductorSize(size='6')
         sleep(1)
-        expectedErrorMsg = 'Heads cannot be applied to size 6 or 8.'
-        actualErrorMsg = self.circuit.getErrorMsg()
+        expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
+        actualErrorMsg = unidecode.unidecode(self.circuit.getErrorMsg())
 
         self.assertion.assertTrue(expectedErrorMsg in actualErrorMsg)
 
@@ -219,6 +222,7 @@ class TestCircuit(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
+        self.job.createAJob()
         self.jobList.selectAJob()
         sleep(1)
         self.jobSummary.tapConfigureJob()
@@ -1133,5 +1137,425 @@ class TestCircuit(ProjectBase):
         self.assertion.assertEqual(oldRowNumber, newRowNumber - 2)
         self.assertion.assertEqual(oldValue, newValue)
 
+    @pytest.mark.ac
+    def testCircuitAddedToFeederSchedule(self):
+        # Verify a successfully added circuit is displayed in the feeder schedule
+        email = 'nick.moore+auto8@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1311235
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        beforeCount = self.feederSchedule.getNumberOfRows()
+        self.circuit.createCircuitWithSIMpullHead()
+        sleep(1)
+        afterCount = self.feederSchedule.getNumberOfRows()
 
+        self.assertion.assertEqual(beforeCount + 1, afterCount)
+
+    @pytest.mark.ac
+    def testVerifyCircuitMetalOptionsUS(self):
+        # Verify circuit options are correct for a US user
+        email = 'nick.moore+auto9@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311227
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        USConductorList = ['CU / THHN', 'CU / XHHW', 'CU / USE', 'AL / THHN', 'AL / XHHW', 'AL / USE']
+        actualConductorList = self.circuit.getConductorTypeList()
+
+        self.assertion.assertEqual(USConductorList, actualConductorList)
+
+    @pytest.mark.ac
+    def testVerifyCircuitMetalOptionsCanada(self):
+        # Verify circuit options are correct for a Canada user
+        email = 'nick.moore+auto10@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311228
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        CanadaConductorList = ['CU / RW90', 'CU / RWU', 'CU / T90', 'CU / THHN', 'AL / RW90', 'AL / RWU', 'AL / T90', 'AL / THHN']
+        actualConductorList = self.circuit.getConductorTypeList()
+
+        self.assertion.assertEqual(CanadaConductorList, actualConductorList)
+
+    @pytest.mark.ac
+    def testVerifySIMpullHeadSuccessfullyAdded(self):
+        # Verify that a circuit with SIMpull head is successfully added
+        email = 'nick.moore+auto11@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311236
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.circuit.createCircuitWithSIMpullHead()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), True)
+
+    @pytest.mark.ac
+    def testVerifySIMpullHeadNotAdded(self):
+        # Verify that a circuit with SIMpull head is not added
+        email = 'nick.moore+auto12@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311237
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.circuit.createGreenCircuit()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+
+    @pytest.mark.ac
+    def testVerifySIMpullOffByDefault(self):
+        # Verify that the SIMpull option is off by default
+        email = 'nick.moore+auto15@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311256
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+
+    @pytest.mark.ac
+    def testVerifyMaxNumberOfConductorsIs6(self):
+        # Verify that the max number of conductors is 6
+        email = 'nick.moore+auto16@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311259
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        sizeList = ['1', '2', '3', '4', '5', '6']
+
+        self.assertion.assertEqual(self.circuit.getConductorSizeList(), sizeList)
+
+    @pytest.mark.ac
+    def testVerifyUnitsForStandardAccount(self):
+        # Verify that units are displayed in feet for standard account
+        email = 'nick.moore+autostandard@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311258
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+
+        self.assertion.assertEqual(self.circuit.getLength().ui_object.get_attribute('placeholder'), 'Feet')
+
+    @pytest.mark.ac
+    def testVerifyUnitsForMetricAccount(self):
+        # Verify that units are displayed in meters for metric account
+        email = 'nick.moore+autometric@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311257
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+
+        self.assertion.assertEqual(self.circuit.getLength().ui_object.get_attribute('placeholder'), 'Meters')
+
+    @pytest.mark.ac
+    def testVerifyGreenAvailableForOneConductor(self):
+        # Verify that the green color is available with one conductor selected
+        email = 'nick.moore+auto17@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311254
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectNumOfConductor('1')
+        self.circuit.selectConductorSize('4')
+
+        self.assertion.assertExists(self.circuit.getColorOption('Green'))
+
+    @pytest.mark.ac
+    def testVerifyGreenNotAvailableForMoreThanOneConductor(self):
+        # Verify that the green color is not an option when >1 conductor selected
+        email = 'nick.moore+auto18@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311255
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+
+        for i in range(2, 7, 1):
+            self.circuit.selectNumOfConductor(str(i))
+            self.assertion.assertNotExists(self.circuit.getColorOption('Green').ui_object)
+
+    @pytest.mark.ac
+    def testVerifyColorSwapAfterChoosingPreset(self):
+        # Verify colors can be swapped out after choosing a preset
+        email = 'nick.moore+auto19@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311249
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Red-Blue')
+        colors = ['Yellow', 'White', 'Pink']
+        for i in range(3):
+            self.circuit.tapSelectedColorCircle(i)
+            self.circuit.selectColorOption(colors[i])
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colors[i])
+
+    @pytest.mark.ac
+    def testVerifyColorPresetOverridesPartialColorSelection(self):
+        # Verify that when colors have been partially selected, selecting a preset updates the color selection
+        email = 'nick.moore+auto21@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311250
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectColorOption('Blue')
+        sleep(1)
+        colorPreset = ['Brown', 'Orange', 'Yellow']
+        self.circuit.selectCommonPreset('Brown-Orange-Yellow')
+
+        for i in range(3):
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colorPreset[i])
+
+    @pytest.mark.ac
+    def testVerifyCircuitCreatedWithOneConductorAdded(self):
+        # Verify a circuit with one conductor can be created with all valid fields entered
+        email = 'nick.moore+auto22@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311244
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        # Create circuit with one conductor
+        self.circuit.createGreenCircuitOfDifferentMetalInsulation()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getLength().getValue(), '100')
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+        self.assertion.assertEqual(self.circuit.getSelectedColorCircle(0).getLabel(), 'Green')
+        self.assertion.assertEqual(self.circuit.getNumOfConductorPicker().getValue(), '1')
+
+    @pytest.mark.ac
+    def testVerifyCircuitCreatedWithMoreThanOneConductorAdded(self):
+        # Verify a circuit with >1 conductor can be created with all valid fields entered
+        email = 'nick.moore+auto23@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311245
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        # Create circuit with 4 conductors
+        self.circuit.createLargeCACircuit()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+
+        self.assertion.assertEqual(self.circuit.getLength().getValue(), '500')
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
+        self.assertion.assertEqual(self.circuit.getNumOfConductorPicker().getValue(), '4')
+        for i in range(4):
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), 'Black')
+
+    @pytest.mark.ac
+    def testVerifyChangeNumConductorsResetsColorSelection(self):
+        # Verify when colors have been selected, changing the number of conductors resets the color selection
+        email = 'nick.moore+auto24@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311247
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Red-Blue')
+        sleep(1)
+        self.circuit.selectNumOfConductor('1')
+
+        self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(0).getLabel()), '--')
+
+    @pytest.mark.ac
+    def testVerifyPresetColorSelectionOverridesAnotherPreset(self):
+        # Verify when a color preset has been selected, selecting another preset overrides the color selection
+        email = 'nick.moore+auto25@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311248
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / RW90')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Red-Blue')
+        sleep(1)
+        self.circuit.selectCommonPreset('Black-Black-Black')
+
+        for i in range(3):
+            self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), 'Black')
+
+    @pytest.mark.ac
+    def testVerifyConductorSizeResetsAfterChangingMetalType(self):
+        # Verify when a size is not available, changing metal/insulation type resets the size selection
+        email = 'nick.moore+auto26@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311251
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / RW90')
+        self.circuit.selectConductorSize('4')
+        sleep(1)
+        self.circuit.selectConductorType('CU / THHN')
+        sizeLabel = 'Select Size\n1'
+
+        self.assertion.assertEqual(unidecode.unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
+
+    @pytest.mark.ac
+    def testVerifyChangingMetalResetsColorSelection(self):
+        # Verify when colors are selected, changing metal resets the color selection
+        email = 'nick.moore+auto27@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311252
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Black-Black')
+        sleep(1)
+        self.circuit.selectConductorType('CU / XHHW')
+
+        for i in range(3):
+            self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
+
+    @pytest.mark.ac
+    def testVerifyChangingSizeResetsColorSelection(self):
+        # Verify when colors are selected, changing size resets the color selection
+        email = 'nick.moore+auto28@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311253
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Black-Black')
+        sleep(1)
+        self.circuit.selectConductorSize('1')
+
+        for i in range(3):
+            self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
