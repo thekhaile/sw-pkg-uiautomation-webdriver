@@ -161,12 +161,18 @@ class TestProject(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         sleep(2)
+        self.projectList.tapCreateProject()
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
+        sleep(2)
+        self.project.tapSubmit()
+        sleep(2)
         self.projectList.tapOverflow()
         sleep(2)
         self.projectList.tapEditSettings()
         sleep(2)
         el = self.project.getProjectNameOnEditSettings()
-        self.assertion.assertExists(el)
+        self.assertion.assertEqual(el, name)
 
     @pytest.mark.ac
     def testProjectWithUniqueNameCanBeSavedOnEditProjectSettings(self):
