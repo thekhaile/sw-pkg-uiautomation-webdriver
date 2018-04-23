@@ -6,6 +6,8 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
+from southwire_pkg_uiautomation_webdriver.components.job import Job
+
 
 
 class TestProject(ProjectBase):
@@ -16,6 +18,7 @@ class TestProject(ProjectBase):
         self.authentication = Authentication(self)
         self.project = Project(self)
         self.projectList = ProjectList(self)
+        self.job = Job(self)
 
     @pytest.mark.ac
     def testCreateAProjectSuccessfully(self):
@@ -105,7 +108,6 @@ class TestProject(ProjectBase):
         password = 'Test123!'
         self.caseId = 1301727
 
-
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.tapCreateProject()
@@ -113,4 +115,39 @@ class TestProject(ProjectBase):
         el = self.project.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
+    @pytest.mark.ac
+    def testProjectNameIsPresented(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301715
 
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.tapCreateProject()
+        sleep(2)
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
+        sleep(3)
+        self.project.tapSubmit()
+        sleep(2)
+        el = self.app.findElement(self.app.getStrategy().XPATH, '//*[text()="%s"]' % name)
+        self.assertion.assertExists(el)
+
+    @pytest.mark.ac
+    def testNewProjectIsOnTheTopOfProjectList(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301716
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        sleep(2)
+        self.projectList.tapCreateProject()
+        sleep(2)
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
+        sleep(3)
+        self.project.tapSubmit()
+        sleep(2)
+        newValue = self.projectList.getProjectName()
+        self.assertion.assertEqual(newValue, name)

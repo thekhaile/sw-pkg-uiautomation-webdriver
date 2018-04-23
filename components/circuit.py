@@ -65,6 +65,15 @@ class Circuit(object):
         el = self.testCase.UIType.Picker(el)
         return el
 
+    def getConductorTypeList(self):
+        conductorTypeList = []
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Metal / Insulation"]')
+        values = el.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        values.pop(0)
+        for i in values:
+            conductorTypeList.append(i.text)
+        return conductorTypeList
+
     def selectConductorType(self, type):
         el = self.getConductorTypePicker()
         el.scrollToValue(type)
@@ -73,6 +82,15 @@ class Circuit(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@label="Size"]')
         el = self.testCase.UIType.Picker(el)
         return el
+
+    def getConductorSizeList(self):
+        conductorSizeList = []
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//select[@id="conductors"]')
+        sizes = el.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'option')
+        sizes.pop(0)
+        for i in sizes:
+            conductorSizeList.append(i.text)
+        return conductorSizeList
 
     def selectConductorSize(self, size):
         el = self.getConductorSizePicker()
