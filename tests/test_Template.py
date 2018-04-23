@@ -121,3 +121,22 @@ class TestTemplate(ProjectBase):
         self.jobList.selectAJob()
 
         self.assertion.assertNotExists(self.jobSummary.getUploadTemplateOption(), "Upload template option is available")
+
+    @pytest.mark.ac
+    def testUploadOptionHiddenAfterSuccessfulUpload(self):
+        # Verify the upload option is hidden and not able to re-upload the template again after a successful upload
+        email = 'nick.moore+auto34@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381720
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+
+        self.assertion.assertNotExists(self.jobSummary.getUploadTemplateOption(), "Upload template option is available")
+
+
+

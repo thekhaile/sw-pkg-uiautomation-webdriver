@@ -15,7 +15,8 @@ class JobSummary(object):
     def uploadTemplate(self, filePath):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@type="file"]')
         cwd = os.getcwd()
-        el.send_keys(cwd + filePath)
+        path = os.path.abspath(cwd+filePath)
+        el.send_keys(path)
 
     def getUploadTemplateOption(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().ID, 'upload-file')
