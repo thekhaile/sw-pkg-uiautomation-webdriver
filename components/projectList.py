@@ -62,3 +62,19 @@ class ProjectList(object):
         # get the list of rows from the table
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
         return len(rows)
+
+    def getOverflow(self):
+        els = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = els[0]
+        return el
+
+    def tapOverflow(self):
+        el = self.getOverflow()
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapEditSettings(self):
+        overflow = self.getOverflow()
+        el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()

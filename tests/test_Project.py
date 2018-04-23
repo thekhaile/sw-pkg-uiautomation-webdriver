@@ -154,4 +154,16 @@ class TestProject(ProjectBase):
 
     @pytest.mark.ac1
     def testCurrentProjectNameIsPresentedOnEditProjectSettings(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301909
 
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        sleep(2)
+        self.projectList.tapOverflow()
+        sleep(2)
+        self.projectList.tapEditSettings()
+        sleep(2)
+        el = self.project.getProjectNameOnEditSettings()
+        self.assertion.assertExists(el)

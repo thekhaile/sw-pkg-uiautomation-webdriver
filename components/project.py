@@ -59,4 +59,6 @@ class Project(object):
         self.projectList.selectAProject()
 
     def getProjectNameOnEditSettings(self):
-        el = self.testCase.
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Project Name*"]')
+        el = self.testCase.UIType.Element(el)
+        return el.getValue()

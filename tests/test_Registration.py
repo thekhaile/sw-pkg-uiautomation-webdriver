@@ -591,7 +591,7 @@ class TestRegistration(ProjectBase):
         phone = self.registration.getPhone().getValue()
         self.assertion.assertEqual(phone, '5120000000')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testPasswordCanBeEntered(self):
         self.caseId = 1307216
         self.navigation.navigateToRegistrationPage()
@@ -601,7 +601,7 @@ class TestRegistration(ProjectBase):
         password = self.registration.getPassword().getValue()
         self.assertion.assertEqual(password, 'password')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testConfirmPasswordCanBeEntered(self):
         self.caseId = 1307217
         self.navigation.navigateToRegistrationPage()
