@@ -183,12 +183,15 @@ class TestCircuit(ProjectBase):
     """Error messages"""
     @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
+        # Verify that SIMpull option is not available with size 6 circuit
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
+        self.caseId = 1311238
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
+        self.job.createAJob()
         self.jobList.selectAJob()
         sleep(1)
         self.jobSummary.tapConfigureJob()
@@ -202,8 +205,8 @@ class TestCircuit(ProjectBase):
         sleep(1)
         self.circuit.selectConductorSize(size='6')
         sleep(1)
-        expectedErrorMsg = 'Heads cannot be applied to size 6 or 8.'
-        actualErrorMsg = self.circuit.getErrorMsg()
+        expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
+        actualErrorMsg = unidecode._unidecode(self.circuit.getErrorMsg())
 
         self.assertion.assertTrue(expectedErrorMsg in actualErrorMsg)
 
@@ -219,6 +222,7 @@ class TestCircuit(ProjectBase):
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
+        self.job.createAJob()
         self.jobList.selectAJob()
         sleep(1)
         self.jobSummary.tapConfigureJob()
@@ -233,7 +237,7 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize(size='8')
         sleep(1)
         expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
-        actualErrorMsg = unidecode.unidecode(self.circuit.getErrorMsg())
+        actualErrorMsg = unidecode._unidecode(self.circuit.getErrorMsg())
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
@@ -1146,25 +1150,12 @@ class TestCircuit(ProjectBase):
         self.job.createAJob()
         self.jobList.selectAJob()
         self.jobSummary.tapConfigureJob()
-        self.feederSchedule.tapCreateCircuit()
-        self.circuit.enterFrom('A')
-        self.circuit.enterTo('B')
-        self.circuit.selectConductorType(type='CU / THHN')
-        self.circuit.selectConductorSize(size='300')
-        self.circuit.enterCircuitLength('1000')
-        self.circuit.selectNumOfConductor(NOC='4')
-        self.circuit.selectCommonPreset(preset='Pink-Purple-Tan-Gray')
-        self.circuit.tapSubmit()
+        beforeCount = self.feederSchedule.getNumberOfRows()
+        self.circuit.createCircuitWithSIMpullHead()
         sleep(1)
-        fromText = self.feederSchedule.getCircuitFrom()
-        toText = self.feederSchedule.getCircuitTo()
-        size = self.feederSchedule.getCircuitSize()
-        length = self.feederSchedule.getCircuitLength()
+        afterCount = self.feederSchedule.getNumberOfRows()
 
-        self.assertion.assertEqual('A', fromText)
-        self.assertion.assertEqual('B', toText)
-        self.assertion.assertEqual('300', size)
-        self.assertion.assertEqual("1000'", length)
+        self.assertion.assertEqual(beforeCount + 1, afterCount)
 
     @pytest.mark.ac
     def testVerifyCircuitMetalOptionsUS(self):
@@ -1243,46 +1234,6 @@ class TestCircuit(ProjectBase):
         self.feederSchedule.tapEditCircuit()
 
         self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
-
-    @pytest.mark.ac
-    def testVerifySIMpullNotAvailableSize6(self):
-        # Verify that SIMpull option is not available with size 6 circuit
-        email = 'nick.moore+auto13@mutualmobile.com'
-        password = 'newpassword'
-
-        self.caseId = 1311238
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projectList.selectAProject()
-        self.job.createAJob()
-        self.jobList.selectAJob()
-        self.jobSummary.tapConfigureJob()
-        self.feederSchedule.tapCreateCircuit()
-        self.circuit.selectConductorType('CU / THHN')
-        self.circuit.selectConductorSize(size='6')
-        errorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
-
-        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getErrorMsg()), errorMsg)
-
-    @pytest.mark.ac
-    def testVerifySIMpullNotAvailableSize8(self):
-        # Verify that SIMpull option is not available with size 8 circuit
-        email = 'nick.moore+auto14@mutualmobile.com'
-        password = 'newpassword'
-
-        self.caseId = 1311239
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projectList.selectAProject()
-        self.job.createAJob()
-        self.jobList.selectAJob()
-        self.jobSummary.tapConfigureJob()
-        self.feederSchedule.tapCreateCircuit()
-        self.circuit.selectConductorType('CU / THHN')
-        self.circuit.selectConductorSize(size='8')
-        errorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
-
-        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getErrorMsg()), errorMsg)
 
     @pytest.mark.ac
     def testVerifySIMpullOffByDefault(self):
@@ -1417,31 +1368,6 @@ class TestCircuit(ProjectBase):
             self.circuit.tapSelectedColorCircle(i)
             self.circuit.selectColorOption(colors[i])
             self.assertion.assertEqual(self.circuit.getSelectedColorCircle(i).getLabel(), colors[i])
-
-    @pytest.mark.ac
-    def testVerifySIMpullDisabledWithSizes6And8(self):
-        # Verify when SIMpull head is already selected, changing to size 6 or 8 disables the SIMpull option
-        email = 'nick.moore+auto20@mutualmobile.com'
-        password = 'newpassword'
-
-        self.caseId = 1311246
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projectList.selectAProject()
-        self.job.createAJob()
-        self.jobList.selectAJob()
-        self.jobSummary.tapConfigureJob()
-        self.feederSchedule.tapCreateCircuit()
-        self.circuit.selectConductorType('CU / THHN')
-        self.circuit.toggleSIMpullHead()
-        self.circuit.selectConductorSize('8')
-        sleep(1)
-        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
-        self.circuit.selectConductorSize('4')
-        self.circuit.toggleSIMpullHead()
-        self.circuit.selectConductorSize('6')
-        sleep(1)
-        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False)
 
     @pytest.mark.ac
     def testVerifyColorPresetOverridesPartialColorSelection(self):
