@@ -17,6 +17,10 @@ class JobSummary(object):
         cwd = os.getcwd()
         el.send_keys(cwd + filePath)
 
+    def getUploadTemplateOption(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().ID, 'upload-file')
+        return el
+
     def tapConfigureJob(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.tertiary')
         el = self.testCase.UIType.Button(el)
