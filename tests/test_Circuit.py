@@ -1538,7 +1538,7 @@ class TestCircuit(ProjectBase):
         sleep(1)
         self.circuit.selectNumOfConductor('1')
 
-        self.assertion.assertNotEqual(self.circuit.getSelectedColorCircle(0).getLabel(), 'Black')
+        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(0).getLabel()), '--')
 
     @pytest.mark.ac
     def testVerifyPresetColorSelectionOverridesAnotherPreset(self):
@@ -1585,3 +1585,51 @@ class TestCircuit(ProjectBase):
         sizeLabel = 'Select Size\n1'
 
         self.assertion.assertEqual(unidecode._unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
+
+    @pytest.mark.ac
+    def testVerifyChangingMetalResetsColorSelection(self):
+        # Verify when colors are selected, changing metal resets the color selection
+        email = 'nick.moore+auto27@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311252
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Black-Black')
+        sleep(1)
+        self.circuit.selectConductorType('CU / XHHW')
+
+        for i in range(3):
+            self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
+
+    @pytest.mark.ac
+    def testVerifyChangingSizeResetsColorSelection(self):
+        # Verify when colors are selected, changing size resets the color selection
+        email = 'nick.moore+auto28@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1311253
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapCreateCircuit()
+        self.circuit.selectConductorType('CU / THHN')
+        self.circuit.selectConductorSize('4')
+        self.circuit.selectNumOfConductor('3')
+        self.circuit.selectCommonPreset('Black-Black-Black')
+        sleep(1)
+        self.circuit.selectConductorSize('1')
+
+        for i in range(3):
+            self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
