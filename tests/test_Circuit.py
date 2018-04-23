@@ -181,7 +181,7 @@ class TestCircuit(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     """Error messages"""
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
         # Verify that SIMpull option is not available with size 6 circuit
         email = 'ningxin.liao@mutualmobile.com'
