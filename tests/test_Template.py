@@ -11,6 +11,7 @@ from southwire_pkg_uiautomation_webdriver.components.configurator.reelList impor
 from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
 from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
+import unidecode
 
 class TestTemplate(ProjectBase):
 
@@ -138,5 +139,142 @@ class TestTemplate(ProjectBase):
 
         self.assertion.assertNotExists(self.jobSummary.getUploadTemplateOption(), "Upload template option is available")
 
+    @pytest.mark.ac
+    def testVerifyUploadedCircuitsDisplayedInOrder(self):
+        # Verify that uploaded circuits are displayed in order
+        email = 'nick.moore+auto35@mutualmobile.com'
+        password = 'newpassword'
 
+        self.caseId = 1381722
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        fromList = ['PANEL', 'PANEL', 'MCC-1', 'MCC-1']
+        toList = ['GEN-ATS-U', 'GEN-ATS-I #1', 'XFRMT T1', 'XFRMT T1']
+        sizeList = ['400', '350', '6', '8']
+        lengthList = ["359'", "379'", "180'", "180'"]
 
+        rowCount = self.feederSchedule.getNumberOfRows()
+        for i in range(rowCount):
+            self.assertion.assertEqual(self.feederSchedule.getCircuitFrom(i), fromList[i], "Circuit FROM does not match")
+            self.assertion.assertEqual(self.feederSchedule.getCircuitTo(i), toList[i], "Circuit TO does not match")
+            self.assertion.assertEqual(self.feederSchedule.getCircuitSize(i), sizeList[i], "Circuit SIZE does not match")
+            self.assertion.assertEqual(self.feederSchedule.getCircuitLength(i), lengthList[i], "Circuit LENGTH does not match")
+
+    @pytest.mark.ac
+    def testVerifyUploadedCircuitsCanBeEdited(self):
+        # Verify that uploaded circuits can be edited
+        email = 'nick.moore+auto36@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381738
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+        self.circuit.enterCircuitLength('1000')
+        self.circuit.tapSubmit()
+
+        self.assertion.assertEqual(self.feederSchedule.getCircuitLength(0), "1000'", "Circuit LENGTH does not match")
+
+    @pytest.mark.ac
+    def testVerifyUploadedCircuitsCanBeDuplicated(self):
+        # Verify uploaded circuits can be duplicated
+        email = 'nick.moore+auto37@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381739
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        beforeRowCount = self.feederSchedule.getNumberOfRows()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapDuplicateCircuit()
+        afterRowCount = self.feederSchedule.getNumberOfRows()
+
+        self.assertion.assertEqual(beforeRowCount + 1, afterRowCount, "Row count after duplication is wrong")
+
+    @pytest.mark.ac
+    def testVerifyUploadedCircuitsCanBeDeleted(self):
+        # Verify uploaded circuits can be Deleted
+        email = 'nick.moore+auto38@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381740
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        beforeRowCount = self.feederSchedule.getNumberOfRows()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapDeleteCircuit()
+        self.feederSchedule.tapConfirmDelete()
+        afterRowCount = self.feederSchedule.getNumberOfRows()
+
+        self.assertion.assertEqual(beforeRowCount - 1, afterRowCount, "Row count after deletion is wrong")
+
+    @pytest.mark.ac
+    def testUploadedCircuitsSIMpullHeadDefaultOff(self):
+        # Verify that SIMpull head is set to Off by default for uploaded circuits
+        email = 'nick.moore+auto39@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381737
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        self.feederSchedule.tapOverflow()
+        sleep(1)
+        self.feederSchedule.tapEditCircuit()
+        sleep(1)
+
+        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False, "SIMpull head is not set to off")
+
+    @pytest.mark.ac
+    def testUploadedCircuitsHaveCorrectGroundMetal(self):
+        # Verify that uploaded circuits have the correct ground metal selected
+        email = 'nick.moore+auto40@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381735
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        # 4th circuit position is the ground
+        self.feederSchedule.tapOverflow(3)
+        sleep(1)
+        self.feederSchedule.tapEditCircuit(3)
+
+        self.assertion.assertEqual(self.circuit.getConductorTypePicker().getValue(), 'CU|THHN', "Circuit conductor type doesn't match")
