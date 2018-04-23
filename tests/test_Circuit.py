@@ -181,7 +181,7 @@ class TestCircuit(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     """Error messages"""
-    @pytest.mark.ac
+    @pytest.mark.ac1
     def testSIMpullHeadIsNotAvailableForSizes6Conductors(self):
         # Verify that SIMpull option is not available with size 6 circuit
         email = 'ningxin.liao@mutualmobile.com'
@@ -206,7 +206,7 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize(size='6')
         sleep(1)
         expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
-        actualErrorMsg = unidecode._unidecode(self.circuit.getErrorMsg())
+        actualErrorMsg = unidecode.unidecode(self.circuit.getErrorMsg())
 
         self.assertion.assertTrue(expectedErrorMsg in actualErrorMsg)
 
@@ -237,7 +237,7 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize(size='8')
         sleep(1)
         expectedErrorMsg = 'SIMpull (tm) Heads cannot be applied to size 6 or 8.'
-        actualErrorMsg = unidecode._unidecode(self.circuit.getErrorMsg())
+        actualErrorMsg = unidecode.unidecode(self.circuit.getErrorMsg())
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
@@ -1464,7 +1464,7 @@ class TestCircuit(ProjectBase):
         sleep(1)
         self.circuit.selectNumOfConductor('1')
 
-        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(0).getLabel()), '--')
+        self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(0).getLabel()), '--')
 
     @pytest.mark.ac
     def testVerifyPresetColorSelectionOverridesAnotherPreset(self):
@@ -1510,7 +1510,7 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorType('CU / THHN')
         sizeLabel = 'Select Size\n1'
 
-        self.assertion.assertEqual(unidecode._unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
+        self.assertion.assertEqual(unidecode.unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
 
     @pytest.mark.ac
     def testVerifyChangingMetalResetsColorSelection(self):
@@ -1534,7 +1534,7 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorType('CU / XHHW')
 
         for i in range(3):
-            self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
+            self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
 
     @pytest.mark.ac
     def testVerifyChangingSizeResetsColorSelection(self):
@@ -1558,4 +1558,4 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize('1')
 
         for i in range(3):
-            self.assertion.assertEqual(unidecode._unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
+            self.assertion.assertEqual(unidecode.unidecode(self.circuit.getSelectedColorCircle(i).getLabel()), '--')
