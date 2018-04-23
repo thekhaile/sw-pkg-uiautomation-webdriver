@@ -538,26 +538,18 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterContactName('Ningxin Liao')
         sleep(3)
+        name = self.registration.getContactName().getValue()
+        self.assertion.assertEqual(name, 'Ningxin Liao')
 
     @pytest.mark.ac
     def testCompanyNameCanBeEntered(self):
-        self.caseId = 1307200
+        self.caseId = 1307206
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterCompanyName('Mutual Mobile')
         sleep(1)
         companyName = self.registration.getCompanyName().getValue()
         self.assertion.assertEqual(companyName, 'Mutual Mobile')
-
-    @pytest.mark.ac
-    def testContactNameCanBeEntered(self):
-        self.caseId = 1307206
-        self.navigation.navigateToRegistrationPage()
-        sleep(1)
-        self.registration.enterContactName('Ningxin Liao')
-        sleep(1)
-        name = self.registration.getContactName().getValue()
-        self.assertion.assertEqual(name, 'Ningxin Liao')
 
     @pytest.mark.ac
     def testEmailCanBeEntered(self):
