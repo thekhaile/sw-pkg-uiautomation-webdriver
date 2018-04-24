@@ -87,13 +87,15 @@ class FeederSchedule(object):
         return el
 
     # Overflow & edit/duplicate/delete button
-    def tapOverflow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapOverflow(self, rowNumber=0):
+        els = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        el = els[rowNumber]
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapEditCircuit(self, rowNumber=0):
+        overflow = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+        overflow = overflow[rowNumber]
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
         el.tap()

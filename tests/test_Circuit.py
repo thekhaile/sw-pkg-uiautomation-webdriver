@@ -1498,9 +1498,11 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize('4')
         sleep(1)
         self.circuit.selectConductorType('CU / THHN')
-        sizeLabel = 'Select Size\n1'
+        sleep(1)
+        el = self.circuit.getConductorSizePicker()
+        option = el.ui_object.find_element(self.app.getStrategy().XPATH, '//option[text()="Select Size"]')
 
-        self.assertion.assertEqual(unidecode.unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
+        self.assertion.assertTrue(option.is_selected(), "Select Size is not displayed")
 
     @pytest.mark.ac
     def testVerifyChangingMetalResetsColorSelection(self):
