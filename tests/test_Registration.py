@@ -558,9 +558,8 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterEmail('ningxin.test@mutalmobile.com')
         sleep(1)
-        email = self.registration.getEmail()
-        email = self.UIType.TextField(email)
-        self.assertion.assertEqual(email.getValue(), 'ningxin.test@mutalmobile.com')
+        email = self.registration.getEmail().getValue()
+        self.assertion.assertEqual(email, 'ningxin.test@mutalmobile.com')
 
     @pytest.mark.ac
     def testCityCanBeEntered(self):
