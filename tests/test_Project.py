@@ -151,3 +151,45 @@ class TestProject(ProjectBase):
         sleep(2)
         newValue = self.projectList.getProjectName()
         self.assertion.assertEqual(newValue, name)
+
+    @pytest.mark.ac
+    def testCurrentProjectNameIsPresentedOnEditProjectSettings(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301909
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        sleep(2)
+        self.projectList.tapCreateProject()
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
+        sleep(2)
+        self.project.tapSubmit()
+        sleep(2)
+        self.projectList.tapOverflow()
+        sleep(2)
+        self.projectList.tapEditSettings()
+        sleep(2)
+        el = self.project.getProjectNameOnEditSettings()
+        self.assertion.assertEqual(el, name)
+
+    @pytest.mark.ac
+    def testProjectWithUniqueNameCanBeSavedOnEditProjectSettings(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+        self.caseId = 1301914
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        sleep(2)
+        self.projectList.tapCreateProject()
+        name = self.project.generateRandomProjectName()
+        self.project.enterProjectName(name)
+        sleep(2)
+        self.project.tapSubmit()
+        sleep(2)
+        el = self.app.findElement(self.app.getStrategy().XPATH, '//*[text()="%s"]' % name)
+        self.assertion.assertExists(el)
+
+
