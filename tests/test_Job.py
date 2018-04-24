@@ -785,8 +785,8 @@ class TestJob(ProjectBase):
         el = self.job.getSubmitButton()
         self.assertion.assertFalse(el.isEnabled())
 
-    @pytest.mark.ac1
-    def testSubmitButtonIsDisabledWhenNameFieldIsEmptyOnDuplicateJobScreen(self):
+    @pytest.mark.ac
+    def testDuplicatedJobHasANewCreatedDate(self):
         email = 'ningxin.liao+test2@mutualmobile.com'
         password = 'password'
 
@@ -795,10 +795,32 @@ class TestJob(ProjectBase):
         self.authentication.login(email, password)
         self.projectList.selectAProject()
         sleep(2)
-        oldValue = self.jobList.getJobModifiedDate(rowOrder=-1)
-        self.jobList.tapOverflow()
+        oldValue = self.jobList.getJobCreatedDate(rowOrder=-1)
+        self.jobList.tapOverflow(rowOrder=-1)
         sleep(2)
-        self.jobList.tapDuplicateJob()
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        newValue = self.jobList.getJobCreatedDate()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDuplicatedJobHasAnEmptyModifiedDate(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388780
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        oldValue = self.jobList.getJobModifiedDate(rowOrder=-1)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
         sleep(2)
         self.job.enterRandomJobName()
         sleep(2)
@@ -806,5 +828,39 @@ class TestJob(ProjectBase):
         sleep(2)
         newValue = self.jobList.getJobModifiedDate()
         self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, '')
 
+    @pytest.mark.ac
+    def testJobsiteRestrictionCanBeEditedForDuplicatedJob(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
 
+        self.caseId = 1388782
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapEditSettings()
+        sleep(2)
+        oldValue = self.job.getHeight()
+        self.job.enterHeight('100')
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapEditSettings()
+        sleep(2)
+        newValue = self.job.getHeight()
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, '100')
