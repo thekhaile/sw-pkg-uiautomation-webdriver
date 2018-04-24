@@ -1508,7 +1508,10 @@ class TestCircuit(ProjectBase):
         self.circuit.selectConductorSize('4')
         sleep(1)
         self.circuit.selectConductorType('CU / THHN')
-        sizeLabel = 'Select Size\n1'
+        if self.isSafari:
+            sizeLabel = 'Select Size1'
+        else:
+            sizeLabel = 'Select Size\n1'
 
         self.assertion.assertEqual(unidecode.unidecode(self.circuit.getConductorSizePicker().getLabel()), sizeLabel)
 

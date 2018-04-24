@@ -558,8 +558,9 @@ class TestRegistration(ProjectBase):
         sleep(1)
         self.registration.enterEmail('ningxin.test@mutalmobile.com')
         sleep(1)
-        email = self.registration.getEmail().getValue()
-        self.assertion.assertEqual(email, 'ningxin.test@mutalmobile.com')
+        email = self.registration.getEmail()
+        email = self.UIType.TextField(email)
+        self.assertion.assertEqual(email.getValue(), 'ningxin.test@mutalmobile.com')
 
     @pytest.mark.ac
     def testCityCanBeEntered(self):
@@ -591,7 +592,7 @@ class TestRegistration(ProjectBase):
         phone = self.registration.getPhone().getValue()
         self.assertion.assertEqual(phone, '5120000000')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testPasswordCanBeEntered(self):
         self.caseId = 1307216
         self.navigation.navigateToRegistrationPage()
@@ -601,7 +602,7 @@ class TestRegistration(ProjectBase):
         password = self.registration.getPassword().getValue()
         self.assertion.assertEqual(password, 'password')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testConfirmPasswordCanBeEntered(self):
         self.caseId = 1307217
         self.navigation.navigateToRegistrationPage()
@@ -676,7 +677,7 @@ class TestRegistration(ProjectBase):
         self.caseId = 1307221
         self.navigation.navigateToRegistrationPage()
         sleep(1)
-        self.registration.enterEmail('ningxin.test+sw@mutualmobile.com')
+        self.registration.enterEmail('ningxin.test+sw@southwire.com')
         self.registration.selectContactRole(role='Other')
         role = self.registration.getSelectedRole()
         self.assertion.assertEqual(role, 'Southwire Employee')
