@@ -725,3 +725,86 @@ class TestJob(ProjectBase):
         el = self.jobList.getDuplicateJobButton()
         self.assertion.assertExists(el)
 
+    @pytest.mark.ac
+    def testWhenTappingOnDuplicateJobTransitionsToDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388772
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        newUrl = self.driver.current_url
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testErrorMessageDisplayedWhenEnterMoreThan30CharOnDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388775
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        self.job.enterJobName('Test Job Name Over 30 Characters')
+        sleep(2)
+        el = self.job.getErrorMsg()
+        self.assertion.assertEqual(el, 'Job name cannot exceed 30 characters.')
+
+    @pytest.mark.ac
+    def testSubmitButtonIsDisabledWhenNameFieldIsEmptyOnDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388776
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        el = self.job.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac1
+    def testSubmitButtonIsDisabledWhenNameFieldIsEmptyOnDuplicateJobScreen(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388779
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        oldValue = self.jobList.getJobModifiedDate(rowOrder=-1)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        newValue = self.jobList.getJobModifiedDate()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+
