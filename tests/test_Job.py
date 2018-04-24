@@ -682,7 +682,7 @@ class TestJob(ProjectBase):
         self.jobList.tapOverflow()
         sleep(2)
         el = self.jobList.getDuplicateJobButton()
-        self.assertion.assertExists(el)
+        self.assertion.assertExists(el.ui_object)
 
     @pytest.mark.ac
     def testDuplicateButtonIsEnabledForJobSubmittedForRFQ(self):
@@ -723,7 +723,7 @@ class TestJob(ProjectBase):
         self.jobList.tapOverflow()
         sleep(2)
         el = self.jobList.getDuplicateJobButton()
-        self.assertion.assertExists(el)
+        self.assertion.assertExists(el.ui_object)
 
     @pytest.mark.ac
     def testWhenTappingOnDuplicateJobTransitionsToDuplicateJobScreen(self):
