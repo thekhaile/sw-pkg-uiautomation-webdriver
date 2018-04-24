@@ -278,3 +278,42 @@ class TestTemplate(ProjectBase):
         self.feederSchedule.tapEditCircuit(3)
 
         self.assertion.assertEqual(self.circuit.getConductorTypePicker().getValue(), 'CU|THHN', "Circuit conductor type doesn't match")
+
+    @pytest.mark.ac
+    def testCircuitsCanBeAddedAfterTemplateUpload(self):
+        # Verify that circuits can be added to feeder schedule after template upload
+        email = 'nick.moore+auto41@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381741
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        beforeCount = self.feederSchedule.getNumberOfRows()
+        self.circuit.createLargeUSCircuit()
+        afterCount = self.feederSchedule.getNumberOfRows()
+
+        self.assertion.assertEqual(beforeCount + 1, afterCount, 'Number of rows mismatch')
+
+    @pytest.mark.ac
+    def testVerifyGroundSizeAfterTemplateUpload(self):
+        # Verify that the correct ground size is displayed on feeder schedule according to the template
+        email = 'nick.moore+auto42@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381736
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+
+        self.assertion.assertEqual(self.feederSchedule.getCircuitSize(3), '8', 'Ground size is not 8')
