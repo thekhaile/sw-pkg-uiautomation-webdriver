@@ -6,10 +6,14 @@ from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule
 from southwire_pkg_uiautomation_webdriver.components.job import Job
 from southwire_pkg_uiautomation_webdriver.components.navigation import Navigation
 from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
+from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
 from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
 from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
+from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
+from southwire_pkg_uiautomation_webdriver.components.requestQuote import RequestQuote
+
 
 
 class TestJob(ProjectBase):
@@ -25,6 +29,9 @@ class TestJob(ProjectBase):
         self.feederSchedule = FeederSchedule(self)
         self.jobSummary = JobSummary(self)
         self.reel = Reel(self)
+        self.project = Project(self)
+        self.circuit = Circuit(self)
+        self.requestQuote = RequestQuote(self)
 
     """Create job"""
     @pytest.mark.ac
@@ -660,3 +667,200 @@ class TestJob(ProjectBase):
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
 
+    @pytest.mark.ac
+    def testDuplicateButtonIsEnabledForInprogressJob(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388770
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        el = self.jobList.getDuplicateJobButton()
+        self.assertion.assertExists(el.ui_object)
+
+    @pytest.mark.ac
+    def testDuplicateButtonIsEnabledForJobSubmittedForRFQ(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388771
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        '''precondition'''
+        self.project.createAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        self.circuit.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapRequestQuote()
+        sleep(2)
+        self.requestQuote.tapSubmit()
+        sleep(2)
+        '''end of precondition'''
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        el = self.jobList.getDuplicateJobButton()
+        self.assertion.assertExists(el.ui_object)
+
+    @pytest.mark.ac
+    def testWhenTappingOnDuplicateJobTransitionsToDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388772
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        newUrl = self.driver.current_url
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testErrorMessageDisplayedWhenEnterMoreThan30CharOnDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388775
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        self.job.enterJobName('Test Job Name Over 30 Characters')
+        sleep(2)
+        el = self.job.getErrorMsg()
+        self.assertion.assertEqual(el, 'Job name cannot exceed 30 characters.')
+
+    @pytest.mark.ac
+    def testSubmitButtonIsDisabledWhenNameFieldIsEmptyOnDuplicateJobScreen(self):
+        email = 'ningxin.liao+test3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388776
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        el = self.job.getSubmitButton()
+        self.assertion.assertFalse(el.isEnabled())
+
+    @pytest.mark.ac
+    def testDuplicatedJobHasANewCreatedDate(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388779
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        oldValue = self.jobList.getJobCreatedDate(rowOrder=-1)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        newValue = self.jobList.getJobCreatedDate()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDuplicatedJobHasAnEmptyModifiedDate(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388780
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        oldValue = self.jobList.getJobModifiedDate(rowOrder=-1)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        newValue = self.jobList.getJobModifiedDate()
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, '')
+
+    @pytest.mark.ac
+    def testJobsiteRestrictionCanBeEditedForDuplicatedJob(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388782
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapEditSettings()
+        sleep(2)
+        oldValue = self.job.getHeight()
+        self.job.enterHeight('100')
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapEditSettings()
+        sleep(2)
+        newValue = self.job.getHeight()
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(newValue, '100')

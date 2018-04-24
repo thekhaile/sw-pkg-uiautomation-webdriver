@@ -81,35 +81,37 @@ class JobList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def getOverflow(self):
-        els = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        if len(els) > 1:
-            el = els[1]
-        else:
-            el = els[0]
-        return el
+    def _getJobOverflow(self, rowOrder):
+        table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'table.overview-list.many-columns')
+        els = table.find_elements(self.testCase.app.getStrategy().XPATH, './/*[@class="overflow"]')
+        seletedRow = els[rowOrder]
+        return seletedRow
 
-    def tapOverflow(self):
-        el = self.getOverflow()
+    def tapOverflow(self, rowOrder=0):
+        el = self._getJobOverflow(rowOrder)
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditSettings(self):
-        overflow = self.getOverflow()
+    def tapEditSettings(self, rowOrder=0):
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDeleteJob(self):
-        overflow = self.getOverflow()
+    def tapDeleteJob(self, rowOrder=0):
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete Job"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDuplicateJob(self):
-        overflow = self.getOverflow()
+    def getDuplicateJobButton(self, rowOrder=0):
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate Job"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapDuplicateJob(self, rowOrder=0):
+        el = self.getDuplicateJobButton(rowOrder)
         el.tap()
 
     def tapConfirmDelete(self):
