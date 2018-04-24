@@ -24,11 +24,11 @@ class Registration(object):
 
     def getEmail(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Email"]')
+        el = self.testCase.UIType.TextField(el)
         return el
 
     def enterEmail(self,text):
         el = self.getEmail()
-        el = self.testCase.UIType.TextField(el)
         el.tap()
         el.clearText()
         el.enterText(text)

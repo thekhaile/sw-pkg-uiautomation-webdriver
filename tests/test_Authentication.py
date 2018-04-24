@@ -158,7 +158,10 @@ class TestAuthentication(ProjectBase):
         currentUrl = self.driver.current_url
         self.authentication.login(email, password)
         newUrl = self.driver.current_url
-        expectedErrorMsg = "This account hasn't been verified.\nResend verification email."
+        if self.isSafari:
+            expectedErrorMsg = "This account hasn't been verified.Resend verification email."
+        else:
+            expectedErrorMsg = "This account hasn't been verified.\nResend verification email."
         actualErrorMsg = unidecode.unidecode(self.authentication.getErrorMsg())
 
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)

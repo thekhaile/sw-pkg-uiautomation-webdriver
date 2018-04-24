@@ -563,7 +563,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCityCanBeEntered(self):
-        self.caseId = 1307208
+        self.caseId = 1307209
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterCity('Austin')
@@ -603,7 +603,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testConfirmPasswordCanBeEntered(self):
-        self.caseId = 1307217
+        self.caseId = 1307218
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -641,6 +641,15 @@ class TestRegistration(ProjectBase):
         role = self.registration.getSelectedRole()
         self.assertion.assertEqual(role, 'Other')
 
+    @pytest.mark.ac1
+    def testContractorRoleCanBeSelected(self):
+        self.caseId = 1307202
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectContactRole(role='Contractor')
+        role = self.registration.getSelectedRole()
+        self.assertion.assertEqual(role, 'Contractor')
+
     @pytest.mark.ac
     def testStateProvinceCanBeSelected(self):
         self.caseId = 1307211
@@ -676,7 +685,7 @@ class TestRegistration(ProjectBase):
         self.caseId = 1307221
         self.navigation.navigateToRegistrationPage()
         sleep(1)
-        self.registration.enterEmail('ningxin.test+sw@mutualmobile.com')
+        self.registration.enterEmail('ningxin.test+sw@southwire.com')
         self.registration.selectContactRole(role='Other')
         role = self.registration.getSelectedRole()
         self.assertion.assertEqual(role, 'Southwire Employee')
