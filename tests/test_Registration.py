@@ -563,7 +563,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testCityCanBeEntered(self):
-        self.caseId = 1307208
+        self.caseId = 1307209
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterCity('Austin')
