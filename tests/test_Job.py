@@ -864,3 +864,32 @@ class TestJob(ProjectBase):
         newValue = self.job.getHeight()
         self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertEqual(newValue, '100')
+
+    @pytest.mark.ac1
+    def testDuplicatedJobSharesTheSameFeederSchedule(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388783
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.selectAJob(rowOrder=-1)
+        sleep(2)
+        oldValue = self.feederSchedule.getCircuitTo()
+        self.navigation.navigateToProjectsPage()
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        newValue = self.feederSchedule.getCircuitTo()
+        self.assertion.assertEqual(oldValue, newValue)
