@@ -255,7 +255,7 @@ class TestTemplate(ProjectBase):
         self.feederSchedule.tapEditCircuit()
         sleep(1)
 
-        self.assertion.assertEqual(self.circuit.getSIMpullHeadToggle().isOn(), False, "SIMpull head is not set to off")
+        self.assertion.assertFalse(self.circuit.getSIMpullHeadToggle().getLabel(), "SIMpull head is not set to off")
 
     @pytest.mark.ac
     def testUploadedCircuitsHaveCorrectGroundMetal(self):
