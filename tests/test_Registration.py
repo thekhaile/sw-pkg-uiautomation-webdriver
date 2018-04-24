@@ -603,7 +603,7 @@ class TestRegistration(ProjectBase):
 
     @pytest.mark.ac
     def testConfirmPasswordCanBeEntered(self):
-        self.caseId = 1307217
+        self.caseId = 1307218
         self.navigation.navigateToRegistrationPage()
         sleep(1)
         self.registration.enterConfirmPassword('password')
@@ -640,6 +640,15 @@ class TestRegistration(ProjectBase):
         sleep(1)
         role = self.registration.getSelectedRole()
         self.assertion.assertEqual(role, 'Other')
+
+    @pytest.mark.ac1
+    def testContractorRoleCanBeSelected(self):
+        self.caseId = 1307202
+        self.navigation.navigateToRegistrationPage()
+        sleep(1)
+        self.registration.selectContactRole(role='Contractor')
+        role = self.registration.getSelectedRole()
+        self.assertion.assertEqual(role, 'Contractor')
 
     @pytest.mark.ac
     def testStateProvinceCanBeSelected(self):
