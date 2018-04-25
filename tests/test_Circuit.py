@@ -218,7 +218,7 @@ class TestCircuit(ProjectBase):
         email = 'ningxin.liao@mutualmobile.com'
         password = 'newpassword'
 
-        self.caseId = 1311246
+        self.caseId = 1311239
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
