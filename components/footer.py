@@ -15,7 +15,7 @@ class Footer(object):
 
     def getContractorSolutionsLink(self):
         footerList = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.footer-item')
-        el = footerList[0]
+        el = footerList[4]
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
@@ -25,7 +25,7 @@ class Footer(object):
 
     def getLegalDisclaimer(self):
         footerList = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.footer-item')
-        el = footerList[1]
+        el = footerList[5]
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
@@ -34,8 +34,7 @@ class Footer(object):
         el.tap()
 
     def getContactEmail(self):
-        el = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.footer-item')
-        email = el[-1]
+        email = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.footer-item')
         email = self.testCase.UIType.Element(email)
         return email.getLabel()
 
