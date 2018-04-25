@@ -81,31 +81,31 @@ class JobList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def __getJobOverflows(self, rowOrder):
+    def _getJobOverflow(self, rowOrder):
         table = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'table.overview-list.many-columns')
         els = table.find_elements(self.testCase.app.getStrategy().XPATH, './/*[@class="overflow"]')
         seletedRow = els[rowOrder]
         return seletedRow
 
     def tapOverflow(self, rowOrder=0):
-        el = self.__getJobOverflows(rowOrder)
+        el = self._getJobOverflow(rowOrder)
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapEditSettings(self, rowOrder=0):
-        overflow = self.__getJobOverflows(rowOrder)
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def tapDeleteJob(self, rowOrder=0):
-        overflow = self.__getJobOverflows(rowOrder)
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete Job"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
     def getDuplicateJobButton(self, rowOrder=0):
-        overflow = self.__getJobOverflows(rowOrder)
+        overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate Job"]')
         el = self.testCase.UIType.Button(el)
         return el

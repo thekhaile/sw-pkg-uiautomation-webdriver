@@ -27,15 +27,16 @@ class ReelList(object):
 
 
     # overflow for edit and delete
-    def __getReelOverflows(self):
+    def _getReelOverflow(self, rowOrder):
         # find overflow container
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-item-container')
         # find overflow list
-        overflows = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.overflow')
-        return overflows
+        els = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.overflow')
+        seletedRow = els[rowOrder]
+        return seletedRow
 
     def tapOverflow(self, rowOrder=0):
-        overflows = self.__getReelOverflows()
+        overflows = self._getReelOverflow(rowOrder)
         el = overflows[rowOrder]
         el = self.testCase.UIType.Button(el)
         el.tap()
