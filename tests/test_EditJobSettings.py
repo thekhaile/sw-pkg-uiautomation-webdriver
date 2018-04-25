@@ -304,7 +304,7 @@ class TestEditJobSettings(ProjectBase):
         newValue = self.job.getWeight()
         self.assertion.assertNotEqual(oldValue, newValue)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testExitEditJobSettingsTansitionsToViewJobSummaryScreen(self):
         email = 'ningxin.liao+regression@mutualmobile.com'
         password = 'password'
