@@ -578,7 +578,7 @@ class TestJob(ProjectBase):
         self.assertion.assertEqual(reelList, newReelList)
 
     @pytest.mark.ac
-    def testDuplicatedJobCount(self):
+    def testJobCountIncreaseByOneAfterAJobHasBeenDuplicated(self):
         # Verify the list of jobs is incremented after duplication
         email = 'nick.moore+auto1@mutualmobile.com'
         password = 'newpassword'
@@ -592,9 +592,6 @@ class TestJob(ProjectBase):
         self.job.tapSubmit()
         sleep(1)
         jobCount = self.jobList.getJobCount()
-        sleep(1)
-        self.jobList.selectAJob()
-        sleep(1)
         self.jobList.tapOverflow()
         sleep(1)
         self.jobList.tapDuplicateJob()
@@ -606,7 +603,7 @@ class TestJob(ProjectBase):
         self.assertion.assertEqual(jobCount + 1, newJobCount)
 
     @pytest.mark.ac
-    def testDuplicatedJobListPosition(self):
+    def testDuplicatedJobIsOnTheTopOfTheList(self):
         # Verify the duplicated job is placed at the top of the job list
         email = 'nick.moore+auto1@mutualmobile.com'
         password = 'newpassword'
@@ -618,8 +615,6 @@ class TestJob(ProjectBase):
         self.jobList.tapCreateJob()
         self.job.enterJobName(self.job.generateRandomName())
         self.job.tapSubmit()
-        sleep(1)
-        self.jobList.selectAJob()
         sleep(1)
         self.jobList.tapOverflow()
         sleep(1)
