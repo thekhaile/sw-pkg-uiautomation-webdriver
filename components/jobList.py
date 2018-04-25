@@ -92,16 +92,24 @@ class JobList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditSettings(self, rowOrder=0):
+    def getEditSettings(self,rowOrder=0):
         overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapEditSettings(self, rowOrder=0):
+        el = self.getEditSettings(rowOrder)
         el.tap()
 
-    def tapDeleteJob(self, rowOrder=0):
+    def getDeleteJobButton(self, rowOrder=0):
         overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete Job"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapDeleteJob(self, rowOrder=0):
+        el = self.getDeleteJobButton(rowOrder)
         el.tap()
 
     def getDuplicateJobButton(self, rowOrder=0):

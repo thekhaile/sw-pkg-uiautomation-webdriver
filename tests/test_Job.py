@@ -454,59 +454,6 @@ class TestJob(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
-    '''Delete Jobs'''
-    @pytest.mark.ac
-    def testDeleteInProgressJob(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.caseId = 1379235
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projectList.selectAProject()
-        # precondition
-        self.jobList.tapCreateJob()
-        sleep(1)
-        name = self.job.generateRandomName()
-        self.job.enterJobName(name)
-        sleep(1)
-        self.job.tapSubmit()
-        sleep(1)
-        # end of precondition
-        oldJobCount = self.jobList.getJobCount()
-        jobName = self.jobList.getJobName(rowOrder=0)
-        self.jobList.tapOverflow()
-        sleep(2)
-        self.jobList.tapDeleteJob()
-        sleep(2)
-        self.jobList.tapConfirmDelete()
-        sleep(2)
-        newJobCount = self.jobList.getJobCount()
-        self.assertEqual(oldJobCount-1, newJobCount)
-        if newJobCount >= 1:
-            newJobName = self.jobList.getJobName(rowOrder=0)
-            self.assertion.assertNotEqual(jobName, newJobName)
-
-    @pytest.mark.ac
-    def testCancelDeleteInProgressJob(self):
-        email = 'ningxin.liao@mutualmobile.com'
-        password = 'newpassword'
-
-        self.caseId = 1379242
-        self.navigation.navigateToLoginPage()
-        self.authentication.login(email, password)
-        self.projectList.selectAProject()
-        jobName = self.jobList.getJobName(rowOrder=0)
-        self.jobList.tapOverflow()
-        sleep(2)
-        self.jobList.tapDeleteJob()
-        sleep(2)
-        self.jobList.tapCancelDelete()
-        sleep(3)
-        newJobName = self.jobList.getJobName(rowOrder=0)
-
-        self.assertion.assertEqual(jobName, newJobName)
-
     '''Duplicate Jobs'''
     @pytest.mark.ac
     def testDuplicatedJobHasIdenticalSettings(self):
