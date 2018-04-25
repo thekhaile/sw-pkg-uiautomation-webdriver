@@ -1022,7 +1022,7 @@ class TestJob(ProjectBase):
         newJobCount = self.jobList.getJobCount()
         self.assertEqual(oldJobCount, newJobCount - 1)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testDuplicatedJobCanBeSubmittedForRFQ(self):
         email = 'ningxin.liao+test2@mutualmobile.com'
         password = 'password'
