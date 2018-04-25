@@ -27,27 +27,27 @@ class ReelList(object):
 
 
     # overflow for edit and delete
-    def getOverflows(self):
+    def _getReelOverflow(self, rowOrder):
         # find overflow container
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.reel-item-container')
         # find overflow list
-        overflows = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.overflow')
-        return overflows
+        els = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.overflow')
+        seletedRow = els[rowOrder]
+        return seletedRow
 
-    def tapOverflow(self, reelOrder=0):
-        overflows = self.getOverflows()
-        el = overflows[reelOrder]
+    def tapOverflow(self, rowOrder=0):
+        el = self._getReelOverflow(rowOrder)
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditReel(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapEditReel(self, rowOrder=0):
+        overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDeleteReel(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapDeleteReel(self, rowOrder=0):
+        overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
         el = self.testCase.UIType.Button(el)
         el.tap()

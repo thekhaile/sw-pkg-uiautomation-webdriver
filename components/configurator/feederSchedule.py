@@ -87,27 +87,31 @@ class FeederSchedule(object):
         return el
 
     # Overflow & edit/duplicate/delete button
-    def tapOverflow(self, rowNumber=0):
-        els = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        el = els[rowNumber]
+    def _getCircuirOverflow(self, rowOrder):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.feeder-schedule-section')
+        els = container.find_elements(self.testCase.app.getStrategy().XPATH, './/*[@class="overflow"]')
+        seletedRow = els[rowOrder]
+        return seletedRow
+
+    def tapOverflow(self, rowOrder=0):
+        el = self._getCircuirOverflow(rowOrder)
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditCircuit(self, rowNumber=0):
-        overflow = self.testCase.app.findElements(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
-        overflow = overflow[rowNumber]
+    def tapEditCircuit(self, rowOrder=0):
+        overflow = self._getCircuirOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDeleteCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapDeleteCircuit(self, rowOrder=0):
+        overflow = self._getCircuirOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDuplicateCircuit(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapDuplicateCircuit(self, rowOrder=0):
+        overflow = self._getCircuirOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Duplicate"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
