@@ -718,7 +718,9 @@ class TestJob(ProjectBase):
         self.requestQuote.tapSubmit()
         sleep(2)
         '''end of precondition'''
-        self.jobList.selectAJob()
+        self.navigation.navigateToProjectsPage()
+        sleep(2)
+        self.projectList.selectAProject()
         sleep(2)
         self.jobList.tapOverflow()
         sleep(2)
@@ -865,7 +867,7 @@ class TestJob(ProjectBase):
         self.assertion.assertNotEqual(oldValue, newValue)
         self.assertion.assertEqual(newValue, '100')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testDuplicatedJobSharesTheSameFeederSchedule(self):
         email = 'ningxin.liao+test2@mutualmobile.com'
         password = 'password'
