@@ -262,7 +262,7 @@ class TestTrackReelProgress(ProjectBase):
         sleep(2)
         package = self.reelList.getReelPackage()
 
-        self.assertion.assertEqual(package, '61"')
+        self.assertion.assertEqual(package, 'SIM61')
 
     @pytest.mark.ac
     def testLargestProductIsCorrectWhenReelHasOverLimitRestrictionsOnUSNonSIMpullReel(self):
@@ -430,9 +430,9 @@ class TestTrackReelProgress(ProjectBase):
         volume = self.reelList.getVolumePercentage()
 
         self.assertion.assertNotEqual(oldValue, newValue)
-        self.assertion.assertEqual(newValue, 'C17')
+        self.assertion.assertEqual(newValue, 'N25F')
         self.assertion.assertEqual(weight, '58%')
-        self.assertion.assertEqual(volume, '80%')
+        self.assertion.assertEqual(volume, '52%')
 
     @pytest.mark.ac
     def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
@@ -498,9 +498,9 @@ class TestTrackReelProgress(ProjectBase):
         volume = self.reelList.getVolumePercentage()
 
         self.assertion.assertNotEqual(oldValue, newValue)
-        self.assertion.assertEqual(newValue, 'C17')
+        self.assertion.assertEqual(newValue, 'N25F')
         self.assertion.assertEqual(weight, '58%')
-        self.assertion.assertEqual(volume, '80%')
+        self.assertion.assertEqual(volume, '52%')
 
     @pytest.mark.ac
     def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
@@ -562,7 +562,7 @@ class TestTrackReelProgress(ProjectBase):
         volume = self.reelList.getVolumePercentage()
 
         self.assertion.assertNotEqual(oldValue, newValue)
-        self.assertion.assertEqual(newValue, '61"')
+        self.assertion.assertEqual(newValue, 'SIM61')
         self.assertion.assertEqual(weight, '93%')
         self.assertion.assertEqual(volume, '68%')
 

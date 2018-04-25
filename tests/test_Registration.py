@@ -641,7 +641,7 @@ class TestRegistration(ProjectBase):
         role = self.registration.getSelectedRole()
         self.assertion.assertEqual(role, 'Other')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testContractorRoleCanBeSelected(self):
         self.caseId = 1307202
         self.navigation.navigateToRegistrationPage()
