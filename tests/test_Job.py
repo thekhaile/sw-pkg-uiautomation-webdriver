@@ -13,6 +13,7 @@ from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
 from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
 from southwire_pkg_uiautomation_webdriver.components.requestQuote import RequestQuote
+from southwire_pkg_uiautomation_webdriver.components.jobSummary.reels import Reels
 
 
 
@@ -32,6 +33,7 @@ class TestJob(ProjectBase):
         self.project = Project(self)
         self.circuit = Circuit(self)
         self.requestQuote = RequestQuote(self)
+        self.reels = Reels(self)
 
     """Create job"""
     @pytest.mark.ac
@@ -452,6 +454,7 @@ class TestJob(ProjectBase):
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
+    '''Delete Jobs'''
     @pytest.mark.ac
     def testDeleteInProgressJob(self):
         email = 'ningxin.liao@mutualmobile.com'
@@ -504,6 +507,7 @@ class TestJob(ProjectBase):
 
         self.assertion.assertEqual(jobName, newJobName)
 
+    '''Duplicate Jobs'''
     @pytest.mark.ac
     def testDuplicatedJobHasIdenticalSettings(self):
         # Verify the duplicated job's settings are identical to the original
@@ -882,3 +886,164 @@ class TestJob(ProjectBase):
         sleep(2)
         newValue = self.feederSchedule.getCircuitTo()
         self.assertion.assertEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testFeederScheduleCanBeEditedOnDuplicatedJob(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388784
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        oldValue = self.feederSchedule.getCircuitFrom()
+        self.feederSchedule.tapRemoveCircuit()
+        self.feederSchedule.confirmRemoval()
+        sleep(2)
+        self.feederSchedule.switchToAvailableCircuitTab()
+        sleep(2)
+        self.feederSchedule.tapOverflow()
+        sleep(2)
+        self.feederSchedule.tapEditCircuit()
+        self.circuit.enterRandomFrom()
+        sleep(2)
+        self.circuit.tapSubmit()
+        sleep(2)
+        newValue = self.feederSchedule.getCircuitFrom()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testReelConfiguratorCanBeEditedOnDuplicatedJob(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388786
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        oldValue = self.reelList.getReelName()
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapEditReel()
+        self.reel.enterRandomReelName()
+        sleep(2)
+        self.reel.tapSubmit()
+        sleep(2)
+        newValue = self.reelList.getReelName()
+        self.assertion.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testDuplicatedJobCanBeDeleted(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388787
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        oldJobCount = self.jobList.getJobCount()
+        jobName = self.jobList.getJobName(rowOrder=0)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDeleteJob()
+        sleep(2)
+        self.jobList.tapConfirmDelete()
+        sleep(2)
+        newJobCount = self.jobList.getJobCount()
+        self.assertEqual(oldJobCount - 1, newJobCount)
+        if newJobCount >= 1:
+            newJobName = self.jobList.getJobName(rowOrder=0)
+            self.assertion.assertNotEqual(jobName, newJobName)
+
+    @pytest.mark.ac
+    def testDuplicatedJobCanBeDuplicatedAgain(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388788
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        oldJobCount = self.jobList.getJobCount()
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.jobList.tapDuplicateJob()
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        newJobCount = self.jobList.getJobCount()
+        self.assertEqual(oldJobCount, newJobCount - 1)
+
+    @pytest.mark.ac1
+    def testDuplicatedJobCanBeSubmittedForRFQ(self):
+        email = 'ningxin.liao+test2@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388793
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        sleep(2)
+        self.jobList.tapOverflow(rowOrder=-1)
+        sleep(2)
+        self.jobList.tapDuplicateJob(rowOrder=-1)
+        sleep(2)
+        self.job.enterRandomJobName()
+        sleep(2)
+        self.job.tapSubmit()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapRequestQuote()
+        sleep(2)
+        self.requestQuote.tapSubmit()
+        sleep(2)
+        self.assertion.assertExists(self.jobSummary.getQuoteSubmittedDate())
