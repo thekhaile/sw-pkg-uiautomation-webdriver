@@ -542,7 +542,7 @@ class TestJob(ProjectBase):
         self.assertion.assertEqual(simpullToggle, self.job.getSIMpullReelToggle().getValue())
 
     @pytest.mark.ac
-    def testDuplicatedJobReels(self):
+    def testDuplicatedJobHasIdenticalReelsInfo(self):
         # Verify the duplicated job's reels are identical to the original
         email = 'nick.moore+auto1@mutualmobile.com'
         password = 'newpassword'
@@ -564,8 +564,6 @@ class TestJob(ProjectBase):
         reelList = self.reelList.getReels()
         self.navigation.navigateToProjectsPage()
         self.projectList.selectAProject()
-        sleep(1)
-        self.jobList.selectAJob()
         sleep(1)
         self.jobList.tapOverflow()
         sleep(1)
