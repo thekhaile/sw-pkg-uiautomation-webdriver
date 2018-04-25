@@ -505,7 +505,7 @@ class TestJob(ProjectBase):
         self.assertion.assertEqual(jobName, newJobName)
 
     @pytest.mark.ac
-    def testDuplicatedJobSettings(self):
+    def testDuplicatedJobHasIdenticalSettings(self):
         # Verify the duplicated job's settings are identical to the original
         email = 'nick.moore+auto1@mutualmobile.com'
         password = 'newpassword'
@@ -522,16 +522,12 @@ class TestJob(ProjectBase):
         simpullToggle = self.job.getSIMpullReelToggle().getValue()
         self.job.tapSubmit()
         sleep(1)
-        self.jobList.selectAJob()
-        sleep(1)
         self.jobList.tapOverflow()
         sleep(1)
         self.jobList.tapDuplicateJob()
         sleep(1)
         self.job.enterJobName(self.job.generateRandomName())
         self.job.tapSubmit()
-        self.jobList.selectAJob()
-        sleep(1)
         self.jobList.tapOverflow()
         sleep(1)
         self.jobList.tapEditSettings()
