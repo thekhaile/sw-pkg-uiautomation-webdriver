@@ -8,12 +8,6 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.projectList import ProjectList
 from southwire_pkg_uiautomation_webdriver.components.project import Project
 from southwire_pkg_uiautomation_webdriver.components.jobList import JobList
-from southwire_pkg_uiautomation_webdriver.components.configurator.reelList import ReelList
-from southwire_pkg_uiautomation_webdriver.components.reel import Reel
-from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary import JobSummary
-from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
-from southwire_pkg_uiautomation_webdriver.components.requestQuote import RequestQuote
-from southwire_pkg_uiautomation_webdriver.components.jobSummary.reels import Reels
 
 
 
@@ -26,14 +20,8 @@ class TestEditJobSettings(ProjectBase):
         self.projectList = ProjectList(self)
         self.job = Job(self)
         self.jobList = JobList(self)
-        self.reelList = ReelList(self)
         self.feederSchedule = FeederSchedule(self)
-        self.jobSummary = JobSummary(self)
-        self.reel = Reel(self)
         self.project = Project(self)
-        self.circuit = Circuit(self)
-        self.requestQuote = RequestQuote(self)
-        self.reels = Reels(self)
 
     @pytest.mark.ac
     def testEditJobNameWithNewName(self):
