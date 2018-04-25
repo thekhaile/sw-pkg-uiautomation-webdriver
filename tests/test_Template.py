@@ -317,3 +317,60 @@ class TestTemplate(ProjectBase):
         self.jobSummary.tapConfigureJob()
 
         self.assertion.assertEqual(self.feederSchedule.getCircuitSize(3), '8', 'Ground size is not 8')
+
+    @pytest.mark.ac
+    def testVerifyGroundWireSharesSameFromAsCircuit(self):
+        # Verify that ground wire is a separate circuit that shares the same From of the main circuit in the same row
+        email = 'nick.moore+auto44@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381727
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        fromValue = self.feederSchedule.getCircuitFrom(3)
+
+        self.assertEqual(fromValue, 'MCC-1', 'FROM value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testVerifyGroundWireSharesSameToAsCircuit(self):
+        # Verify that ground wire is a separate circuit that shares the same To of the main circuit in the same row
+        email = 'nick.moore+auto45@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381728
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        toValue = self.feederSchedule.getCircuitTo(3)
+
+        self.assertEqual(toValue, 'XFRMT T1', 'TO value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testVerifyGroundWireSharesSameLengthAsCircuit(self):
+        # Verify that ground wire is a separate circuit that shares the same Length of the main circuit in the same row
+        email = 'nick.moore+auto46@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381729
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        length = self.feederSchedule.getCircuitLength(3)
+
+        self.assertEqual(length, "180'", 'LENGTH value for ground wire does not match paired circuit')
