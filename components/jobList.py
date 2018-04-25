@@ -70,7 +70,7 @@ class JobList(object):
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         # This is a work-around for not being able to tap the element in Firefox
-        if self.testCase.app.isFirefox():
+        if self.testCase.app.isFirefox() or self.testCase.app.isSafari():
             el.tapByLocation()
         else:
             el.tap()
