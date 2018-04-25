@@ -36,19 +36,18 @@ class ReelList(object):
         return seletedRow
 
     def tapOverflow(self, rowOrder=0):
-        overflows = self._getReelOverflow(rowOrder)
-        el = overflows[rowOrder]
+        el = self._getReelOverflow(rowOrder)
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditReel(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapEditReel(self, rowOrder=0):
+        overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDeleteReel(self):
-        overflow = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//div[@class="overflow"]')
+    def tapDeleteReel(self, rowOrder=0):
+        overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
