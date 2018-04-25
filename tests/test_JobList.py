@@ -115,8 +115,8 @@ class TestJobList(ProjectBase):
     @pytest.mark.ac
     def testVerifyNewJobDisplayedOnJobList(self):
         # Verify that the new job is displayed on the user's job list
-        email = 'nick.moore+auto49@mutualmobile.com'
-        password = 'newpassword'
+        email = 'khai.le+sw1@mutualmobile.com'
+        password = 'password'
 
         self.caseId = 1301977
         self.navigation.navigateToLoginPage()
@@ -125,11 +125,8 @@ class TestJobList(ProjectBase):
         self.jobList.tapCreateJob()
         self.job.enterJobName("Job2018")
         self.job.tapSubmit()
-        newJob = self.jobList.getJobName()
-        self.jobList.tapOverflow()
         sleep(1)
-        self.jobList.tapDeleteJob()
-        self.jobList.tapConfirmDelete()
+        newJob = self.jobList.getJobName()
 
         self.assertion.assertEqual('Job2018', newJob)
 
