@@ -70,7 +70,7 @@ class JobList(object):
         el = self.getAJob(rowOrder)
         el = self.testCase.UIType.Element(el)
         # This is a work-around for not being able to tap the element in Firefox
-        if self.testCase.app.isFirefox():
+        if self.testCase.app.isFirefox() or self.testCase.app.isSafari():
             el.tapByLocation()
         else:
             el.tap()
@@ -92,7 +92,8 @@ class JobList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def getEditSettings(self,rowOrder=0):
+
+    def getEditSettings(self, rowOrder=0):
         overflow = self._getJobOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit Settings"]')
         el = self.testCase.UIType.Button(el)

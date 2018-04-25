@@ -22,6 +22,11 @@ class JobSummary(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().ID, 'upload-file')
         return el
 
+    def getConfigureJob(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.tertiary')
+        el = self.testCase.UIType.Button(el)
+        return el
+
     def tapConfigureJob(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.tertiary')
         el = self.testCase.UIType.Button(el)
