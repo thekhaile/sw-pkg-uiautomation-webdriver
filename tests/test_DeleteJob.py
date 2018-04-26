@@ -129,7 +129,7 @@ class TestDeleteJob(ProjectBase):
 
         self.assertion.assertEqual(jobName, newJobName)
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testJobCountDecreasesBy1AfterASuccessfulDelete(self):
         email = 'khai.le+SW1@mutualmobile.com'
         password = 'password'
