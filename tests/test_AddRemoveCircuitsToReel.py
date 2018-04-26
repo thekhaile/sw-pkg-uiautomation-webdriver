@@ -445,8 +445,6 @@ class TestAddRemoveCircuitsToReel(ProjectBase):
         sleep(3)
         self.reel.createReelWithNoRestriction()
         sleep(2)
-        self.circuit.createSmallCircuit()
-        sleep(2)
         # end of precondition
         self.circuit.createCircuitWithSIMpullHead()
         sleep(2)
@@ -496,7 +494,7 @@ class TestAddRemoveCircuitsToReel(ProjectBase):
         self.assertion.assertTrue(oldRowNumber, newRowNumber + 2)
 
     @pytest.mark.ac
-    def testCircuitWithoutSIMpullHeadCanBeAddedOnSameReel(self):
+    def testCircuitWithAndWithoutSIMpullHeadCanBeAddedOnSameReel(self):
         email = 'ningxin.liao+testAddRemove@mutualmobile.com'
         password = 'password'
 
