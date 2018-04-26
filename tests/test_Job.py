@@ -35,7 +35,6 @@ class TestJob(ProjectBase):
         self.requestQuote = RequestQuote(self)
         self.reels = Reels(self)
 
-    """Create job"""
     @pytest.mark.ac
     def testCreateJobWithUniqueNameAndToggleOn(self):
         # Verify that a new job with unique name can be created on Create New Job page and Toggle On
@@ -262,6 +261,29 @@ class TestJob(ProjectBase):
         sleep(1)
         self.assertion.assertTrue(self.job.getSIMpullReelToggle().isOn(),
                                   'Toggle has the off state after being tapped')
+        self.job.tapSubmit()
+        sleep(1)
+        viewJobName = self.jobList.getJobName(rowOrder=0)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertNotEqual(currentUrl, newUrl)
+        self.assertion.assertEqual(jobName, viewJobName)
+
+    @pytest.mark.ac
+    def testNewJobIsListedOnTheJobList(self):
+        email = 'ningxin.liao@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1301977
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.project.createAProject()
+        self.jobList.tapCreateJob()
+        sleep(1)
+        currentUrl = self.driver.current_url
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
+        sleep(1)
         self.job.tapSubmit()
         sleep(1)
         viewJobName = self.jobList.getJobName(rowOrder=0)
