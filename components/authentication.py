@@ -62,6 +62,6 @@ class Authentication(object):
         el.tap()
 
     def getConfirmationMsg(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.toast.scroll-down')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
