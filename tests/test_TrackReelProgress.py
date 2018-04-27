@@ -435,7 +435,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(volume, '52%')
 
     @pytest.mark.ac
-    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
+    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacityUS(self):
         email = 'ningxin.liao+USinStd@mutualmobile.com'
         password = 'password'
 
@@ -503,7 +503,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(volume, '52%')
 
     @pytest.mark.ac
-    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacity(self):
+    def testReelSizeIncreaseBy2WhenExceedCurrentVolumeCapacityCA(self):
         email = 'ningxin.liao+CAinStd@mutualmobile.com'
         password = 'password'
 
@@ -611,7 +611,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(volume, '99%')
 
     @pytest.mark.ac
-    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacity(self):
+    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacityUS(self):
         email = 'ningxin.liao+USinStd@mutualmobile.com'
         password = 'password'
 
@@ -646,7 +646,7 @@ class TestTrackReelProgress(ProjectBase):
         self.assertion.assertEqual(volume, '0%')
 
     @pytest.mark.ac
-    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacity(self):
+    def testReelSizeDecreaseBy2WhenBelowCurrentVolumeCapacityCA(self):
         email = 'ningxin.liao+CAinStd@mutualmobile.com'
         password = 'password'
 
