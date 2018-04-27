@@ -27,7 +27,7 @@ class TestAuthentication(ProjectBase):
         self.passwordReset.tapReset()
         sleep(2)
         actualMsg = self.authentication.getConfirmationMsg()
-        expectedMsg = 'Password reset sent. Please check your email and follow the link to reset your password. Resend password reset email.'
+        expectedMsg = 'Password reset sent. Please check your email and follow the link to reset your password.Resend password reset email.'
 
         self.assertion.assertEqual(actualMsg, expectedMsg)
 
@@ -44,7 +44,7 @@ class TestAuthentication(ProjectBase):
         self.passwordReset.tapReset()
         sleep(2)
         actualMsg = self.authentication.getConfirmationMsg()
-        expectedMsg = 'Password reset sent. Please check your email and follow the link to reset your password. Resend password reset email.'
+        expectedMsg = 'Password reset sent. Please check your email and follow the link to reset your password.Resend password reset email.'
 
         self.assertion.assertEqual(actualMsg, expectedMsg)
 
@@ -60,7 +60,6 @@ class TestAuthentication(ProjectBase):
         self.passwordReset.enterEmail(email)
         self.passwordReset.tapReset()
         sleep(2)
-        actualMsg = self.passwordReset.getErrorMsg()
-        expectedMsg = 'This email format is incorrect.'
+        expectedURL = 'https://southwire-configurator-test.firebaseapp.com/reset-password'
 
-        self.assertion.assertEqual(actualMsg, expectedMsg)
+        self.assertion.assertEqual(expectedURL, self.driver.current_url)

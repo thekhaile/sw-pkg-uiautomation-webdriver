@@ -123,10 +123,11 @@ class TestJobList(ProjectBase):
         self.authentication.login(email, password)
         self.projectList.selectAProject()
         self.jobList.tapCreateJob()
-        self.job.enterJobName("Job2018")
+        jobName = self.job.generateRandomName()
+        self.job.enterJobName(jobName)
         self.job.tapSubmit()
         sleep(1)
         newJob = self.jobList.getJobName()
 
-        self.assertion.assertEqual('Job2018', newJob)
+        self.assertion.assertEqual(jobName, newJob)
 

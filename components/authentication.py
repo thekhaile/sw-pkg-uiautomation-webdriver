@@ -50,7 +50,7 @@ class Authentication(object):
         el.tap()
 
     def getErrorMsg(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.fade-in')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
@@ -62,6 +62,6 @@ class Authentication(object):
         el.tap()
 
     def getConfirmationMsg(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.toast.scroll-down')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
