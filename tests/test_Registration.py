@@ -116,35 +116,6 @@ class TestRegistration(ProjectBase):
         self.assertion.assertNotEqual(currentUrl, newUrl)
 
     @pytest.mark.ac
-    def testExitRegistrationProcess(self):
-        self.caseId = 1307370
-        self.navigation.navigateToRegistrationPage()
-        sleep(3)
-        currentUrl = self.driver.current_url
-        self.registration.enterRandomEmail()
-        sleep(3)
-        self.registration.tapCancel()
-        sleep(3)
-        newUrl = self.driver.current_url
-
-        self.assertion.assertNotEqual(currentUrl, newUrl)
-
-    @pytest.mark.ac
-    def testNavigateBackToLoginScreenAfterTapCancel(self):
-        self.caseId = 1307377
-        self.navigation.navigateToLoginPage()
-        sleep(2)
-        currentUrl = self.driver.current_url
-        self.authentication.tapCreateAccount()
-        self.registration.enterRandomEmail()
-        sleep(2)
-        self.registration.tapCancel()
-        sleep(3)
-        newUrl = self.driver.current_url
-
-        self.assertion.assertEqual(currentUrl, newUrl)
-
-    @pytest.mark.ac
     def testCreateAccountWithOnlyRequiredFields(self):
         self.caseId = 1381583
         self.navigation.navigateToRegistrationPage()
@@ -173,6 +144,37 @@ class TestRegistration(ProjectBase):
         newUrl = self.driver.current_url
 
         self.assertion.assertNotEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testExitRegistrationProcess(self):
+        self.caseId = 1307370
+        self.navigation.navigateToLoginPage()
+        sleep(3)
+        currentUrl = self.driver.current_url
+        self.registration.tapCreateAccount()
+        self.registration.enterRandomEmail()
+        sleep(3)
+        self.registration.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
+    @pytest.mark.ac
+    def testNavigateBackToLoginScreenAfterTapCancel(self):
+        self.caseId = 1307377
+        self.navigation.navigateToLoginPage()
+        sleep(2)
+        currentUrl = self.driver.current_url
+        self.authentication.tapCreateAccount()
+        self.registration.enterRandomEmail()
+        sleep(2)
+        self.registration.tapCancel()
+        sleep(3)
+        newUrl = self.driver.current_url
+
+        self.assertion.assertEqual(currentUrl, newUrl)
+
 
     """Error handling"""
     @pytest.mark.ac
@@ -284,7 +286,7 @@ class TestRegistration(ProjectBase):
         self.assertion.assertEqual(expectedRole, actualRole)
 
     @pytest.mark.ac
-    def testRegisterWithInvalidFormatEmail(self):
+    def testRegisterWithInvalidEmailFormat(self):
         self.caseId = 1307371
         self.navigation.navigateToRegistrationPage()
         sleep(1)

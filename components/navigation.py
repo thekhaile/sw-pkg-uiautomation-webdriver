@@ -25,3 +25,19 @@ class Navigation(object):
 
     def navigateToAccountPage(self):
         self.testCase.driver.get(Navigation.ACCOUNT_PAGE)
+
+    # breadcrumbs
+    def tapProjectBreadcrumb(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'ul.breadcrumbs')
+        breadcrumbs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = breadcrumbs[0]
+        el = self.testCase.UIType.Element(el)
+        el.tap()
+
+    def tapJobBreadcrumb(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'ul.breadcrumbs')
+        breadcrumbs = container.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'a')
+        el = breadcrumbs[-1]
+        el = self.testCase.UIType.Element(el)
+        el.tap()
+

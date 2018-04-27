@@ -266,7 +266,6 @@ class Registration(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
-        sleep(3)
 
     def getSubmitButton(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@type="submit"]')
@@ -279,7 +278,7 @@ class Registration(object):
 
     # Error msg
     def getErrorMsg(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.scroll-down')
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.fade-in')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
@@ -300,6 +299,13 @@ class Registration(object):
     def tapLogOut(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.logout')
         el = self.testCase.UIType.Element(el)
+        el.tap()
+
+
+    '''Create Account'''
+    def tapCreateAccount(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
+        el = self.testCase.UIType.Button(el)
         el.tap()
 
 
