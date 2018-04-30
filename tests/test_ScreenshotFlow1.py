@@ -12,6 +12,7 @@ from southwire_pkg_uiautomation_webdriver.components.job import Job
 from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule import FeederSchedule
 from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
 from southwire_pkg_uiautomation_webdriver.components import Registration
+from southwire_pkg_uiautomation_webdriver.components.reel import Reel
 
 class TestScreenshotFlow(ProjectBase):
 
@@ -28,6 +29,7 @@ class TestScreenshotFlow(ProjectBase):
         self.feederSchedule = FeederSchedule(self)
         self.circuit = Circuit(self)
         self.registration = Registration(self)
+        self.reel = Reel(self)
 
     def saveScreenshot(self, description):
         self.app.saveScreenshot(description + '_' + self.driver.desired_capabilities['browserName']+ '_' + self.driver.desired_capabilities['platform'], self.screenshotPath)
@@ -130,7 +132,7 @@ class TestScreenshotFlow(ProjectBase):
         self.saveScreenshot('flow_createCircuit_Filled')
 
     @pytest.mark.ac
-    def testScreenShotFlow2(self):
+    def testScreenshotFlowAccountCreation(self):
         self.navigation.navigateToLoginPage()
         self.authentication.tapCreateAccount()
 
@@ -169,3 +171,56 @@ class TestScreenshotFlow(ProjectBase):
         # Screenshot - Login account created
         self.driver.execute_script("window.scrollTo(0, 0);")
         self.saveScreenshot('flow_login_accountCreated')
+
+    @pytest.mark.ac
+    def testScreenshotFlowDeleteJob(self):
+        self.navigation.navigateToLoginPage()
+        self.authentication.enterEmail('nick.moore+testflow@mutualmobile.com')
+        self.authentication.enterPassword('newpassword')
+        self.authentication.tapSubmit()
+        self.projectList.selectAProject()
+        self.job.createAJob()
+
+        # Screenshot - overflow menu on job summary
+        self.jobList.tapOverflow()
+        sleep(1)
+        self.saveScreenshot('flow_deleteJob_Overflow')
+
+        # Screenshot - delete confirmation modal
+        self.jobList.tapDeleteJob()
+        sleep(1)
+        self.saveScreenshot('flow_deleteJob_Confirmation')
+
+        self.jobList.tapConfirmDelete()
+
+        # Screenshot - Post job deletion
+        sleep(1)
+        self.saveScreenshot('flow_deleteJob_After')
+
+    @pytest.mark.ac
+    def testScreenshotFlowRemoveCircuit(self):
+        self.navigation.navigateToLoginPage()
+        self.authentication.enterEmail('nick.moore+testflow@mutualmobile.com')
+        self.authentication.enterPassword('newpassword')
+        self.authentication.tapSubmit()
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+        self.jobSummary.tapConfigureJob()
+
+        # Create a reel with one circuit
+        self.reel.createReelWithNoRestriction()
+        sleep(1)
+        self.circuit.createLargeUSCircuit()
+        self.feederSchedule.tapAddCircuit()
+        sleep(1)
+
+        # Screenshot - Remove circuit from reel confirmation
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        self.feederSchedule.tapRemoveCircuit()
+        sleep(1)
+        self.saveScreenshot('flow_removeCircuit_Confirmation')
+
+        # Screenshot - After circuit removed
+        self.feederSchedule.tapConfirmDelete()
+        sleep(1)
+        self.saveScreenshot('flow_removeCircuit_After')
