@@ -13,6 +13,7 @@ from southwire_pkg_uiautomation_webdriver.components.configurator.feederSchedule
 from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
 from southwire_pkg_uiautomation_webdriver.components import Registration
 from southwire_pkg_uiautomation_webdriver.components.reel import Reel
+from southwire_pkg_uiautomation_webdriver.components import Reels
 
 class TestScreenshotFlow(ProjectBase):
 
@@ -30,6 +31,7 @@ class TestScreenshotFlow(ProjectBase):
         self.circuit = Circuit(self)
         self.registration = Registration(self)
         self.reel = Reel(self)
+        self.reels = Reels(self)
 
     def saveScreenshot(self, description):
         self.app.saveScreenshot(description + '_' + self.driver.desired_capabilities['browserName']+ '_' + self.driver.desired_capabilities['platform'], self.screenshotPath)
@@ -101,7 +103,7 @@ class TestScreenshotFlow(ProjectBase):
         self.saveScreenshot('flow_jobSummaryFeederSchedule_Empty')
 
         # Screenshot - Job Summary reels empty
-        self.jobSummary.tapReelsTab()
+        self.reels.switchToReelsTab()
         self.saveScreenshot('flow_jobSummaryReels_Empty')
 
         # Screenshot - RFQ error
