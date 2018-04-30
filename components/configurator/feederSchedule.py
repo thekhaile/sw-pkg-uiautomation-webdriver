@@ -173,11 +173,7 @@ class FeederSchedule(object):
         else:
             return 0
 
-    def getExpandArrow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
-        return el
-
     def tapExpandArrow(self):
-        el = self.getExpandArrow()
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
         el = self.testCase.UIType.Element(el)
         el.tap()
