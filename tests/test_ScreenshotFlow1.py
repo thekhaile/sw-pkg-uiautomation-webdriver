@@ -63,8 +63,9 @@ class TestScreenshotFlow(ProjectBase):
         sleep(1)
         self.saveScreenshot('flow_createProject_Error')
 
-        # Cancel out of create project screen
-        self.project.tapCancelButton()
+        # Create a project
+        self.project.enterRandomProjectName()
+        self.project.tapSubmit()
 
         # Screenshot - Job list empty state
         self.projectList.selectAProject()
