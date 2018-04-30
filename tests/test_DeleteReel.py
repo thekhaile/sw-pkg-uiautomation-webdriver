@@ -92,3 +92,99 @@ class TestReel(ProjectBase):
 
         self.assertion.assertNotExists(button.ui_object)
 
+    @pytest.mark.ac
+    def testConfirmationModalIsDisplayedUponDeleteButton(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388824
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        """end of preconditions"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapDeleteReel()
+        sleep(2)
+        modal = self.reelList.getConfirmationModal()
+        text = self.reelList.getConfirmationModal().getLabel()
+        self.assertion.assertExists(modal.ui_object)
+        self.assertion.assertEqual(text, 'Are you sure you want to delete this reel?')
+
+    @pytest.mark.ac
+    def testReelIsDeletedFromReelListAfterConfirmDeletion(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388825
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        oldValue = self.reelList.getReelName()
+        """end of preconditions"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapDeleteReel()
+        sleep(2)
+        self.reelList.tapConfirmDelete()
+        sleep(2)
+        newValue = self.reelList.getReelName()
+        sleep(2)
+        self.assertNotEqual(oldValue, newValue)
+
+    @pytest.mark.ac
+    def testCircuitBeenPlacedOnAReelBecomeAvailableAfterReelIsDeleted(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1388826
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        self.circuit.createSmallCircuit()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.feederSchedule.switchToCircuitsOnReelTab()
+        sleep(2)
+        oldValue = self.feederSchedule.getCircuitFrom()
+        """end of preconditions"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapDeleteReel()
+        sleep(2)
+        self.reelList.tapConfirmDelete()
+        sleep(2)
+        self.feederSchedule.switchToAvailableCircuitTab()
+        sleep(2)
+        newValue = self.feederSchedule.getCircuitFrom()
+        self.assertEqual(oldValue, newValue)
