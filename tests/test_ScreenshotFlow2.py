@@ -201,3 +201,36 @@ class TestScreenshotFlow2(ProjectBase):
         self.feederSchedule.tapConfirmDelete()
         sleep(2)
         self.saveScreenshot('flow_circuitDeletion_AfterDeletion')
+
+    @pytest.mark.ac
+    def testScreenshotFlowReelDeletion(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        """Reel deletion - selecte a reel"""
+        self.saveScreenshot('flow_reelDeletion_SelecteAReel')
+        sleep(2)
+
+        """Reel deletion - deletion confirmation"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapDeleteReel()
+        sleep(2)
+        self.saveScreenshot('flow_reelDeletion_DeletionConfirmation')
+        sleep(2)
+
+        """Reel deletion - after deletion"""
+        self.reelList.tapConfirmDelete()
+        sleep(2)
+        self.saveScreenshot('flow_reelDeletion_AfterDeletion')
