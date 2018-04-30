@@ -14,10 +14,10 @@ from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
 from southwire_pkg_uiautomation_webdriver.components.requestQuote import RequestQuote
 
 
-class TestReel(ProjectBase):
+class TestDeleteReel(ProjectBase):
 
     def __init__(self, *args, **kwargs):
-        super(TestReel, self).__init__(*args, **kwargs)
+        super(TestDeleteReel, self).__init__(*args, **kwargs)
         self.navigation = Navigation(self)
         self.authentication = Authentication(self)
         self.projectList = ProjectList(self)
