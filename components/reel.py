@@ -41,9 +41,13 @@ class Reel(object):
         height = self.getRandomHeight()
         self.enterHeight(height)
 
-    def enterHeight(self, text):
+    def getHeightField(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Height"]')
         el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterHeight(self, text):
+        el = self.getHeightField()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -55,6 +59,10 @@ class Reel(object):
     def enterRandomWidth(self):
         width = self.getRandomWidth()
         self.enterWidth(width)
+
+    def getWidthField(self):
+        
+        return el
 
     def enterWidth(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Width"]')
@@ -70,6 +78,11 @@ class Reel(object):
     def enterRandomWeight(self):
         weight = self.getRandomWeight()
         self.enterWeight(weight)
+
+    def getWeightInput(self):
+        weight = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Weight"]')
+        el = weight.find_element(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        return el.getLabel()
 
     def enterWeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Weight"]')

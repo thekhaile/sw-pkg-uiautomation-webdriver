@@ -40,10 +40,14 @@ class ReelList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditReel(self, rowOrder=0):
+    def getEditButton(self, rowOrder=0):
         overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapEditReel(self):
+        el = self.getEditButton()
         el.tap()
 
     def getDeleteButton(self,rowOrder=0):

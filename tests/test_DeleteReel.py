@@ -56,7 +56,7 @@ class TestDeleteReel(ProjectBase):
         self.assertion.assertExists(button.ui_object)
 
     @pytest.mark.ac
-    def testDeleteButtonIsDisabledForJobSubmittedForRFQ(self):
+    def testDeleteReelIsDisabledForJobSubmittedForRFQ(self):
         email = 'ningxin.liao+regression3@mutualmobile.com'
         password = 'password'
 
