@@ -46,10 +46,14 @@ class ReelList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapDeleteReel(self, rowOrder=0):
+    def getDeleteButton(self,rowOrder=0):
         overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapDeleteReel(self, rowOrder=0):
+        el = self.getDeleteButton()
         el.tap()
 
     def tapConfirmDelete(self):
