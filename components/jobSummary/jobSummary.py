@@ -60,8 +60,3 @@ class JobSummary(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[text()="Request Quote"]')
         el = self.testCase.UIType.Button(el)
         el.tap()
-
-    def tapReelsTab(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, "//span[text()='Reels']")
-        el = self.testCase.UIType.Button(el)
-        el.tap()
