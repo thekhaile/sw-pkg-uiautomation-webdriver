@@ -5,7 +5,6 @@ from southwire_pkg_uiautomation_webdriver.components.navigation import Navigatio
 from southwire_pkg_uiautomation_webdriver.components.authentication import Authentication
 from southwire_pkg_uiautomation_webdriver.components.passwordReset import PasswordReset
 
-
 class TestAuthentication(ProjectBase):
 
     def __init__(self, *args, **kwargs):

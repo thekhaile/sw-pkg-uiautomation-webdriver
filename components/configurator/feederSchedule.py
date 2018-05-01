@@ -172,3 +172,8 @@ class FeederSchedule(object):
             return len(rows)
         else:
             return 0
+
+    def tapExpandArrow(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
+        el = self.testCase.UIType.Element(el)
+        el.tap()
