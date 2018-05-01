@@ -19,6 +19,8 @@ class JobList(object):
         rows = table.find_elements(self.testCase.app.getStrategy().CSS_SELECTOR, 'tr')
 
         selectedRow = rows[rowOrder]
+        if self.testCase.app.isFirefox():
+            selectedRow.location_once_scrolled_into_view
         return selectedRow
 
     def getJobCount(self):
