@@ -204,3 +204,25 @@ class Reel(object):
         sleep(1)
         self.tapSubmit()
         sleep(3)
+
+    # get inputs
+    def getHeightInput(self):
+        height = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Height"]')
+        els = height.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[0]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWidthInput(self):
+        width = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Width"]')
+        els = width.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[1]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWeightInput(self):
+        weight = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Weight"]')
+        els = weight.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[-1]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()

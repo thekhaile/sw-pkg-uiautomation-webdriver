@@ -40,17 +40,30 @@ class ReelList(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
-    def tapEditReel(self, rowOrder=0):
+    def getEditButton(self, rowOrder=0):
         overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Edit"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapEditReel(self):
+        el = self.getEditButton()
         el.tap()
 
-    def tapDeleteReel(self, rowOrder=0):
+    def getDeleteButton(self,rowOrder=0):
         overflow = self._getReelOverflow(rowOrder)
         el = overflow.find_element(self.testCase.app.getStrategy().XPATH, './/*[text()="Delete"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapDeleteReel(self):
+        el = self.getDeleteButton()
         el.tap()
+
+    def getConfirmationModal(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.modal-text')
+        el = self.testCase.UIType.Element(el)
+        return el
 
     def tapConfirmDelete(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'button.confirm')
