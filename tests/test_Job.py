@@ -125,9 +125,6 @@ class TestJob(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.job.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
     @pytest.mark.ac
     def testCreateJobWithOver30CharLimit(self):
         # Verify that when entering more than 30 char for job name, that an alert is displayed on the Create New Job page

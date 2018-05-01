@@ -44,6 +44,7 @@ class TestAddRemoveCircuitsToReel(ProjectBase):
         self.circuit.createSmallCircuit()
         sleep(3)
         add = self.feederSchedule.getAddButton()
+        sleep(1)
 
         self.assertion.assertNotExists(add.ui_object)
 

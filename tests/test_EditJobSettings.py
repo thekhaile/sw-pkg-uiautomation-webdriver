@@ -79,9 +79,6 @@ class TestEditJobSettings(ProjectBase):
         self.assertion.assertEqual(expectedErrorMsg, actualErrorMsg)
         self.assertion.assertEqual(currentUrl, newUrl)
 
-        el = self.job.getSubmitButton()
-        self.assertion.assertFalse(el.isEnabled())
-
     @pytest.mark.ac
     def testEditSIMPullReel(self):
         # Verify when a SIMpull Reel selection is changed for the job, that the new setting is updated in the database
