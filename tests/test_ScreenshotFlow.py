@@ -281,6 +281,7 @@ class TestScreenshotFlow(ProjectBase):
         sleep(2)
 
         # Screenshot - Login account created
+        sleep(1)
         self.driver.execute_script("window.scrollTo(0, 0);")
         self.saveScreenshot('flow_login_accountCreated')
 
