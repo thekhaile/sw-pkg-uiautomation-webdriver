@@ -141,6 +141,7 @@ class TestDeleteReel(ProjectBase):
         self.reel.createReelWithNoRestriction()
         sleep(2)
         oldValue = self.reelList.getReelName()
+        oldLen = len(self.reelList.getReels())
         """end of preconditions"""
         self.reelList.tapOverflow()
         sleep(2)
@@ -149,8 +150,10 @@ class TestDeleteReel(ProjectBase):
         self.reelList.tapConfirmDelete()
         sleep(2)
         newValue = self.reelList.getReelName()
+        newLen = len(self.reelList.getReels())
         sleep(2)
-        self.assertNotEqual(oldValue, newValue)
+        self.assertion.assertNotEqual(oldValue, newValue)
+        self.assertion.assertEqual(oldLen, newLen + 1)
 
     @pytest.mark.ac
     def testCircuitBeenPlacedOnAReelBecomeAvailableAfterReelIsDeleted(self):
