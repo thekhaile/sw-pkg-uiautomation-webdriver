@@ -183,7 +183,7 @@ class TestViewJobSummary(ProjectBase):
         el = self.feederSchedule.getColor()
         self.assertion.assertEqual(el, 'Green')
 
-    @pytest.mark.ac1
+    @pytest.mark.ac
     def testSIMpullHeadIsPresentedOnFeederSchedule(self):
         email = 'ningxin.liao+test4@mutualmobile.com'
         password = 'password'
