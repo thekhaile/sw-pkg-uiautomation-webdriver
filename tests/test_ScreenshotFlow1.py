@@ -34,7 +34,12 @@ class TestScreenshotFlow(ProjectBase):
         self.reels = Reels(self)
 
     def saveScreenshot(self, description):
-        self.app.saveScreenshot(description + '_' + self.driver.desired_capabilities['browserName']+ '_' + self.driver.desired_capabilities['platform'], self.screenshotPath)
+        if self.app.isFirefox:
+            platform = ''
+        else:
+            platform = self.driver.desired_capabilities['platform']
+
+        self.app.saveScreenshot(description + '_' + self.driver.desired_capabilities['browserName'] + '_' + platform, self.screenshotPath)
 
     @pytest.mark.ac
     def testScreenShotFlow1(self):
@@ -171,6 +176,7 @@ class TestScreenshotFlow(ProjectBase):
         sleep(2)
 
         # Screenshot - Login account created
+        sleep(1)
         self.driver.execute_script("window.scrollTo(0, 0);")
         self.saveScreenshot('flow_login_accountCreated')
 
