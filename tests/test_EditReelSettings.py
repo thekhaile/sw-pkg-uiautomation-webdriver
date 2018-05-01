@@ -115,4 +115,88 @@ class TestEditReelSettings(ProjectBase):
         sleep(2)
         self.reelList.tapEditReel()
         sleep(2)
-        el = self.reel.getHeightField().getValue()
+        el = self.reel.getHeightInput()
+
+        self.assertion.assertEqual(el, '999999"')
+
+    @pytest.mark.ac
+    def testWidthIsDisplayedOnEditReelSettingsPage(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381679
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelOverRestrictions()
+        sleep(2)
+        """end of precondition"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapEditReel()
+        sleep(2)
+        el = self.reel.getWidthInput()
+
+        self.assertion.assertEqual(el, '999999"')
+
+    @pytest.mark.ac
+    def testWeightIsDisplayedOnEditReelSettingsPage(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381681
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelOverRestrictions()
+        sleep(2)
+        """end of precondition"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapEditReel()
+        sleep(2)
+        el = self.reel.getWeightInput()
+
+        self.assertion.assertEqual(el, '999999lb')
+
+    @pytest.mark.ac
+    def testSaveButtonIsEnabledWhenConditionsMet(self):
+        email = 'ningxin.liao+regression3@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1381691
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        """preconditions"""
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.reel.createReelOverRestrictions()
+        sleep(2)
+        """end of precondition"""
+        self.reelList.tapOverflow()
+        sleep(2)
+        self.reelList.tapEditReel()
+        sleep(2)
+        self.reel.enterRandomReelName()
+        el = self.reel.getSubmitButton()
+
+        self.assertion.assertTrue(el.isEnabled())

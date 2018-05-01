@@ -41,13 +41,9 @@ class Reel(object):
         height = self.getRandomHeight()
         self.enterHeight(height)
 
-    def getHeightField(self):
+    def enterHeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Height"]')
         el = self.testCase.UIType.TextField(el)
-        return el
-
-    def enterHeight(self, text):
-        el = self.getHeightField()
         el.tap()
         el.clearText()
         el.enterText(text)
@@ -59,10 +55,6 @@ class Reel(object):
     def enterRandomWidth(self):
         width = self.getRandomWidth()
         self.enterWidth(width)
-
-    def getWidthField(self):
-        
-        return el
 
     def enterWidth(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Width"]')
@@ -78,11 +70,6 @@ class Reel(object):
     def enterRandomWeight(self):
         weight = self.getRandomWeight()
         self.enterWeight(weight)
-
-    def getWeightInput(self):
-        weight = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Weight"]')
-        el = weight.find_element(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
-        return el.getLabel()
 
     def enterWeight(self, text):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//input[@label="Weight"]')
@@ -217,3 +204,25 @@ class Reel(object):
         sleep(1)
         self.tapSubmit()
         sleep(3)
+
+    # get inputs
+    def getHeightInput(self):
+        height = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Height"]')
+        els = height.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[0]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWidthInput(self):
+        width = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Width"]')
+        els = width.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[1]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWeightInput(self):
+        weight = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Weight"]')
+        els = weight.find_elements(self.testCase.app.getStrategy().XPATH, '//div[@class="text"]')
+        el = els[-1]
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
