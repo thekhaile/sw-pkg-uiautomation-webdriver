@@ -84,7 +84,9 @@ class TestCircuit(ProjectBase):
         self.jobSummary.tapConfigureJob()
         sleep(3)
         oldRowNumber = self.feederSchedule.getNumberOfRows()
+        sleep(1)
         self.feederSchedule.tapCreateCircuit()
+        sleep(2)
         currentUrl = self.driver.current_url
         fromText = self.circuit.generateRandomFrom()
         self.circuit.enterFrom(fromText)
@@ -128,7 +130,9 @@ class TestCircuit(ProjectBase):
         self.jobSummary.tapConfigureJob()
         sleep(3)
         oldRowNumber = self.feederSchedule.getNumberOfRows()
+        sleep(1)
         self.feederSchedule.tapCreateCircuit()
+        sleep(1)
         currentUrl = self.driver.current_url
         fromText = self.circuit.generateRandomFrom()
         self.circuit.enterFrom(fromText)
@@ -1141,9 +1145,11 @@ class TestCircuit(ProjectBase):
         self.jobList.selectAJob()
         self.jobSummary.tapConfigureJob()
         beforeCount = self.feederSchedule.getNumberOfRows()
+        sleep(1)
         self.circuit.createCircuitWithSIMpullHead()
         sleep(1)
         afterCount = self.feederSchedule.getNumberOfRows()
+        sleep(1)
 
         self.assertion.assertEqual(beforeCount + 1, afterCount)
 

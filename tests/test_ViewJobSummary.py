@@ -195,8 +195,9 @@ class TestViewJobSummary(ProjectBase):
         sleep(2)
         self.feederSchedule.tapExpandArrow()
         sleep(2)
-        el = self.feederSchedule.getToggle()
-        self.assertion.assertTrue(el.isOn())
+        el = self.feederSchedule.getSIMpullHeadsText()
+
+        self.assertion.assertExists(el)
 
     @pytest.mark.ac
     def testReelNameIsPresentedOnReelConfigurator(self):
@@ -399,8 +400,9 @@ class TestViewJobSummary(ProjectBase):
         sleep(2)
         self.reels.tapExpandArrow()
         sleep(2)
-        el = self.reels.getCircuitToggle()
-        self.assertion.assertTrue(el.isOn())
+        el = self.reels.getSIMpullHeadsText()
+
+        self.assertion.assertExists(el)
 
     @pytest.mark.ac
     def testBullseyeVisualizationIsPresentedOnReelConfigurator(self):

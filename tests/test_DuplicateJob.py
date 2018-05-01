@@ -232,7 +232,7 @@ class TestDuplicateJob(ProjectBase):
         self.jobList.selectAJob()
         sleep(2)
         self.jobSummary.tapRequestQuote()
-        sleep(2)
+        sleep(3)
         self.requestQuote.tapSubmit()
         sleep(2)
         '''end of precondition'''

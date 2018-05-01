@@ -183,6 +183,7 @@ class TestTrackReelProgress(ProjectBase):
         self.feederSchedule.tapAddCircuit()
         sleep(2)
         newValue = self.reelList.getWeightPercentage()
+        sleep(1)
 
         self.assertion.assertNotEqual(oldValue, newValue)
 
@@ -387,7 +388,7 @@ class TestTrackReelProgress(ProjectBase):
         self.feederSchedule.tapAddCircuit()
         sleep(2)
         self.feederSchedule.tapAddCircuit()
-        sleep(2)
+        sleep(3)
         alert = self.feederSchedule.getExceedsAlert()
         package = self.reelList.getReelPackage()
         weight = self.reelList.getWeightPercentage()
@@ -745,7 +746,9 @@ class TestTrackReelProgress(ProjectBase):
         self.feederSchedule.tapAddCircuit()
         sleep(2)
         self.feederSchedule.getExceedsAlert()
+        sleep(1)
         newValue = self.reelList.getReelPackage()
+        sleep(1)
         weight = self.reelList.getWeightPercentage()
         volume = self.reelList.getVolumePercentage()
 
