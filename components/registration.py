@@ -275,6 +275,9 @@ class Registration(object):
     def tapSubmit(self):
         el = self.getSubmitButton()
         el.tap()
+        if self.app.isFirefox():
+            sleep(2)
+            self.driver.switch_to_alert().accept()
 
     # Error msg
     def getErrorMsg(self):
