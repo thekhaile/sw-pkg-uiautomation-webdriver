@@ -35,3 +35,24 @@ class RequestQuote(object):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.toast-text')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
+
+    def getQuoteSubmitted(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.quote-submitted')
+        el = self.testCase.UIType.Element(el)
+        return el
+
+    def getEmail(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'textarea')
+        el = self.testCase.UIType.TextField(el)
+        return el
+
+    def enterEmail(self,text):
+        el = self.getEmail()
+        el.tap()
+        el.clearText()
+        el.enterText(text)
+
+    def getRFQSubmissionBanner(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.toast-text')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()

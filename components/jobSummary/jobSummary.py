@@ -56,7 +56,11 @@ class JobSummary(object):
         date = text.split(' ')[-1]
         return date
 
-    def tapRequestQuote(self):
+    def getRequestQuote(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[text()="Request Quote"]')
         el = self.testCase.UIType.Button(el)
+        return el
+
+    def tapRequestQuote(self):
+        el = self.getRequestQuote()
         el.tap()
