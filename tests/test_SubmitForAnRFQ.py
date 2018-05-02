@@ -460,7 +460,7 @@ class TestSubmitForAnRFQ(ProjectBase):
         self.assertion.assertEqual(self.requestQuote.getQuoteSubmitted(), 'Quote Submitted')
 
     @pytest.mark.ac
-    def testRequestQuoteIsNotDisplayedForJobSubmittedForRFQ(self):
+    def testRequestQuoteButtonIsNotDisplayedForJobSubmittedForRFQ(self):
         email = 'ningxin.liao+regression@mutualmobile.com'
         password = 'password'
 
@@ -488,7 +488,42 @@ class TestSubmitForAnRFQ(ProjectBase):
         sleep(2)
         self.requestQuote.tapSubmit()
         sleep(3)
-        self.assertion.assertExists(self.jobSummary.getRequestQuote(), 'Verify request quote button is not displayed')
+        self.assertion.assertNotExists(self.jobSummary.getRequestQuote(), 'Verify request quote button is not displayed')
+
+    @pytest.mark.ac
+    def testDeleteJobButtonIsNotDisplayedForJobSubmittedForRFQ(self):
+        email = 'ningxin.liao+regression@mutualmobile.com'
+        password = 'password'
+
+        self.caseId = 1391975
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.circuit.createSmallCircuit()
+        sleep(2)
+        self.reel.createReelWithNoRestriction()
+        sleep(2)
+        self.feederSchedule.tapAddCircuit()
+        sleep(2)
+        self.navigation.tapJobDetailBreadcrumb()
+        sleep(2)
+        self.jobList.selectAJob()
+        sleep(2)
+        self.jobSummary.tapRequestQuote()
+        sleep(2)
+        self.requestQuote.tapSubmit()
+        sleep(3)
+        self.navigation.tapJobBreadcrumb()
+        sleep(2)
+        self.jobList.tapOverflow()
+        sleep(2)
+        self.assertion.assertNotExists(self.jobList.getDeleteJobButton(),'Verify delete job button is not displayed')
 
 
 
