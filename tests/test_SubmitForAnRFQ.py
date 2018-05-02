@@ -37,7 +37,7 @@ class TestSubmitForAnRFQ(ProjectBase):
         email = 'ningxin.liao+regression@mutualmobile.com'
         password = 'password'
 
-        self.caseId = 1301710
+        self.caseId = 1391886
         self.navigation.navigateToLoginPage()
         self.authentication.login(email, password)
         self.projectList.selectAProject()
@@ -456,8 +456,7 @@ class TestSubmitForAnRFQ(ProjectBase):
         self.jobSummary.tapRequestQuote()
         sleep(2)
         self.requestQuote.tapSubmit()
-        self.assertion.assertExists(self.requestQuote.getQuoteSubmitted(), 'Verify job submission banner is displayed')
-        self.assertion.assertEqual(self.requestQuote.getQuoteSubmitted(), 'Quote Submitted')
+        self.assertion.assertExists(self.requestQuote.getRFQSubmissionBanner(), 'Verify job submission banner is displayed')
 
     @pytest.mark.ac
     def testRequestQuoteButtonIsNotDisplayedForJobSubmittedForRFQ(self):
@@ -488,7 +487,7 @@ class TestSubmitForAnRFQ(ProjectBase):
         sleep(2)
         self.requestQuote.tapSubmit()
         sleep(3)
-        self.assertion.assertNotExists(self.jobSummary.getRequestQuote(), 'Verify request quote button is not displayed')
+        self.assertion.assertNotExists(self.jobSummary.getRequestQuote().ui_object, 'Verify request quote button is not displayed')
 
     @pytest.mark.ac
     def testDeleteJobButtonIsNotDisplayedForJobSubmittedForRFQ(self):
@@ -523,7 +522,67 @@ class TestSubmitForAnRFQ(ProjectBase):
         sleep(2)
         self.jobList.tapOverflow()
         sleep(2)
-        self.assertion.assertNotExists(self.jobList.getDeleteJobButton(),'Verify delete job button is not displayed')
+        try:
+            deleteButton = self.jobList.getDeleteJobButton().ui_object
+        except:
+            deleteButton = None
+        self.assertion.assertNotExists(deleteButton,'Verify delete job button is not displayed')
+
+    @pytest.mark.ac
+    def testJobSettingsCannotBeEditedAfterRFQSubmission(self):
+        # Verify the job settings cannot be edited once an RFQ is submitted
+        email = 'nick.moore+auto50@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1391972
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.tapOverflow()
+
+        try:
+            editSettings = self.jobList.getEditSettings().ui_object
+        except:
+            editSettings = None
+        self.assertion.assertNotExists(editSettings, "Job settings button exists")
+
+    @pytest.mark.ac
+    def testJobReelsCannotBeEditedAfterRFQSubmission(self):
+        # Verify the job reels cannot be edited once an RFQ is submitted
+        email = 'nick.moore+auto50@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1391973
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+
+        try:
+            configureJob = self.jobSummary.getConfigureJob().ui_object
+        except:
+            configureJob = None
+
+        self.assertion.assertNotExists(configureJob, "Configure job button exists")
+
+    @pytest.mark.ac
+    def testJobFeederScheduleCannotBeEditedAfterRFQSubmission(self):
+        # Verify the job feeder schedule cannot be edited once an RFQ is submitted
+        email = 'nick.moore+auto50@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1391974
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.jobList.selectAJob()
+
+        try:
+            configureJob = self.jobSummary.getConfigureJob().ui_object
+        except:
+            configureJob = None
+
+        self.assertion.assertNotExists(configureJob, "Configure job button exists")
 
 
 
