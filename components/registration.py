@@ -12,7 +12,7 @@ class Registration(object):
         """
         self.testCase = testCase
 
-    # Required fields
+    '''Required fields'''
     def generateRandomEmail(self):
         randomName = ''.join([random.choice(string.letters+string.digits) for i in range(8)])
         randomEmail = randomName + '@ningxintest.com'
@@ -217,7 +217,7 @@ class Registration(object):
         el = self.testCase.UIType.Element(option)
         return el.getLabel()
 
-    #Not required fields
+    '''Not required fields'''
 
     def generateRandomZip(self):
         zip = ''.join([random.choice(string.digits + string.ascii_uppercase) for i in range(6)])
@@ -261,7 +261,7 @@ class Registration(object):
         if self.testCase.isChromium:
             self.testCase.app.dismissKeyboard()
 
-    # Cancel & Submit button
+    '''Cancel & Submit button'''
     def tapCancel(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//button[@class="secondary"]')
         el = self.testCase.UIType.Button(el)
@@ -276,13 +276,13 @@ class Registration(object):
         el = self.getSubmitButton()
         el.tap()
 
-    # Error msg
+    '''Error msg'''
     def getErrorMsg(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.error-message.fade-in')
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
-    # Edit Acct Info
+    '''Edit Acct Info'''
 
     def tapAccount(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.account-link')
@@ -294,13 +294,11 @@ class Registration(object):
         el = self.testCase.UIType.Element(el)
         return el.getLabel()
 
-
-    """Log Out"""
+    '''Log Out'''
     def tapLogOut(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'a.logout')
         el = self.testCase.UIType.Element(el)
         el.tap()
-
 
     '''Create Account'''
     def tapCreateAccount(self):

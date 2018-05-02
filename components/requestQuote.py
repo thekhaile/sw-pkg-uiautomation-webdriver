@@ -30,3 +30,8 @@ class RequestQuote(object):
     def tapSubmit(self):
         el = self.getSubmitButton()
         el.tap()
+
+    def getErrorMessage(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.toast-text')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
