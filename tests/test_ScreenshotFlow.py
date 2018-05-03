@@ -278,6 +278,9 @@ class TestScreenshotFlow(ProjectBase):
         self.registration.enterCity('Austin')
         self.registration.selectStateOrProvince('Texas')
         self.registration.tapSubmit()
+        if self.app.isFirefox():
+            sleep(2)
+            self.app.driver.switch_to_alert().accept()
         sleep(2)
 
         # Screenshot - Login account created
