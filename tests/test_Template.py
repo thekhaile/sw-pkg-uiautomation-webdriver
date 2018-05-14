@@ -376,3 +376,47 @@ class TestTemplate(ProjectBase):
         length = self.feederSchedule.getCircuitLength(rowOrder=5)
 
         self.assertEqual(length, "180'", 'LENGTH value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testGroundWireSharesTheSameInsulation(self):
+        # Verify that ground wire is a separate circuit that shares the same insulation of the main circuit in the same row
+        email = 'nick.moore+auto46@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381730
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow(arrowOrder=5)
+        sleep(2)
+        el = self.feederSchedule.getInsulation()
+
+        self.assertEqual(el, "THHN", 'INSULATION value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testGroundWireColorIsDefaultToGreen(self):
+        # Verify that the Ground Wire color selection is defaulted to Green if the combination of Metal/Insulation has green product
+        email = 'nick.moore+auto46@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381733
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow(arrowOrder=5)
+        sleep(2)
+        el = self.feederSchedule.getColor()
+
+        self.assertEqual(el, "Green", 'Color value for ground wire does not match paired circuit')
