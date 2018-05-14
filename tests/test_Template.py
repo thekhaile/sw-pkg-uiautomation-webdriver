@@ -13,6 +13,7 @@ from southwire_pkg_uiautomation_webdriver.components.jobSummary.jobSummary impor
 from southwire_pkg_uiautomation_webdriver.components.circuit import Circuit
 import unidecode
 
+
 class TestTemplate(ProjectBase):
 
     def __init__(self, *args, **kwargs):
