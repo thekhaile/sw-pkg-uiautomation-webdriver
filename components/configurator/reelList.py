@@ -157,4 +157,4 @@ class ReelList(object):
     def getEmptyState(self):
         el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.empty-configure-section')
         el = self.testCase.UIType.Element(el)
-        return el.getLabel()
+        return el

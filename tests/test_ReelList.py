@@ -45,8 +45,9 @@ class TestReelList(ProjectBase):
         sleep(2)
         self.jobSummary.tapConfigureJob()
         sleep(2)
-        message = unidecode.unidecode(self.reelList.getEmptyState())
+        message = unidecode.unidecode(self.reelList.getEmptyState().getLabel())
 
+        self.assertion.assertTrue(self.reelList.getEmptyState().isDisplayed())
         self.assertion.assertEqual(message, "You haven't created any reels.")
 
     @pytest.mark.ac
