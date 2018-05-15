@@ -173,8 +173,9 @@ class FeederSchedule(object):
         else:
             return 0
 
-    def tapExpandArrow(self):
-        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
+    def tapExpandArrow(self, arrowOrder=0):
+        arrows = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expand.down')
+        el = arrows[arrowOrder]
         el = self.testCase.UIType.Element(el)
         el.tap()
 
@@ -198,3 +199,26 @@ class FeederSchedule(object):
         el = self.testCase.UIType.Button(el)
         el.tap()
 
+    def getMetal(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expanded-header')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
+        text = el.text
+        metal = text.split(' ')[3]
+        return metal
+
+    def getInsulation(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expanded-header')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')
+        text = el.text
+        insulation = text.split(' ')[5]
+        return insulation
+
+    def getColor(self):
+        container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.selected-color')
+        el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.color-label')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getSIMpullHeadsText(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'span.simpull-text')
+        return el

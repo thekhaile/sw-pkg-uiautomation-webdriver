@@ -117,9 +117,8 @@ class TestTemplate(ProjectBase):
         self.jobList.selectAJob()
         self.jobSummary.tapConfigureJob()
         self.circuit.createCircuitWithSIMpullHead()
-        self.navigation.navigateToProjectsPage()
-        self.projectList.selectAProject()
-        self.jobList.selectAJob()
+        self.navigation.tapJobDetailBreadcrumb()
+        sleep(2)
 
         self.assertion.assertNotExists(self.jobSummary.getUploadTemplateOption(), "Upload template option is available")
 
@@ -136,6 +135,7 @@ class TestTemplate(ProjectBase):
         self.job.createAJob()
         self.jobList.selectAJob()
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
 
         self.assertion.assertNotExists(self.jobSummary.getUploadTemplateOption(), "Upload template option is available")
 
@@ -153,13 +153,12 @@ class TestTemplate(ProjectBase):
         self.jobList.selectAJob()
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
         sleep(2)
-        fromList = ['PANEL', 'PANEL', 'MCC-1', 'MCC-1']
-        toList = ['GEN-ATS-U', 'GEN-ATS-I #1', 'XFRMT T1', 'XFRMT T1']
-        sizeList = ['400', '350', '6', '8']
-        lengthList = ["359'", "379'", "180'", "180'"]
+        fromList = ['PANEL', 'PANEL', 'PANEL', 'PANEL', 'MCC-1']
+        toList = ['GEN-ATS-U', 'GEN-ATS-U', 'GEN-ATS-I #1', 'GEN-ATS-I #1', 'XFRMT T1']
+        sizeList = ['400', '400', '350','350', '6']
+        lengthList = ["359'", "359'", "379'", "379'", "180'"]
 
-        rowCount = self.feederSchedule.getNumberOfRows()
-        for i in range(rowCount):
+        for i in range(5):
             self.assertion.assertEqual(self.feederSchedule.getCircuitFrom(i), fromList[i], "Circuit FROM does not match")
             self.assertion.assertEqual(self.feederSchedule.getCircuitTo(i), toList[i], "Circuit TO does not match")
             self.assertion.assertEqual(self.feederSchedule.getCircuitSize(i), sizeList[i], "Circuit SIZE does not match")
@@ -226,14 +225,17 @@ class TestTemplate(ProjectBase):
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
         sleep(2)
         self.jobSummary.tapConfigureJob()
-        beforeRowCount = self.feederSchedule.getNumberOfRows()
+        sleep(2)
+        oldValue = self.feederSchedule.getNumberOfRows()
         self.feederSchedule.tapOverflow()
-        sleep(1)
+        sleep(2)
         self.feederSchedule.tapDeleteCircuit()
+        sleep(2)
         self.feederSchedule.tapConfirmDelete()
-        afterRowCount = self.feederSchedule.getNumberOfRows()
+        sleep(2)
+        newValue = self.feederSchedule.getNumberOfRows()
 
-        self.assertion.assertEqual(beforeRowCount - 1, afterRowCount, "Row count after deletion is wrong")
+        self.assertion.assertEqual(oldValue - 1, newValue, "Row count after deletion is wrong")
 
     @pytest.mark.ac
     def testUploadedCircuitsSIMpullHeadDefaultOff(self):
@@ -316,7 +318,7 @@ class TestTemplate(ProjectBase):
         sleep(2)
         self.jobSummary.tapConfigureJob()
 
-        self.assertion.assertEqual(self.feederSchedule.getCircuitSize(3), '8', 'Ground size is not 8')
+        self.assertion.assertEqual(self.feederSchedule.getCircuitSize(rowOrder=5), '8', 'Ground size is not 8')
 
     @pytest.mark.ac
     def testVerifyGroundWireSharesSameFromAsCircuit(self):
@@ -333,7 +335,7 @@ class TestTemplate(ProjectBase):
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
         sleep(2)
         self.jobSummary.tapConfigureJob()
-        fromValue = self.feederSchedule.getCircuitFrom(3)
+        fromValue = self.feederSchedule.getCircuitFrom(rowOrder=5)
 
         self.assertEqual(fromValue, 'MCC-1', 'FROM value for ground wire does not match paired circuit')
 
@@ -352,7 +354,7 @@ class TestTemplate(ProjectBase):
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
         sleep(2)
         self.jobSummary.tapConfigureJob()
-        toValue = self.feederSchedule.getCircuitTo(3)
+        toValue = self.feederSchedule.getCircuitTo(rowOrder=5)
 
         self.assertEqual(toValue, 'XFRMT T1', 'TO value for ground wire does not match paired circuit')
 
@@ -371,6 +373,50 @@ class TestTemplate(ProjectBase):
         self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
         sleep(2)
         self.jobSummary.tapConfigureJob()
-        length = self.feederSchedule.getCircuitLength(3)
+        length = self.feederSchedule.getCircuitLength(rowOrder=5)
 
         self.assertEqual(length, "180'", 'LENGTH value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testGroundWireSharesTheSameInsulation(self):
+        # Verify that ground wire is a separate circuit that shares the same insulation of the main circuit in the same row
+        email = 'nick.moore+auto46@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381730
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow(arrowOrder=5)
+        sleep(2)
+        el = self.feederSchedule.getInsulation()
+
+        self.assertEqual(el, "THHN", 'INSULATION value for ground wire does not match paired circuit')
+
+    @pytest.mark.ac
+    def testGroundWireColorIsDefaultToGreen(self):
+        # Verify that the Ground Wire color selection is defaulted to Green if the combination of Metal/Insulation has green product
+        email = 'nick.moore+auto46@mutualmobile.com'
+        password = 'newpassword'
+
+        self.caseId = 1381733
+        self.navigation.navigateToLoginPage()
+        self.authentication.login(email, password)
+        self.projectList.selectAProject()
+        self.job.createAJob()
+        self.jobList.selectAJob()
+        self.jobSummary.uploadTemplate('/../../test_data/Example_upload.xlsm')
+        sleep(2)
+        self.jobSummary.tapConfigureJob()
+        sleep(2)
+        self.feederSchedule.tapExpandArrow(arrowOrder=5)
+        sleep(2)
+        el = self.feederSchedule.getColor()
+
+        self.assertEqual(el, "Green", 'Color value for ground wire does not match paired circuit')
