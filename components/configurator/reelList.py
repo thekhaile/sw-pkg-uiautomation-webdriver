@@ -118,6 +118,12 @@ class ReelList(object):
         percentage = self.testCase.UIType.Element(percentage)
         return percentage.getLabel()
 
+    def getVolumeBar(self):
+        bars = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.background-bar')
+        el = bars[0]
+        el = self.testCase.UIType.Element(el)
+        return el
+
     def getWeightPercentage(self):
         # get the selected reel container
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR,
@@ -129,6 +135,17 @@ class ReelList(object):
         percentage = self.testCase.UIType.Element(percentage)
         return percentage.getLabel()
 
+    def getWeightNumber(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.right-side')
+        el = self.testCase.UIType.Element(el)
+        return el.getLabel()
+
+    def getWeightBar(self):
+        bars = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.background-bar')
+        el = bars[-1]
+        el = self.testCase.UIType.Element(el)
+        return el
+
     def getReels(self):
         els = self.testCase.app.findElements(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.header-left')
         reels = []
@@ -136,3 +153,8 @@ class ReelList(object):
             i = self.testCase.UIType.Element(i)
             reels.append(i.getLabel())
         return reels
+
+    def getEmptyState(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.empty-configure-section')
+        el = self.testCase.UIType.Element(el)
+        return el
