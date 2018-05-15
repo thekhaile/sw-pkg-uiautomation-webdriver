@@ -179,6 +179,26 @@ class FeederSchedule(object):
         el = self.testCase.UIType.Element(el)
         el.tap()
 
+    def tapSortByFrom(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="From"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapSortByTo(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="To"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapSortBySize(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Size"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
+    def tapSortByLength(self):
+        el = self.testCase.app.findElement(self.testCase.app.getStrategy().XPATH, '//*[text()="Length"]')
+        el = self.testCase.UIType.Button(el)
+        el.tap()
+
     def getMetal(self):
         container = self.testCase.app.findElement(self.testCase.app.getStrategy().CSS_SELECTOR, 'div.expanded-header')
         el = container.find_element(self.testCase.app.getStrategy().CSS_SELECTOR, 'span')

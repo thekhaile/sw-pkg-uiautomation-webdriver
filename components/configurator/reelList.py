@@ -25,7 +25,6 @@ class ReelList(object):
         el.tap()
         sleep(2)
 
-
     # overflow for edit and delete
     def _getReelOverflow(self, rowOrder):
         # find overflow container
